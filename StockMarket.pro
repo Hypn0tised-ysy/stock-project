@@ -9,12 +9,14 @@ SOURCES += \
     $$files($$PWD/src/AllWindow/*.cpp) \
     $$files($$PWD/src/database/*.cpp) \
     $$files($$PWD/src/implementation/*.cpp) \
+    $$files($$PWD/src/implementation/Accountdata/*.cpp) \
     $$files($$PWD/src/*.cpp)
 
 HEADERS += \
     $$files($$PWD/src/AllWindow/*.h) \
     $$files($$PWD/src/database/*.h) \
     $$files($$PWD/src/implementation/*.h) \
+    $$files($$PWD/src/implementation/Accountdata/*.h) \
     $$files($$PWD/src/*.h)
 
 

@@ -1,3 +1,5 @@
 /.vscode/*
 /build/*
 /scripts/*
+/.vs
+StockMarket.pro.user
