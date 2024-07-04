@@ -1,4 +1,5 @@
 #include "StockMarket.h"
+#include <QVBoxLayout>
 
 StockMarket::StockMarket(QWidget *parent)
     : QMainWindow(parent)
@@ -6,7 +7,10 @@ StockMarket::StockMarket(QWidget *parent)
     MainWindowStack = new QStackedWidget(this);
     setCentralWidget(MainWindowStack);
     setWindowTitle("Stock Market");
-    resize(1920, 1080);
+    setFixedSize(1920, 1080);
+    auto NowWindow = new LoginWindow(this);
+    MainWindowStack->addWidget(NowWindow);
+    MainWindowStack->setCurrentWidget(NowWindow);
     show();
 }
 

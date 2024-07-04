@@ -1,7 +1,7 @@
 #pragma once
 #include <QMainWindow>
 #include <QStackedWidget>
-
+#include "LoginWindow.h"
 class StockMarket : public QMainWindow
 {
     Q_OBJECT
