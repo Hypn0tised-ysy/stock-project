@@ -15,6 +15,8 @@ SOURCES += \
     jiaoyi.cpp \
     jiaoyi2.cpp \
     main.cpp \
+    stockdetails.cpp \
+    trade_details.cpp \
     widget.cpp \
     zhanghu.cpp
 
@@ -24,6 +26,8 @@ HEADERS += \
     hangqing.h \
     jiaoyi.h \
     jiaoyi2.h \
+    stockdetails.h \
+    trade_details.h \
     widget.h \
     zhanghu.h
 
@@ -33,6 +37,8 @@ FORMS += \
     hangqing.ui \
     jiaoyi.ui \
     jiaoyi2.ui \
+    stockdetails.ui \
+    trade_details.ui \
     widget.ui \
     zhanghu.ui
 

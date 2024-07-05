@@ -36,3 +36,9 @@ void zhanghu::on_check_dingdan_clicked()
     d0.show();
 }
 
+
+void zhanghu::on_listWidget_itemDoubleClicked(QListWidgetItem *item)
+{
+    t0.show();
+}
+

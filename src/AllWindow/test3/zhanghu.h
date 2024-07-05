@@ -9,6 +9,9 @@
 #include"ui_jiaoyi2.h"
 #include"dingdan.h"
 #include"ui_dingdan.h"
+#include"trade_details.h"
+#include"ui_trade_details.h"
+#include<QListWidget>
 namespace Ui {
 class zhanghu;
 }
@@ -30,11 +33,14 @@ private slots:
 
     void on_check_dingdan_clicked();
 
+    void on_listWidget_itemDoubleClicked(QListWidgetItem *item);
+
 private:
     Ui::zhanghu *ui;
     jiaoyi j0;
     jiaoyi2 j1;
     dingdan d0;
+    trade_details t0;
 };
 
 #endif // ZHANGHU_H

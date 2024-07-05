@@ -15,6 +15,11 @@ gushi::gushi(QWidget *parent)
     init_time();
     timer->start(1000);
     connect(timer,SIGNAL(timeout()),this,SLOT(update_time()));
+    connect(this,&gushi::send,&s0,&StockDetails::get);
+    connect(this,&gushi::send1,&s0,&StockDetails::get1);
+    connect(this,&gushi::send2,&s0,&StockDetails::get2);
+    connect(this,&gushi::send3,&s0,&StockDetails::get3);
+
 }
 
 gushi::~gushi()
@@ -75,5 +80,15 @@ void gushi::on_pushButton_clicked()
     v5=v1;
     v1=v2;
     v2=v5;
+}
+
+
+void gushi::on_tableWidget_cellDoubleClicked(int row, int column)
+{   emit send1(v1[row]);
+    emit send2(v3[row]);
+    emit send3(v4[row]);
+    s0.show();
+    s0.showit();
+
 }
 
