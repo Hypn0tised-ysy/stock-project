@@ -21,8 +21,6 @@ HEADERS += \
 
 FORMS += \
     $$files($$PWD/src/AllWindow/*.ui)
-INCLUDEPATH += -I $$PWD/env/include
-LIBS += -L $$PWD/env/libs -lpython39
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
