@@ -1,3 +1,4 @@
+/*
 #include "database.h"
 void databaseInitialize()
 {
@@ -21,3 +22,4 @@ void databaseInitialize()
 
     }
 }
+*/

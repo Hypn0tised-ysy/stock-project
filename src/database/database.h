@@ -7,6 +7,7 @@
 #include <QString>
 #include <QVariantList>
 #include <QObject>
+/*
 QSqlDatabase db;//database
 class Database : public QObject
 {
@@ -32,4 +33,4 @@ public:
 
 private:
     QSqlDatabase db;
-};
+};*/
