@@ -9,6 +9,10 @@ LoginWindow::LoginWindow(QWidget *parent)
     TitleLabel = new QLabel("模拟股票交易", this);
     TitleLabel->setStyleSheet("font-size: 48px; font-weight: bold;");
     TitleLabel->setFixedSize(TitleLabel->sizeHint());
+    QFont font = UserNameLineEdit->font();
+    font.setPointSize(24);
+    UserNameLineEdit->setFont(font);
+    PasswordLineEdit->setFont(font);
     UserNameLineEdit->setStyleSheet(QString::fromStdString(LINEEDITSTYLE));
     PasswordLineEdit->setStyleSheet(QString::fromStdString(LINEEDITSTYLE));
     UserNameLineEdit->setPlaceholderText("User Name");
@@ -19,6 +23,8 @@ LoginWindow::LoginWindow(QWidget *parent)
     CentralLayout = new QVBoxLayout(CentralWidget);
     RegisterButton->setStyleSheet(QString::fromStdString(BUTTONSTYLE));
     resizeEvent(nullptr);
+    LoginButton->setFont(font);
+    RegisterButton->setFont(font);
     PasswordLineEdit->setEchoMode(QLineEdit::Password);
     auto LineEditLayout = new QVBoxLayout();
     auto ButtonLayout = new QHBoxLayout();
@@ -44,6 +50,37 @@ LoginWindow::LoginWindow(QWidget *parent)
     CentralLayout->addLayout(ButtonLayout);
     CentralWidget->setLayout(CentralLayout);
     setCentralWidget(CentralWidget);
+    connect(RegisterButton, &QPushButton::clicked, this, [this]()
+            {
+                std::string Username = UserNameLineEdit->text().toStdString();
+                std::string Password = PasswordLineEdit->text().toStdString();
+                if (Username.empty() || Password.empty())
+                {
+                    QMessageBox::warning(this, "Warning", "Please enter your username and password.");
+                    return;
+                }
+                // User=Userregstier(Username, password);
+                if(true)
+                {
+                    emit Changepage();
+                } });
+    connect(LoginButton, &QPushButton::clicked, this, [this]()
+            {
+        std::string Username = UserNameLineEdit->text().toStdString();
+        std::string Password = PasswordLineEdit->text().toStdString();
+        if (Username.empty() || Password.empty())
+        {
+            QMessageBox::warning(this, "Warning", "Please enter your username and password.");
+            return;
+        }
+        else
+        {
+            // User=Userlogin(Username, password);
+            if (true)
+            {
+                emit Changepage();
+            }
+        } });
 }
 LoginWindow::~LoginWindow()
 {

@@ -1,33 +1,27 @@
 #include "Account.h"
-void Account::enroll()
+bool Account::enroll(std::string _id,std::string _password)
 {
 	Account *user = new Account();//创建一个新的用户
-	bool reg = true;
-	while (reg)
-	{
-		cout << "Please create your id" << endl;
-		setid(user,reg);//设置id
-		if (!reg)
+	bool reg = true;//检测id是否有效
+		std::cout << "Please create your id" << std::endl;
+		setid(user,reg,_id);//设置id
+		if (!reg)//如果输入的账户id有效，开始设置密码
 		{
-			cout << "Please set your password" << endl;
-			setpassword(user);//设置密码
+			std::cout << "Please set your password" << std::endl;
+			setpassword(user,_password);//设置密码
 			user->money = 50000;//启动资金
 		}
 		else
 		{
-			continue;
+			return false;//输入的账户id无效重新输入
 		}
-		
-	}
-	
-	acc.push_back(user);//将新创建的账户添加进入账户列表中
-	cout << "Congratulations,you can enter our sysytem" << endl;
-	system("cls");
+	acc.push_back(user);//将新创建的账户添加进入账户列表中，暂时没有数据库，先用一个数组
+	std::cout << "Congratulations,you can enter our sysytem" << std::endl;
+	system("cls");//清屏幕
+	return true;//输入的id有效
 }
-void Account::setid(Account *user,bool &reg)
+void Account::setid(Account *user,bool &reg,std::string s)
 {
-	string s;
-	getline(cin, s);
 	if (acc.empty())
 	{
 		user->id = s;
@@ -40,7 +34,7 @@ void Account::setid(Account *user,bool &reg)
 		{
 			if (s == t->id)
 			{
-				cout << "somebody use this id,Please try another one" << endl;
+				std::cout << "somebody use this id,Please try another one" << std::endl;
 				reg = true;//重新输一遍
 				return;
 			}
@@ -49,36 +43,30 @@ void Account::setid(Account *user,bool &reg)
 		reg = false;
 	}
 }
-void Account::setpassword(Account *user)
+void Account::setpassword(Account *user,std::string s)
 {
-	string s;
-	getline(cin, s);
 	user->password= s;
 }
-void Account::login()
+bool Account::login(std::string _id, std::string _password)
 {
-	string s1;
-	string s2;
-	while (1)
-	{
-		cout << "enter your account" << endl;
-		getline(cin, s1);
-		getline(cin, s2);
-		if (check(s1, s2))
+	
+	
+
+		std::cout << "enter your account" << std::endl;
+		if (check(_id, _password))
 		{
-			cout << "Welcome back " << endl;
-			break;
+			std::cout << "Welcome back " << std::endl;
 		}
 		else
 		{
-			cout << "Sorry,you put the wrong data,Plsase try again" << endl;
+			std::cout << "Sorry,you put the wrong data,Plsase try again" << std::endl;
+			return false;
 		}
 		Sleep(1000);
 		system("cls");
-	}
-	
+		return true;
 }
-bool Account::check(string id,string pass)
+bool Account::check(std::string id, std::string pass)
 {
 	for (auto tem : acc)
 	{
@@ -92,11 +80,11 @@ bool Account::check(string id,string pass)
 		}
 		else
 		{
-			cout << "You may put the wrong id or wrong password" << endl;
+			std::cout << "You may put the wrong id or wrong password" << std::endl;
 		}
 		
 	}
-	cout << "You may put the wrong id or wrong password" << endl;
+	std::cout << "You may put the wrong id or wrong password" << std::endl;
 	return false;
 }
 bool Account::is_oktobuy(double price,Account *user)
@@ -108,5 +96,16 @@ bool Account::is_oktobuy(double price,Account *user)
 	else
 	{
 		return true;
+	}
+}
+Account* Account::Getaccount(bool is_ok)//可以把那个enroll的函数放在这里进行判定
+{
+	if (is_ok)
+	{
+		return acc.back();//获取当前列表的最新账户
+	}
+	else
+	{
+		return nullptr;
 	}
 }

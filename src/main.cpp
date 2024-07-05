@@ -1,4 +1,5 @@
-#include "./AllWindow/StockMarket.h"
+#include "AllWindow/StockMarket.h"
+
 #include <QApplication>
 #pragma comment(lib, "user32.lib")
 

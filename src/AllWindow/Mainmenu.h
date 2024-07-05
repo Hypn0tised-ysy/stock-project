@@ -2,28 +2,29 @@
 #define WIDGET_H
 
 #include <QWidget>
-#include"zhanghu.h"
-#include"ui_zhanghu.h"
-#include"gushi.h"
-#include"ui_gushi.h"
-#include"hangqing.h"
-#include"ui_hangqing.h"
-#include<QProgressBar>
-#include<QMessageBox>
-#include<QPushButton>
+#include "zhanghu.h"
+#include "ui_zhanghu.h"
+#include "gushi.h"
+#include "ui_gushi.h"
+#include "hangqing.h"
+#include "ui_hangqing.h"
+#include <QProgressBar>
+#include <QMessageBox>
+#include <QPushButton>
 QT_BEGIN_NAMESPACE
-namespace Ui {
-class Widget;
+namespace Ui
+{
+    class Widget;
 }
 QT_END_NAMESPACE
 
-class Widget : public QWidget
+class MainMenu : public QWidget
 {
     Q_OBJECT
 
 public:
-    Widget(QWidget *parent = nullptr);
-    ~Widget();
+    MainMenu(QWidget *parent = nullptr);
+    ~MainMenu();
 
 private slots:
 
