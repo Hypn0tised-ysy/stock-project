@@ -62,22 +62,25 @@ LoginWindow::LoginWindow(QWidget *parent)
                 // User=Userregstier(Username, password);
                 if(true)
                 {
-                    QMessageBox::information(this, "Information", "Register successfully.");
+                    emit Changepage();
                 } });
     connect(LoginButton, &QPushButton::clicked, this, [this]()
             {
-                std::string Username = UserNameLineEdit->text().toStdString();
-                std::string Password = PasswordLineEdit->text().toStdString();
-                if (Username.empty() || Password.empty())
-                {
-                    QMessageBox::warning(this, "Warning", "Please enter your username and password.");
-                    return;
-                }
-                // User=Userlogin(Username, password);
-                if(true)
-                {
-                    QMessageBox::information(this, "Information", "Login successfully.");
-                } });
+        std::string Username = UserNameLineEdit->text().toStdString();
+        std::string Password = PasswordLineEdit->text().toStdString();
+        if (Username.empty() || Password.empty())
+        {
+            QMessageBox::warning(this, "Warning", "Please enter your username and password.");
+            return;
+        }
+        else
+        {
+            // User=Userlogin(Username, password);
+            if (true)
+            {
+                emit Changepage();
+            }
+        } });
 }
 LoginWindow::~LoginWindow()
 {

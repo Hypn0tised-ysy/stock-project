@@ -12,6 +12,12 @@ StockMarket::StockMarket(QWidget *parent)
     MainWindowStack->addWidget(NowWindow);
     MainWindowStack->setCurrentWidget(NowWindow);
     show();
+    connect(NowWindow, &LoginWindow::Changepage, this, [this]()
+            {
+                auto MainMenuPage = new MainMenu();
+                 MainWindowStack->addWidget(MainMenuPage);
+                 MainWindowStack->setCurrentIndex(1);
+                 delete MainWindowStack->widget(0); });
 }
 
 StockMarket::~StockMarket()
