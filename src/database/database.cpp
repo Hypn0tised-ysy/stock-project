@@ -202,7 +202,7 @@ bool updateOrder(int stockId, const QString &symbol, const QString &name, double
 {
 
 }
-QVariantList getOrder(int stockId);
+QVariantList getOrder(int stockId)
 {
 
 }
