@@ -10,17 +10,26 @@ SOURCES += \
     $$files($$PWD/src/database/*.cpp) \
     $$files($$PWD/src/implementation/*.cpp) \
     $$files($$PWD/src/implementation/Accountdata/*.cpp) \
-    $$files($$PWD/src/*.cpp)
+    $$files($$PWD/src/*.cpp) \
+    src/AllWindow/balance.cpp \
+    src/AllWindow/stockdetails.cpp \
+    src/AllWindow/trade_details.cpp
 
 HEADERS += \
     $$files($$PWD/src/AllWindow/*.h) \
     $$files($$PWD/src/database/*.h) \
     $$files($$PWD/src/implementation/*.h) \
     $$files($$PWD/src/implementation/Accountdata/*.h) \
-    $$files($$PWD/src/*.h)
+    $$files($$PWD/src/*.h) \
+    src/AllWindow/balance.h \
+    src/AllWindow/stockdetails.h \
+    src/AllWindow/trade_details.h
 
 FORMS += \
-    $$files($$PWD/src/AllWindow/*.ui)
+    $$files($$PWD/src/AllWindow/*.ui) \
+    src/AllWindow/balance.ui \
+    src/AllWindow/stockdetails.ui \
+    src/AllWindow/trade_details.ui
 INCLUDEPATH += -I $$PWD/env/include
 DEPENDPATH += $$PWD/env/include
 LIBS += -L$$PWD/env/libs -lpython39

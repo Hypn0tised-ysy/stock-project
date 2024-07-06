@@ -31,6 +31,7 @@ void MainMenu::on_tuichudenglu_clicked()
 
 void MainMenu::on_chakangushi_clicked()
 {
+    g0.showit();
     g0.show();
 }
 

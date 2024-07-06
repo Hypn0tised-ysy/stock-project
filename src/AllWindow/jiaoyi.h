@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QDialog>
+#include<QLineEdit>
 namespace Ui {
 class jiaoyi;
 }
@@ -14,9 +15,14 @@ class jiaoyi : public QWidget
 public:
     explicit jiaoyi(QWidget *parent = nullptr);
     ~jiaoyi();
-
+signals:
+    void send_it(QString ID,QString price,QString number,bool b_or_s);
 private slots:
-    void on_pushButton_2_clicked();
+
+
+    void on_queding_clicked();
+
+    void on_close_clicked();
 
 private:
     Ui::jiaoyi *ui;

@@ -22,21 +22,6 @@
      <height>221</height>
     </rect>
    </property>
-   <row>
-    <property name="text">
-     <string>新建行</string>
-    </property>
-   </row>
-   <row>
-    <property name="text">
-     <string>新建行</string>
-    </property>
-   </row>
-   <row>
-    <property name="text">
-     <string>新建行</string>
-    </property>
-   </row>
    <column>
     <property name="text">
      <string>股票ID</string>
@@ -61,14 +46,37 @@
   <widget class="QPushButton" name="close">
    <property name="geometry">
     <rect>
-     <x>160</x>
-     <y>250</y>
+     <x>330</x>
+     <y>260</y>
      <width>80</width>
      <height>18</height>
     </rect>
    </property>
    <property name="text">
     <string>退出</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="delete_2">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>250</y>
+     <width>80</width>
+     <height>18</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>删除订单</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="deleteID">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>250</y>
+     <width>81</width>
+     <height>20</height>
+    </rect>
    </property>
   </widget>
  </widget>

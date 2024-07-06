@@ -5,12 +5,12 @@
 
 int main(int argc, char *argv[])
 {
-    Py_SetPythonHome((wchar_t *)(L"./env"));
+    /*Py_SetPythonHome((wchar_t *)(L"./env"));
     Py_Initialize();
     if (!Py_IsInitialized())
     {
         return -1;
-    }
+    }*/
     QApplication a(argc, argv);
     StockMarket w;
     w.show();

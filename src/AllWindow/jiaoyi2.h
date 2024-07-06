@@ -14,9 +14,13 @@ class jiaoyi2 : public QWidget
 public:
     explicit jiaoyi2(QWidget *parent = nullptr);
     ~jiaoyi2();
-
+signals:
+    void send_it(QString ID,QString price,QString number,bool b_or_s);
 private slots:
-    void on_pushButton_2_clicked();
+
+    void on_close_clicked();
+
+    void on_queding_clicked();
 
 private:
     Ui::jiaoyi2 *ui;
