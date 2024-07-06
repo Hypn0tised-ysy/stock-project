@@ -43,5 +43,5 @@ private:
  * 先声明一个Database对象，
  * QSqlDatabase db;
  * 调用openDatabase函数（指定一个数据库名stock之类的），对数据库操作完毕后，调用closeDatabase函数
- * /
+ */
  */
