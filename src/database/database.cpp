@@ -1,28 +1,6 @@
 /*
 #include "database.h"
 #include <QDebug>
-void databaseInitialize()
-{
-    if (QSqlDatabase::contains("qt_sql_default_connection"))
-    {
-        db = QSqlDatabase::database("qt_sql_default_connection");
-    }
-    else
-    {
-        db = QSqlDatabase::addDatabase("QSQLITE");
-        db.setDatabaseName("stockDb");
-        db.setUserName("user");
-    }
-    if (!db.open())
-    {
-        qDebug() << "Error: Failed to connect database." << db.lastError();
-    }
-    else
-    {
-
-    }
-}
-
 
 Database::Database(QObject *parent) : QObject(parent)
 {
