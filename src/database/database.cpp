@@ -1,7 +1,5 @@
-/*
 #include "database.h"
 #include <QDebug>
-
 Database::Database(QObject *parent) : QObject(parent)
 {
 }
@@ -35,7 +33,14 @@ bool Database::openDatabase(const QString &dbName)
                "symbol TEXT, "
                "name TEXT, "
                "price REAL)");
-    //todo:Create order table
+    //Create orders table
+    query.exec("CREATE TABLE IF NOT EXISTS orders("
+               "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+               "operator TEXT,"
+               "price REAL,"
+               "quantity INT"
+               "symbol TEXT"
+               "side INT");
 
     return true;
 }
@@ -85,7 +90,8 @@ bool Database::updateUser(int userId, const QString &username, const QString &pa
     query.addBindValue(balance);
     query.addBindValue(userId);
 
-    if (!query.exec()) {
+    if (!query.exec())
+    {
         qDebug() << "Failed to update user:" << query.lastError().text();
         return false;
     }
@@ -168,21 +174,64 @@ QVariantList Database::getStock(int stockId)
     stock << query.value("id") << query.value("symbol") << query.value("name") << query.value("price");
     return stock;
 }
-bool addOrder(const QString &symbol, const QString &name, double price)
+bool addOrder(QString &operatorId,double price,int quantity, QString &symbol,bool side)
 {
+    QSqlQuery query;
+    query.prepare("INSERT INTO orders (operator,price, quantity,symbol,side) VALUES (?, ?, ?, ?, ?)");
+    query.addBindValue(operatorId);
+    query.addBindValue(price);
+    query.addBindValue(quantity);
+    query.addBindValue(symbol);
+    query.addBindValue(side);
+    
+    if (!query.exec()) {
+        qDebug() << "Failed to add order:" << query.lastError().text();
+        return false;
+    }
+    return true;
 
 }
-bool removeOrder(int stockId)
+bool removeOrder(int orderId)
 {
-
+    QSqlQuery query;
+    query.prepare("DELETE FROM orders WHERE id = ?");
+    query.addBindValue(orderId);
+    
+    if (!query.exec()) {
+        qDebug() << "Failed to remove order:" << query.lastError().text();
+        return false;
+    }
+    return true;
 }
-bool updateOrder(int stockId, const QString &symbol, const QString &name, double price)
+bool updateOrder(int orderId, QString &operatorId,double price,int quantity, QString &symbol,bool side)
 {
-
+    QSqlQuery query;
+    query.prepare("UPDATE orders SET operator = ?, price = ?, quantity = ?, symbol=?, side=? WHERE id = ?");
+    query.addBindValue(operatorId);
+    query.addBindValue(price);
+    query.addBindValue(quantity);
+    query.addBindValue(symbol);
+    query.addBindValue(side);
+    
+    if (!query.exec())
+    {
+        qDebug() << "Failed to update stock:" << query.lastError().text();
+        return false;
+    }
+    return true;
 }
-QVariantList getOrder(int stockId)
+QVariantList getOrder(int orderId)
 {
-
+    QSqlQuery query;
+    query.prepare("SELECT * FROM orders WHERE id = ?");
+    query.addBindValue(orderId);
+    
+    if (!query.exec() || !query.next()) {
+        qDebug() << "Failed to get order:" << query.lastError().text();
+        return QVariantList();
+    }
+    
+    QVariantList order;
+    order << query.value("id") << query.value("operator") << query.value("price") << query.value("quantity")<<query.value("symbol")<<query.value("side");
+    return order;
 }
-
-*/
