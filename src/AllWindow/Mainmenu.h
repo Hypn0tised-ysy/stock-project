@@ -30,12 +30,12 @@ public:
     ~MainMenu();
     void resizeit();
 public slots:
-
+    void on_tuichudenglu_clicked();
+signals:
+    void tuichudenglu();
 private slots:
 
     void on_zhanghuxinxi_clicked();
-
-    void on_tuichudenglu_clicked();
 
     void on_chakangushi_clicked();
 
