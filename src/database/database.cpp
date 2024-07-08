@@ -1,5 +1,6 @@
 #include "database.h"
 #include <QDebug>
+Database db;
 Database::Database(QObject *parent) : QObject(parent)
 {
 }
@@ -14,7 +15,8 @@ bool Database::openDatabase(const QString &dbName)
     db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName(dbName);
 
-    if (!db.open()) {
+    if (!db.open())
+    {
         qDebug() << "Failed to open database:" << db.lastError().text();
         return false;
     }
@@ -33,7 +35,7 @@ bool Database::openDatabase(const QString &dbName)
                "symbol TEXT, "
                "name TEXT, "
                "price REAL)");
-    //Create orders table
+    // Create orders table
     query.exec("CREATE TABLE IF NOT EXISTS orders("
                "id INTEGER PRIMARY KEY AUTOINCREMENT,"
                "operator TEXT,"
@@ -47,13 +49,14 @@ bool Database::openDatabase(const QString &dbName)
 
 void Database::closeDatabase()
 {
-    if (db.isOpen()) {
+    if (db.isOpen())
+    {
         db.close();
     }
 }
 
 // User operations
-bool Database::addUser(const QString &username, const QString &password, double balance)
+int Database::addUser(const QString &username, const QString &password, double balance)
 {
     QSqlQuery query;
     query.prepare("INSERT INTO users (username, password, balance) VALUES (?, ?, ?)");
@@ -61,11 +64,12 @@ bool Database::addUser(const QString &username, const QString &password, double 
     query.addBindValue(password);
     query.addBindValue(balance);
 
-    if (!query.exec()) {
+    if (!query.exec())
+    {
         qDebug() << "Failed to add user:" << query.lastError().text();
-        return false;
+        return -1;
     }
-    return true;
+    return query.lastInsertId().toInt();
 }
 
 bool Database::removeUser(int userId)
@@ -74,7 +78,8 @@ bool Database::removeUser(int userId)
     query.prepare("DELETE FROM users WHERE id = ?");
     query.addBindValue(userId);
 
-    if (!query.exec()) {
+    if (!query.exec())
+    {
         qDebug() << "Failed to remove user:" << query.lastError().text();
         return false;
     }
@@ -104,7 +109,8 @@ QVariantList Database::getUser(int userId)
     query.prepare("SELECT * FROM users WHERE id = ?");
     query.addBindValue(userId);
 
-    if (!query.exec() || !query.next()) {
+    if (!query.exec() || !query.next())
+    {
         qDebug() << "Failed to get user:" << query.lastError().text();
         return QVariantList();
     }
@@ -113,7 +119,19 @@ QVariantList Database::getUser(int userId)
     user << query.value("id") << query.value("username") << query.value("password") << query.value("balance");
     return user;
 }
+bool ChackUser(const QString &username, const QString &password)
+{
+    QSqlQuery query;
+    query.prepare("SELECT * FROM users WHERE username = ? AND password = ?");
+    query.addBindValue(username);
+    query.addBindValue(password);
 
+    if (!query.exec() || !query.next())
+    {
+        return false;
+    }
+    return true;
+}
 // Stock operations
 bool Database::addStock(const QString &symbol, const QString &name, double price)
 {
@@ -123,7 +141,8 @@ bool Database::addStock(const QString &symbol, const QString &name, double price
     query.addBindValue(name);
     query.addBindValue(price);
 
-    if (!query.exec()) {
+    if (!query.exec())
+    {
         qDebug() << "Failed to add stock:" << query.lastError().text();
         return false;
     }
@@ -136,7 +155,8 @@ bool Database::removeStock(int stockId)
     query.prepare("DELETE FROM stocks WHERE id = ?");
     query.addBindValue(stockId);
 
-    if (!query.exec()) {
+    if (!query.exec())
+    {
         qDebug() << "Failed to remove stock:" << query.lastError().text();
         return false;
     }
@@ -152,7 +172,8 @@ bool Database::updateStock(int stockId, const QString &symbol, const QString &na
     query.addBindValue(price);
     query.addBindValue(stockId);
 
-    if (!query.exec()) {
+    if (!query.exec())
+    {
         qDebug() << "Failed to update stock:" << query.lastError().text();
         return false;
     }
@@ -165,7 +186,8 @@ QVariantList Database::getStock(int stockId)
     query.prepare("SELECT * FROM stocks WHERE id = ?");
     query.addBindValue(stockId);
 
-    if (!query.exec() || !query.next()) {
+    if (!query.exec() || !query.next())
+    {
         qDebug() << "Failed to get stock:" << query.lastError().text();
         return QVariantList();
     }
@@ -174,7 +196,7 @@ QVariantList Database::getStock(int stockId)
     stock << query.value("id") << query.value("symbol") << query.value("name") << query.value("price");
     return stock;
 }
-bool addOrder(QString &operatorId,double price,int quantity, QString &symbol,bool side)
+bool addOrder(QString &operatorId, double price, int quantity, QString &symbol, bool side)
 {
     QSqlQuery query;
     query.prepare("INSERT INTO orders (operator,price, quantity,symbol,side) VALUES (?, ?, ?, ?, ?)");
@@ -183,27 +205,28 @@ bool addOrder(QString &operatorId,double price,int quantity, QString &symbol,boo
     query.addBindValue(quantity);
     query.addBindValue(symbol);
     query.addBindValue(side);
-    
-    if (!query.exec()) {
+
+    if (!query.exec())
+    {
         qDebug() << "Failed to add order:" << query.lastError().text();
         return false;
     }
     return true;
-
 }
 bool removeOrder(int orderId)
 {
     QSqlQuery query;
     query.prepare("DELETE FROM orders WHERE id = ?");
     query.addBindValue(orderId);
-    
-    if (!query.exec()) {
+
+    if (!query.exec())
+    {
         qDebug() << "Failed to remove order:" << query.lastError().text();
         return false;
     }
     return true;
 }
-bool updateOrder(int orderId, QString &operatorId,double price,int quantity, QString &symbol,bool side)
+bool updateOrder(int orderId, QString &operatorId, double price, int quantity, QString &symbol, bool side)
 {
     QSqlQuery query;
     query.prepare("UPDATE orders SET operator = ?, price = ?, quantity = ?, symbol=?, side=? WHERE id = ?");
@@ -212,7 +235,7 @@ bool updateOrder(int orderId, QString &operatorId,double price,int quantity, QSt
     query.addBindValue(quantity);
     query.addBindValue(symbol);
     query.addBindValue(side);
-    
+
     if (!query.exec())
     {
         qDebug() << "Failed to update stock:" << query.lastError().text();
@@ -225,13 +248,14 @@ QVariantList getOrder(int orderId)
     QSqlQuery query;
     query.prepare("SELECT * FROM orders WHERE id = ?");
     query.addBindValue(orderId);
-    
-    if (!query.exec() || !query.next()) {
+
+    if (!query.exec() || !query.next())
+    {
         qDebug() << "Failed to get order:" << query.lastError().text();
         return QVariantList();
     }
-    
+
     QVariantList order;
-    order << query.value("id") << query.value("operator") << query.value("price") << query.value("quantity")<<query.value("symbol")<<query.value("side");
+    order << query.value("id") << query.value("operator") << query.value("price") << query.value("quantity") << query.value("symbol") << query.value("side");
     return order;
 }

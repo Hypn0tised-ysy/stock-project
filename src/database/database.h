@@ -18,9 +18,10 @@ public:
     void closeDatabase();
 
     // operate users' information
-    bool addUser(const QString &username, const QString &password, double balance);
+    int addUser(const QString &username, const QString &password, double balance);
     bool removeUser(int userId);
     bool updateUser(int userId, const QString &username, const QString &password, double balance);
+    bool CheckUser(const QString &username, const QString &password);
     QVariantList getUser(int userId);
 
     // operate stocks' information
@@ -30,17 +31,18 @@ public:
     QVariantList getStock(int stockId);
 
     // operate orders' information
-    bool addOrder(int orderId,QString &operatorId,double price,int quantity, QString &symbol,bool side);
+    bool addOrder(int orderId, QString &operatorId, double price, int quantity, QString &symbol, bool side);
     bool removeOrder(int orderId);
-    bool updateOrder(int orderId, QString &operatorId,double price,int quantity, QString &symbol,bool side);
+    bool updateOrder(int orderId, QString &operatorId, double price, int quantity, QString &symbol, bool side);
     QVariantList getOrder(int orderId);
 
 private:
     QSqlDatabase db;
 };
-Database db;
+extern Database db;
 /*
  * 先声明一个Database对象，
  * QSqlDatabase db;
  * 调用openDatabase函数（指定一个数据库名stock之类的），对数据库操作完毕后，调用closeDatabase函数
  * /
+ */
