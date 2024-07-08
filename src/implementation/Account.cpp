@@ -1,18 +1,21 @@
 #include "Account.h"
 #include "../database/database.h"
+#include <QVariantList>
 extern Database db;
-Account::Account(std::string _id, std::string _password, double _money)
+Account::Account(int _id)
 {
 	id = _id;
-	// password = _password;
-	// money = _money;
+	QVariantList QVuser = db.getUser(_id);
+	Username = QVuser[1].toString().toStdString();
+	password = QVuser[2].toString().toStdString();
+	money = QVuser[3].toDouble();
 }
 
 int enroll(std::string _id, std::string _password)
 {
-	QString id = QString::fromStdString(_id);
+	QString Username = QString::fromStdString(_id);
 	QString password = QString::fromStdString(_password);
-	return db.addUser(id, password, 50000);
+	return db.addUser(Username, password, 50000);
 }
 
 // void Account::setid(Account *user,bool &reg,std::string s)
@@ -80,7 +83,7 @@ bool Account::is_oktobuy(double price, Account *user)
 // }
 std::string Account::get_id(Account *user)
 {
-	return user->id;
+	return user->Username;
 }
 std::vector<My_stock *> Account::show_my_stock()
 {

@@ -14,4 +14,5 @@ public:
 signals:
 
 private:
+    int nowuser;
 };

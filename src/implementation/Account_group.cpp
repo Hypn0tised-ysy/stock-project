@@ -49,11 +49,11 @@ bool Account_group::check(std::string id, std::string pass)
 {
 	for (auto tem : acc)
 	{
-		if (tem->id != id) // 没有找到对应的id时候，继续找
+		if (tem->Username != id) // 没有找到对应的id时候，继续找
 		{
 			continue;
 		}
-		else if (tem->id == id && tem->password == pass) // 账号信息完全匹配
+		else if (tem->Username == id && tem->password == pass) // 账号信息完全匹配
 		{
 			return true;
 		}
@@ -85,7 +85,7 @@ void Account_group::setid(Account *user, bool &reg, std::string s)
 {
 	if (acc.empty()) // 如果账号数据存储中没有账号信息，则
 	{
-		user->id = s;
+		user->Username = s;
 		reg = false;
 	}
 
@@ -93,14 +93,14 @@ void Account_group::setid(Account *user, bool &reg, std::string s)
 	{
 		for (auto t : acc) // 遍历账户的数据存储库
 		{
-			if (s == t->id) // 当你输入的账号信息与数据库中存在的信息有重复的时候
+			if (s == t->Username) // 当你输入的账号信息与数据库中存在的信息有重复的时候
 			{
 				std::cout << "somebody use this id,Please try another one" << std::endl;
 				reg = true; // 重新输一遍
 				return;
 			}
 		}
-		user->id = s; // 注册信息通过要求，可以注册
+		user->Username = s; // 注册信息通过要求，可以注册
 
 		reg = false; // 更改判定条件
 	}

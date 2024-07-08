@@ -1,8 +1,10 @@
 #include "LoginWindow.h"
 #include <QVBoxLayout>
+#include "../implementation/Account.h"
 LoginWindow::LoginWindow(QWidget *parent)
     : QMainWindow(parent)
-{   CentralWidget = new QWidget(this);
+{
+    CentralWidget = new QWidget(this);
     UserNameLineEdit = new QLineEdit(this);
     PasswordLineEdit = new QLineEdit(this);
     TitleLabel = new QLabel("模拟股票交易", this);
@@ -58,10 +60,15 @@ LoginWindow::LoginWindow(QWidget *parent)
                     QMessageBox::warning(this, "Warning", "Please enter your username and password.");
                     return;
                 }
-                // User=Userregstier(Username, password);
-                if(true)
+                int User=enroll(Username, Password);
+                if(User!=-1)
                 {
+                    emit Userid(User);
                     emit Changepage();
+                }
+                else
+                {
+                    QMessageBox::warning(this, "Warning", "Username already exists.");
                 } });
     connect(LoginButton, &QPushButton::clicked, this, [this]()
             {
@@ -74,10 +81,15 @@ LoginWindow::LoginWindow(QWidget *parent)
         }
         else
         {
-            // User=Userlogin(Username, password);
-            if (true)
+            int User=login(Username, Password);
+            if (User != -1)
             {
+                emit Userid(User);
                 emit Changepage();
+            }
+            else
+            {
+                QMessageBox::warning(this, "Warning", "Username or password is incorrect.");
             }
         } });
 }

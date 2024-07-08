@@ -27,7 +27,9 @@ public:
     ~LoginWindow();
 
 signals:
+    void Userid(int id);
     void Changepage();
+
 protected:
     void resizeEvent(QResizeEvent *event) override;
 

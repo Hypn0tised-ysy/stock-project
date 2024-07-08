@@ -12,9 +12,12 @@ StockMarket::StockMarket(QWidget *parent)
     MainWindowStack->addWidget(NowWindow);
     MainWindowStack->setCurrentWidget(NowWindow);
     show();
+    connect(NowWindow, &LoginWindow::Userid, this, [this](int id)
+            { nowuser = id; });
     connect(NowWindow, &LoginWindow::Changepage, this, [this]()
             {
-                auto MainMenuPage = new MainMenu();
+                Account *NowUser = new Account(nowuser);
+                auto MainMenuPage = new MainMenu(NowUser);
                  MainWindowStack->addWidget(MainMenuPage);
                  MainWindowStack->setCurrentIndex(1);
                  delete MainWindowStack->widget(0); });
