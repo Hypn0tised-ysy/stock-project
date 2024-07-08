@@ -8,9 +8,10 @@
 #include "ui_jiaoyi.h"
 #include "hangqing.h"
 #include "ui_hangqing.h"
-MainMenu::MainMenu(QWidget *parent)
+MainMenu::MainMenu(Account InputAccount, QWidget *parent)
     : QWidget(parent), ui(new Ui::Widget)
 {
+    NowAccount = InputAccount;
     ui->setupUi(this);
 }
 

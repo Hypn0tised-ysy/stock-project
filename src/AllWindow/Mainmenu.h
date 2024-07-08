@@ -11,6 +11,7 @@
 #include <QProgressBar>
 #include <QMessageBox>
 #include <QPushButton>
+#include "../implementation/Account.h"
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
@@ -23,7 +24,7 @@ class MainMenu : public QWidget
     Q_OBJECT
 
 public:
-    MainMenu(QWidget *parent = nullptr);
+    MainMenu(Account InputAccount, QWidget *parent = nullptr);
     ~MainMenu();
 
 private slots:
@@ -37,6 +38,7 @@ private slots:
     void on_hangqing_clicked();
 
 private:
+    Account NowAccount;
     Ui::Widget *ui;
     zhanghu z0;
     gushi g0;
