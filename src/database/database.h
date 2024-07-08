@@ -25,7 +25,7 @@ public:
     int addUser(const QString &username, const QString &password, double balance);
     bool removeUser(int userId);
     bool updateUser(int userId, const QString &username, const QString &password, double balance);
-    bool CheckUser(const QString &username, const QString &password);
+    int CheckUser(const QString &username, const QString &password);
     QVariantList getUser(int userId);
 
     // operate stocks' information

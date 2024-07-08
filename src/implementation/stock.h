@@ -1,25 +1,31 @@
 #pragma once
-#include<vector>
-#include<string>
-#include"order_lk.h"
+#include <vector>
+#include <string>
+#include "order_lk.h"
 #include "Account.h"
-#include"Account_group.h"
-class Stock {
+#include "Account_group.h"
+class Stock
+{
 public:
-    std::string symbol;  //¹ÉÆ±´úÂë
-    double market_price;  //µ±Ç°¹É¼Û
-    Stock(std::string s, double p) {  //³õÊ¼¹É¼Û¿ÉÒÔÔÚÕâÀïÉèÖÃ
-        symbol = s; market_price = p;
+    std::string symbol;  // ï¿½ï¿½Æ±ï¿½ï¿½ï¿½ï¿½
+    double market_price; // ï¿½ï¿½Ç°ï¿½É¼ï¿½
+    Stock(std::string s, double p)
+    { // ï¿½ï¿½Ê¼ï¿½É¼Û¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        symbol = s;
+        market_price = p;
         price_list.push_back(p);
     }
-    Order_lk* orderlist_buy = new Order_lk(Order(-1, "0", -1, -1,"z", 0));
-    Order_lk* orderlist_sell = new Order_lk(Order(-1, "0", -1, -1,"z", 1));
-    std::vector<int>price_list;
+    Order_lk *orderlist_buy = new Order_lk(Order(-1, "0", -1, -1, "z", 0));
+    Order_lk *orderlist_sell = new Order_lk(Order(-1, "0", -1, -1, "z", 1));
+    std::vector<int> price_list;
     double highest_buy = 1.1, lowest_sell = 0.9;
-    void add_order(Order &order, Account_group &Ac); //Ìí¼Ó¶©µ¥,²¢ÇÒµ÷ÓÃÊı¾İ¿â
-    void show_price() {
+    double lowest_buy = 0.95;  // æœ€ä½ä¹°å…¥ä»·æ ¼
+    double higest_sell = 1.05; // æœ€é«˜å–å‡ºä»·æ ¼
+
+    void add_order(Order &order, Account_group &Ac); // ï¿½ï¿½ï¿½Ó¶ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½Òµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½İ¿ï¿½
+    void show_price()
+    {
         for (int i = 0; i < price_list.size(); i++)
             std::cout << price_list[i] << " ";
     }
 };
-

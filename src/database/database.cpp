@@ -126,7 +126,7 @@ QVariantList Database::getUser(int userId)
     user << query.value("id") << query.value("username") << query.value("password") << query.value("balance");
     return user;
 }
-bool ChackUser(const QString &username, const QString &password)
+int Database::CheckUser(const QString &username, const QString &password)
 {
     QSqlQuery query;
     query.prepare("SELECT * FROM users WHERE username = ? AND password = ?");
@@ -135,9 +135,9 @@ bool ChackUser(const QString &username, const QString &password)
 
     if (!query.exec() || !query.next())
     {
-        return false;
+        return -1;
     }
-    return true;
+    return query.value("id").toInt();
 }
 // Stock operations
 bool Database::addStock(const QString &symbol, const QString &name, double price)

@@ -1,49 +1,43 @@
 #pragma once
-#include<iostream>
-#include<vector>
-#include<string>
-#include<conio.h>
-#include<stdlib.h>
-#include<Windows.h>
-#include"My_stock.h"
-#include"order.h"
-
-//×¢ÊÍ´úÂë²¿·ÖÎªµÚÒ»°æÔø¾­ÓÃ¹ıµÄÊµÏÖ·½Ê½£¬ÏÖÔÚÌí¼ÓÁËAccount_groupÀ´´æ´¢ÕË»§ĞÅÏ¢£¬¿´ÆğÀ´¸üºÃ¿´ÁË,×¢ÊÍ²¿·Ö·Åµ½ÁËAccount_group
-
-
+#include <iostream>
+#include <vector>
+#include <string>
+#include <conio.h>
+#include <stdlib.h>
+#include <Windows.h>
+#include "My_stock.h"
+#include "order.h"
+#include <Qstring>
+// ×¢ï¿½Í´ï¿½ï¿½ë²¿ï¿½ï¿½Îªï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¹ï¿½ï¿½ï¿½Êµï¿½Ö·ï¿½Ê½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Account_groupï¿½ï¿½ï¿½æ´¢ï¿½Ë»ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¿ï¿½ï¿½ï¿½,×¢ï¿½Í²ï¿½ï¿½Ö·Åµï¿½ï¿½ï¿½Account_group
 
 class Account
 {
 private:
-	std::string id;//ÕË»§Ãûid
-	std::string password;//ÕË»§µÄÃÜÂë
-	double money;//ÕË»§µÄÓà¶î	
-	std::vector<My_stock*>mystock;//´æ´¢¹ÉÆ±ĞÅÏ¢£¬¿ÉÒÔ´æ´¢¶à¸ö²»Í¬ÀàĞÍµÄ¹ÉÆ±
-	//std::vector<Account*>acc;//´æ´¢ÕË»§¸öÌå£¬ÕæÕıµ÷ÓÃµÄÕâ¸ö×÷ÎªÊı¾İ´æ´¢£¬ÓÃ·¨£ºÔÚÍâ²¿¶¨ÒåÒ»¸öAccountÀàµÄ¶ÔÏó£¬Í¨¹ıµ÷ÓÃ¸Ã¶ÔÏóµÄaccÀ´´æ´¢ÕË»§ĞÅÏ¢
+	std::string id;					 // ï¿½Ë»ï¿½ï¿½ï¿½id
+	std::string password;			 // ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	double money;					 // ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	std::vector<My_stock *> mystock; // ï¿½æ´¢ï¿½ï¿½Æ±ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½Ô´æ´¢ï¿½ï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ÍµÄ¹ï¿½Æ±
+	// std::vector<Account*>acc;//ï¿½æ´¢ï¿½Ë»ï¿½ï¿½ï¿½ï¿½å£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½İ´æ´¢ï¿½ï¿½ï¿½Ã·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½â²¿ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Accountï¿½ï¿½Ä¶ï¿½ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ï¿½ï¿½Ã¸Ã¶ï¿½ï¿½ï¿½ï¿½accï¿½ï¿½ï¿½æ´¢ï¿½Ë»ï¿½ï¿½ï¿½Ï¢
 	friend class Account_group;
 
 public:
-	//int enroll(std::string _id,std::string _password);//×¢²á
-	//void setid(Account *user,bool &reg,std::string s);//ÉèÖÃÕËºÅ
-	//void setpassword(Account *user,std::string s);//ÉèÖÃÃÜÂë
-	
-	//bool check(std::string id, std::string pass);//¼ì²éÕËºÅÊÇ·ñÕıÈ·
-	bool is_oktobuy(double price,Account *user);//ÊÇ·ñÓĞ×ã¹»µÄ½ğÇ®ÄÜ¹»È¥¹ºÂòÉÌÆ·
-	//Account*Getaccount(bool is_ok);//Õâ¸öÊÇÅĞ¶ÏÊÇ·ñ×¢²á³É¹¦£¬³É¹¦¾Í·µ»Ø×¢²á³É¹¦µÄÕË»§Ö¸Õë
-	std::string get_id(Account *user);//²é¿´ÎÒµÄÕË»§id
-	std::vector<My_stock*> show_my_stock();//²é¿´ÎÒµÄ¹ÉÆ±¿â´æĞÅÏ¢
-	void upgrade(std::string _sym,int _sum,double price,Order &order);//¸üĞÂ¿â´æĞÅÏ¢
-	Account* find_user(std::string _id);//ÕÒµ½Ö¸¶¨µÄidµÄÓÃ»§
+	// int enroll(std::string _id,std::string _password);//×¢ï¿½ï¿½
+	// void setid(Account *user,bool &reg,std::string s);//ï¿½ï¿½ï¿½ï¿½ï¿½Ëºï¿½
+	// void setpassword(Account *user,std::string s);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	Account() {}
+	// bool check(std::string id, std::string pass);//ï¿½ï¿½ï¿½ï¿½Ëºï¿½ï¿½Ç·ï¿½ï¿½ï¿½È·
+	bool is_oktobuy(double price, Account *user); // ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ã¹»ï¿½Ä½ï¿½Ç®ï¿½Ü¹ï¿½È¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·
+	// Account*Getaccount(bool is_ok);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ¶ï¿½ï¿½Ç·ï¿½×¢ï¿½ï¿½É¹ï¿½ï¿½ï¿½ï¿½É¹ï¿½ï¿½Í·ï¿½ï¿½ï¿½×¢ï¿½ï¿½É¹ï¿½ï¿½ï¿½ï¿½Ë»ï¿½Ö¸ï¿½ï¿½
+	std::string get_id(Account *user);									  // ï¿½é¿´ï¿½Òµï¿½ï¿½Ë»ï¿½id
+	std::vector<My_stock *> show_my_stock();							  // ï¿½é¿´ï¿½ÒµÄ¹ï¿½Æ±ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
+	void upgrade(std::string _sym, int _sum, double price, Order &order); // ï¿½ï¿½ï¿½Â¿ï¿½ï¿½ï¿½ï¿½Ï¢
+	// Account* find_user(std::string _id);//ï¿½Òµï¿½Ö¸ï¿½ï¿½ï¿½ï¿½idï¿½ï¿½ï¿½Ã»ï¿½
 	void setmoney(double mm);
-	Account(std::string _id, std::string _password,double _money);//¹¹Ôìº¯Êı
+	Account(std::string _id, std::string _password, double _money); // ï¿½ï¿½ï¿½ìº¯ï¿½ï¿½
 };
 
-
-
-
-
-//ÏÖÔÚ¹ºÂòºÍ³öÊÛ¶¼¼¯³ÉÔÙÌí¼Ó¶©µ¥ÕâÀïÁË
-//Ìí¼Ó¶©µ¥µÄº¯Êı£¬µÚÒ»¸ö²ÎÊıÊÇ¶©µ¥id£¬µÚ¶ş¸ö²ÎÊıÊÇÓÃ»§ĞÅÏ¢£¬µÚÈı¸ö²ÎÊıÊÇÒâÏò¼Û¸ñ£¬µÚËÄ¸ö²ÎÊıÊÇÊıÁ¿£¬µÚÎå¸ö²ÎÊıÊÇÂòÈëºÍÂô³öµÄ·½Ïò
-Order add_my_order(int order_id,Account*user,double price,int sum,std::string sym,bool side);
-int enroll(std::string _id, std::string _password);//×¢²á
-int login(std::string _id, std::string _password);//µÇÂ¼
+// ï¿½ï¿½ï¿½Ú¹ï¿½ï¿½ï¿½Í³ï¿½ï¿½Û¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+// ï¿½ï¿½ï¿½Ó¶ï¿½ï¿½ï¿½ï¿½Äºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¶ï¿½ï¿½ï¿½idï¿½ï¿½ï¿½Ú¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Û¸ñ£¬µï¿½ï¿½Ä¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä·ï¿½ï¿½ï¿½
+Order add_my_order(int order_id, Account *user, double price, int sum, std::string sym, bool side);
+int enroll(std::string _id, std::string _password); // ×¢ï¿½ï¿½
+int login(std::string _id, std::string _password);	// ï¿½ï¿½Â¼
