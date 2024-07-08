@@ -7,6 +7,10 @@
 #include <QString>
 #include <QVariantList>
 #include <QObject>
+#include "../implementation/Account.h"
+#include "../implementation/order.h"
+#include "../implementation/Stock.h"
+#include "../implementation/My_stock.h"
 class Database : public QObject
 {
     Q_OBJECT
@@ -28,6 +32,7 @@ public:
     bool addStock(const QString &symbol, const QString &name, double price);
     bool removeStock(int stockId);
     bool updateStock(int stockId, const QString &symbol, const QString &name, double price);
+    My_stock *getMyStock(int userId);
     QVariantList getStock(int stockId);
 
     // operate orders' information

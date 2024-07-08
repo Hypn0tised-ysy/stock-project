@@ -266,3 +266,7 @@ QVariantList getOrder(int orderId)
     order << query.value("id") << query.value("operator") << query.value("price") << query.value("quantity") << query.value("symbol") << query.value("side");
     return order;
 }
+My_stock *getMyStock(int userId)
+{
+    // todo:
+}
