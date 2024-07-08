@@ -18,9 +18,18 @@
     <rect>
      <x>20</x>
      <y>20</y>
-     <width>40</width>
-     <height>12</height>
+     <width>131</width>
+     <height>21</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>21</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(0, 0, 0);</string>
    </property>
    <property name="text">
     <string>股票情形</string>
@@ -35,6 +44,16 @@
      <height>18</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+	background-color: rgb(255, 63, 25);
+border-color: rgb(138, 255, 255);
+border-radius:25px;    /*设置圆角半径 */
+padding:2px 4px;  /*QFrame边框与内部其它部件的距离*/
+color:white;		/*字体颜色*/
+font:bold 14px;		/*设置按钮文字和大小*/
+}</string>
+   </property>
    <property name="text">
     <string>退出</string>
    </property>
@@ -47,6 +66,11 @@
      <width>401</width>
      <height>192</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(235, 255, 249);
+border-radius:25px;    /*设置圆角半径 */
+font:bold 14px;		/*设置按钮文字和大小*/</string>
    </property>
    <row>
     <property name="text">

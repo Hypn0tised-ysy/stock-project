@@ -7,15 +7,14 @@ StockMarket::StockMarket(QWidget *parent)
     MainWindowStack = new QStackedWidget(this);
     setCentralWidget(MainWindowStack);
     setWindowTitle("Stock Market");
-    setFixedSize(1920, 1080);
+    setFixedSize(1500, 800);
     auto NowWindow = new LoginWindow(this);
     MainWindowStack->addWidget(NowWindow);
     MainWindowStack->setCurrentWidget(NowWindow);
     show();
     connect(NowWindow, &LoginWindow::Changepage, this, [this]()
             {
-
-                auto MainMenuPage = new MainMenu(Account(),this);
+                auto MainMenuPage = new MainMenu();
                  MainWindowStack->addWidget(MainMenuPage);
                  MainWindowStack->setCurrentIndex(1);
                  delete MainWindowStack->widget(0); });

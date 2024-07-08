@@ -25,7 +25,7 @@ class zhanghu : public QWidget
 public:
     explicit zhanghu(QWidget *parent = nullptr);
     ~zhanghu();
-
+    void resizeit();
 private slots:
     void on_tuichu_clicked();
 

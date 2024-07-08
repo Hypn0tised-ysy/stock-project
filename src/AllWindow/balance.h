@@ -14,7 +14,7 @@ class balance : public QWidget
 public:
     explicit balance(QWidget *parent = nullptr);
     ~balance();
-
+    void resizeit();
 private slots:
     void on_close_clicked();
 

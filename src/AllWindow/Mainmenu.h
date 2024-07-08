@@ -2,6 +2,8 @@
 #define WIDGET_H
 
 #include <QWidget>
+#include<QTime>
+#include <QWidget>
 #include "zhanghu.h"
 #include "ui_zhanghu.h"
 #include "gushi.h"
@@ -11,7 +13,6 @@
 #include <QProgressBar>
 #include <QMessageBox>
 #include <QPushButton>
-#include "../implementation/Account.h"
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
@@ -24,8 +25,10 @@ class MainMenu : public QWidget
     Q_OBJECT
 
 public:
-    MainMenu(Account InputAccount, QWidget *parent = nullptr);
+    MainMenu(QWidget *parent = nullptr);
     ~MainMenu();
+    void resizeit();
+public slots:
 
 private slots:
 
@@ -37,11 +40,15 @@ private slots:
 
     void on_hangqing_clicked();
 
+    void init_time();
+
+    void update_time();
 private:
-    Account NowAccount;
     Ui::Widget *ui;
     zhanghu z0;
     gushi g0;
     hangqing h0;
+    QTime *w_time_record;
+    QTimer *w_timer;
 };
 #endif // WIDGET_H

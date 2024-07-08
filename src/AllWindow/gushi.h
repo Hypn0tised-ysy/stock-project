@@ -17,6 +17,7 @@ class gushi : public QWidget
 public:
     explicit gushi(QWidget *parent = nullptr);
     ~gushi();
+    void resizeit();
 signals:
     void send(int i);
     void send1(QString ID);
@@ -39,7 +40,6 @@ private slots:
 
 private:
     Ui::gushi *ui;
-    stockdetails s0;
     QTime *time_record;
     QTimer *timer;
 };

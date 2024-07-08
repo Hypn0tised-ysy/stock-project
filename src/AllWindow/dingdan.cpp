@@ -8,13 +8,36 @@ dingdan::dingdan(QWidget *parent)
     , ui(new Ui::dingdan)
 {
     ui->setupUi(this);
-     ui->deleteID->setClearButtonEnabled(true);
+    setFixedSize(600, 500);
+    ui->deleteID->setClearButtonEnabled(true);
+    resizeit();
 }
 
 dingdan::~dingdan()
 {
     delete ui;
 }
+
+void dingdan::resizeit(){
+    int widths=this->width();
+    int heights=this->height();
+    ui->close->setGeometry(widths*0.7,heights*0.85,widths*0.2,heights*0.1);
+    ui->deleteID->setGeometry(widths*0.05,heights*0.85,widths*0.2,heights*0.1);
+    ui->delete_2->setGeometry(widths*0.3,heights*0.85,widths*0.2,heights*0.1);
+    ui->label->setGeometry(widths*0.05,heights*0.75,widths*0.2,heights*0.1);
+    ui->tableWidget->setGeometry(widths*0.1,heights*0.1,widths*0.8,heights*0.6);
+    ui->tableWidget->setColumnWidth(0,widths*0.2);
+    ui->tableWidget->setColumnWidth(1,widths*0.2);
+    ui->tableWidget->setColumnWidth(2,widths*0.15);
+    ui->tableWidget->setColumnWidth(3,widths*0.2);
+
+}
+
+
+
+
+
+
 
 void dingdan::on_close_clicked()
 {

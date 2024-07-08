@@ -19,6 +19,7 @@ public:
     void get2(QString price);
     void get3(QString number);
     void showit();
+    void resizeit();
 private slots:
     void on_close_clicked();
 

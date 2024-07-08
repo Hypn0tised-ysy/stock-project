@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>交易详情</string>
   </property>
   <widget class="QPushButton" name="close">
    <property name="geometry">
@@ -22,6 +22,16 @@
      <height>18</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+	background-color: rgb(255, 63, 25);
+border-color: rgb(138, 255, 255);
+border-radius:25px;    /*设置圆角半径 */
+padding:2px 4px;  /*QFrame边框与内部其它部件的距离*/
+color:white;		/*字体颜色*/
+font:bold 14px;		/*设置按钮文字和大小*/
+}</string>
+   </property>
    <property name="text">
     <string>退出</string>
    </property>
@@ -31,8 +41,8 @@
     <rect>
      <x>10</x>
      <y>20</y>
-     <width>40</width>
-     <height>12</height>
+     <width>51</width>
+     <height>21</height>
     </rect>
    </property>
    <property name="text">
@@ -44,9 +54,15 @@
     <rect>
      <x>80</x>
      <y>20</y>
-     <width>40</width>
-     <height>12</height>
+     <width>51</width>
+     <height>21</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+     <bold>true</bold>
+    </font>
    </property>
    <property name="text">
     <string>ID</string>
@@ -58,7 +74,7 @@
      <x>10</x>
      <y>70</y>
      <width>51</width>
-     <height>16</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="text">
@@ -70,9 +86,15 @@
     <rect>
      <x>80</x>
      <y>70</y>
-     <width>40</width>
-     <height>12</height>
+     <width>51</width>
+     <height>21</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+     <bold>true</bold>
+    </font>
    </property>
    <property name="text">
     <string>buyID</string>
@@ -83,12 +105,12 @@
     <rect>
      <x>10</x>
      <y>120</y>
-     <width>40</width>
-     <height>12</height>
+     <width>51</width>
+     <height>16</height>
     </rect>
    </property>
    <property name="text">
-    <string>交易性质</string>
+    <string>交易性质:</string>
    </property>
   </widget>
   <widget class="QLabel" name="b_or_s">
@@ -96,9 +118,15 @@
     <rect>
      <x>80</x>
      <y>120</y>
-     <width>40</width>
-     <height>12</height>
+     <width>51</width>
+     <height>21</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+     <bold>true</bold>
+    </font>
    </property>
    <property name="text">
     <string>b_or_s</string>
@@ -109,12 +137,12 @@
     <rect>
      <x>160</x>
      <y>20</y>
-     <width>40</width>
-     <height>12</height>
+     <width>51</width>
+     <height>21</height>
     </rect>
    </property>
    <property name="text">
-    <string>出价</string>
+    <string>出价:</string>
    </property>
   </widget>
   <widget class="QLabel" name="price">
@@ -122,9 +150,15 @@
     <rect>
      <x>240</x>
      <y>20</y>
-     <width>40</width>
-     <height>12</height>
+     <width>51</width>
+     <height>21</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+     <bold>true</bold>
+    </font>
    </property>
    <property name="text">
     <string>price</string>
@@ -135,12 +169,12 @@
     <rect>
      <x>160</x>
      <y>70</y>
-     <width>40</width>
-     <height>12</height>
+     <width>51</width>
+     <height>21</height>
     </rect>
    </property>
    <property name="text">
-    <string>交易数量</string>
+    <string>交易数量:</string>
    </property>
   </widget>
   <widget class="QLabel" name="number">
@@ -148,9 +182,15 @@
     <rect>
      <x>240</x>
      <y>70</y>
-     <width>40</width>
-     <height>12</height>
+     <width>51</width>
+     <height>21</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+     <bold>true</bold>
+    </font>
    </property>
    <property name="text">
     <string>number</string>
@@ -161,12 +201,12 @@
     <rect>
      <x>160</x>
      <y>120</y>
-     <width>40</width>
-     <height>12</height>
+     <width>51</width>
+     <height>21</height>
     </rect>
    </property>
    <property name="text">
-    <string>交易时间</string>
+    <string>交易时间:</string>
    </property>
   </widget>
   <widget class="QLabel" name="time">
@@ -174,9 +214,15 @@
     <rect>
      <x>240</x>
      <y>120</y>
-     <width>40</width>
-     <height>12</height>
+     <width>51</width>
+     <height>21</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+     <bold>true</bold>
+    </font>
    </property>
    <property name="text">
     <string>time</string>

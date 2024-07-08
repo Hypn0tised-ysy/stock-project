@@ -14,7 +14,7 @@ class trade_details : public QWidget
 public:
     explicit trade_details(QWidget *parent = nullptr);
     ~trade_details();
-
+    void resizeit();
 private slots:
     void on_close_clicked();
 

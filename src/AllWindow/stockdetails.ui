@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>股票详情</string>
   </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
@@ -44,9 +44,15 @@
     <rect>
      <x>470</x>
      <y>30</y>
-     <width>41</width>
+     <width>211</width>
      <height>16</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+     <bold>true</bold>
+    </font>
    </property>
    <property name="text">
     <string>ID</string>
@@ -70,9 +76,15 @@
     <rect>
      <x>470</x>
      <y>80</y>
-     <width>51</width>
+     <width>171</width>
      <height>16</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+     <bold>true</bold>
+    </font>
    </property>
    <property name="text">
     <string>number</string>
@@ -96,9 +108,15 @@
     <rect>
      <x>620</x>
      <y>80</y>
-     <width>51</width>
+     <width>181</width>
      <height>16</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+     <bold>true</bold>
+    </font>
    </property>
    <property name="text">
     <string>price</string>
@@ -112,6 +130,11 @@
      <width>331</width>
      <height>271</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(235, 255, 249);
+border-radius:25px;    /*设置圆角半径 */
+font:bold 14px;		/*设置按钮文字和大小*/</string>
    </property>
    <column>
     <property name="text">
@@ -137,6 +160,16 @@
      <width>80</width>
      <height>18</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+	background-color: rgb(255, 63, 25);
+border-color: rgb(138, 255, 255);
+border-radius:25px;    /*设置圆角半径 */
+padding:2px 4px;  /*QFrame边框与内部其它部件的距离*/
+color:white;		/*字体颜色*/
+font:bold 14px;		/*设置按钮文字和大小*/
+}</string>
    </property>
    <property name="text">
     <string>退出</string>

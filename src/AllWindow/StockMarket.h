@@ -3,7 +3,6 @@
 #include <QStackedWidget>
 #include "LoginWindow.h"
 #include "MainMenu.h"
-#include "../implementation/Account.h"
 class StockMarket : public QMainWindow
 {
     Q_OBJECT
@@ -12,6 +11,7 @@ class StockMarket : public QMainWindow
 public:
     StockMarket(QWidget *parent = nullptr);
     ~StockMarket();
+signals:
 
 private:
 };

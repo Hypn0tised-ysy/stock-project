@@ -15,7 +15,7 @@ class hangqing : public QWidget
 public:
     explicit hangqing(QWidget *parent = nullptr);
     ~hangqing();
-
+     void resizeit();
 private slots:
     void on_close_clicked();
 

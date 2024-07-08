@@ -14,6 +14,7 @@ class dingdan : public QWidget
 public:
     explicit dingdan(QWidget *parent = nullptr);
     ~dingdan();
+    void resizeit();
 public slots:
     void showit();
     void get_it(QString ID,QString price,QString number,bool b_or_s);

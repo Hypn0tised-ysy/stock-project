@@ -15,6 +15,7 @@ class jiaoyi : public QWidget
 public:
     explicit jiaoyi(QWidget *parent = nullptr);
     ~jiaoyi();
+    void resizeit();
 signals:
     void send_it(QString ID,QString price,QString number,bool b_or_s);
 private slots:

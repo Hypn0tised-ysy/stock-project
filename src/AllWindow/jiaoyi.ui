@@ -22,6 +22,15 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-radius:25px</string>
+   </property>
   </widget>
   <widget class="QLabel" name="label">
    <property name="geometry">
@@ -58,6 +67,15 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-radius:25px</string>
+   </property>
   </widget>
   <widget class="QLabel" name="label_3">
    <property name="geometry">
@@ -81,6 +99,15 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-radius:25px</string>
+   </property>
   </widget>
   <widget class="QPushButton" name="queding">
    <property name="geometry">
@@ -90,6 +117,17 @@
      <width>80</width>
      <height>18</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+	background-color: rgb(69, 109, 255);
+
+border-color: rgb(138, 255, 255);
+border-radius:25px;    /*设置圆角半径 */
+padding:2px 4px;  /*QFrame边框与内部其它部件的距离*/
+color:white;		/*字体颜色*/
+font:bold 14px;		/*设置按钮文字和大小*/
+}</string>
    </property>
    <property name="text">
     <string>确定订单</string>
@@ -103,6 +141,16 @@
      <width>80</width>
      <height>18</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+	background-color: rgb(255, 63, 25);
+border-color: rgb(138, 255, 255);
+border-radius:25px;    /*设置圆角半径 */
+padding:2px 4px;  /*QFrame边框与内部其它部件的距离*/
+color:white;		/*字体颜色*/
+font:bold 14px;		/*设置按钮文字和大小*/
+}</string>
    </property>
    <property name="text">
     <string>退出</string>
