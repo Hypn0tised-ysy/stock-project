@@ -10,20 +10,14 @@ SOURCES += \
     $$files($$PWD/src/database/*.cpp) \
     $$files($$PWD/src/implementation/*.cpp) \
     $$files($$PWD/src/implementation/Accountdata/*.cpp) \
-    $$files($$PWD/src/*.cpp) \
-    src/AllWindow/balance.cpp \
-    src/AllWindow/stockdetails.cpp \
-    src/AllWindow/trade_details.cpp
+    $$files($$PWD/src/*.cpp)
 
 HEADERS += \
     $$files($$PWD/src/AllWindow/*.h) \
     $$files($$PWD/src/database/*.h) \
     $$files($$PWD/src/implementation/*.h) \
     $$files($$PWD/src/implementation/Accountdata/*.h) \
-    $$files($$PWD/src/*.h) \
-    src/AllWindow/balance.h \
-    src/AllWindow/stockdetails.h \
-    src/AllWindow/trade_details.h
+    $$files($$PWD/src/*.h)
 
 FORMS += \
     $$files($$PWD/src/AllWindow/*.ui) \

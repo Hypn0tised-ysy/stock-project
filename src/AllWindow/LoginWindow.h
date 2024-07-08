@@ -7,7 +7,7 @@
 #include <string>
 #include <QVBoxLayout>
 #include <QMessageBox>
-#include "../implementation/Accountdata/Account.h"
+// #include "../implementation/Account.h"
 const std::string LINEEDITSTYLE = "QLineEdit{border: 2px solid #8f8f91; border-radius: 10px; padding: 8px; background-color: #f2f2f2;}"
                                   "QLineEdit:focus{border: 2px solid #4d90fe;}"
                                   "QLineEdit:hover{border: 2px solid #4d90fe;}"
@@ -28,6 +28,7 @@ public:
 
 signals:
     void Changepage();
+
 protected:
     void resizeEvent(QResizeEvent *event) override;
 
@@ -39,5 +40,5 @@ private:
     QWidget *CentralWidget;
     QVBoxLayout *CentralLayout = nullptr;
     QLabel *TitleLabel;
-    Account *User;
+    // Account *User;
 };
