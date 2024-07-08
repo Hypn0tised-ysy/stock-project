@@ -59,6 +59,13 @@ void Database::closeDatabase()
 int Database::addUser(const QString &username, const QString &password, double balance)
 {
     QSqlQuery query;
+    // 检查是否有重复的用户名
+    query.prepare("SELECT * FROM users WHERE username = ?");
+    query.addBindValue(username);
+    if (!query.exec() || query.next())
+    {
+        return -1;
+    }
     query.prepare("INSERT INTO users (username, password, balance) VALUES (?, ?, ?)");
     query.addBindValue(username);
     query.addBindValue(password);
