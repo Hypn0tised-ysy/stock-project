@@ -13,7 +13,7 @@ bool Account_group::enroll(std::string _id, std::string _password)
 	}
 	else
 	{
-		return false;//输入的账户id无效重新输入
+		return false;//输入的账户id无效重新输入s
 	}
 	acc.push_back(user);//将新创建的账户添加进入账户列表中，暂时没有数据库，先用一个数组
 	My_stock*mynew = new My_stock("A", 100);
