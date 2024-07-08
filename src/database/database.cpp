@@ -3,6 +3,7 @@
 Database db;
 Database::Database(QObject *parent) : QObject(parent)
 {
+    this->openDatabase("stock");
 }
 
 Database::~Database()
@@ -274,7 +275,7 @@ QVariantList getOrder(int orderId)
     order << query.value("id") << query.value("operator") << query.value("price") << query.value("quantity") << query.value("symbol") << query.value("side");
     return order;
 }
-bool addUserStock(int userId, const QString &symbol,const QString &name, int quantity)
+bool addUserStock(int userId, const QString &symbol, const QString &name, int quantity)
 {
     QSqlQuery query;
     query.prepare("INSERT INTO user_stocks (user_id, symbol, name,quantity) VALUES (?, ?, ?, ?)");
@@ -283,7 +284,8 @@ bool addUserStock(int userId, const QString &symbol,const QString &name, int qua
     query.addBindValue(name);
     query.addBindValue(quantity);
 
-    if (!query.exec()) {
+    if (!query.exec())
+    {
         qDebug() << "Failed to add user stock:" << query.lastError().text();
         return false;
     }
@@ -296,20 +298,22 @@ bool removeUserStock(int userId, const QString &symbol)
     query.addBindValue(userId);
     query.addBindValue(symbol);
 
-    if (!query.exec()) {
+    if (!query.exec())
+    {
         qDebug() << "Failed to remove user stock:" << query.lastError().text();
         return false;
     }
     return true;
 }
-bool updateUserStock(int userId, const Qstring &symbol, int quantity)
+bool updateUserStock(int userId, const QString &symbol, int quantity)
 {
     QSqlQuery query;
     query.prepare("UPDATE user_stocks SET quantity = ? WHERE user_id = ? AND symbol = ?");
     query.addBindValue(quantity);
     query.addBindValue(userId);
     query.addBindValue(symbol);
-    if (!query.exec()) {
+    if (!query.exec())
+    {
         qDebug() << "Failed to update user stock:" << query.lastError().text();
         return false;
     }
@@ -320,23 +324,25 @@ QVariantList getUserStocks(int userId)
     QSqlQuery query;
     query.prepare("SELECT symbol,name, quantity FROM user_stocks WHERE user_id = ?");
     query.addBindValue(userId);
-    
-    if (!query.exec()) {
+
+    if (!query.exec())
+    {
         qDebug() << "Failed to fetch user stocks:" << query.lastError().text();
         return QVariantList();
     }
-    
+
     QVariantList result;
-    while (query.next()) {
+    while (query.next())
+    {
         QVariantMap stock;
         stock["symbol"] = query.value("symbol");
-        stock["name"]=query.value("name");
+        stock["name"] = query.value("name");
         stock["quantity"] = query.value("quantity");
         result.append(stock);
     }
-    
+
     return result;
-//result存储了userId对应用户持有的股票信息，result[0][name]可以获取用户持有的第一支股票的名称
+    // result存储了userId对应用户持有的股票信息，result[0][name]可以获取用户持有的第一支股票的名称
 }
 My_stock *getMyStock(int userId)
 {

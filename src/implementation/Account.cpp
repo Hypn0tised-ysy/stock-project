@@ -1,5 +1,6 @@
 #include "Account.h"
 #include "../database/database.h"
+extern Database db;
 Account::Account(std::string _id, std::string _password, double _money)
 {
 	id = _id;

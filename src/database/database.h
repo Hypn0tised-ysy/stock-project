@@ -41,12 +41,11 @@ public:
     bool updateOrder(int orderId, QString &operatorId, double price, int quantity, QString &symbol, bool side);
     QVariantList getOrder(int orderId);
 
-    //operate users' stock
-    bool addUserStock(int userId, const QString &symbol,const QString &name, int quantity);
+    // operate users' stock
+    bool addUserStock(int userId, const QString &symbol, const QString &name, int quantity);
     bool removeUserStock(int userId, const QString &symbol);
-    bool updateUserStock(int userId, const Qstring &symbol, int quantity);
+    bool updateUserStock(int userId, const QString &symbol, int quantity);
     QVariantList getUserStocks(int userId);
-
 
 private:
     QSqlDatabase db;
