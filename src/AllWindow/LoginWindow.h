@@ -27,6 +27,7 @@ public:
     ~LoginWindow();
 
 signals:
+    void Userid(int id);
     void Changepage();
 
 protected:
