@@ -23,18 +23,19 @@ private:
 	friend class Account_group;
 
 public:
-	//bool enroll(std::string _id,std::string _password);//注册
+	//int enroll(std::string _id,std::string _password);//注册
 	//void setid(Account *user,bool &reg,std::string s);//设置账号
-	void setpassword(Account *user,std::string s);//设置密码
-	//bool login(std::string _id, std::string _password);//登录
+	//void setpassword(Account *user,std::string s);//设置密码
+	
 	//bool check(std::string id, std::string pass);//检查账号是否正确
 	bool is_oktobuy(double price,Account *user);//是否有足够的金钱能够去购买商品
 	//Account*Getaccount(bool is_ok);//这个是判断是否注册成功，成功就返回注册成功的账户指针
 	std::string get_id(Account *user);//查看我的账户id
 	std::vector<My_stock*> show_my_stock();//查看我的股票库存信息
 	void upgrade(std::string _sym,int _sum,double price,Order &order);//更新库存信息
-	//Account* find_user(std::string _id);//找到指定的id的用户
+	Account* find_user(std::string _id);//找到指定的id的用户
 	void setmoney(double mm);
+	Account(std::string _id, std::string _password,double _money);//构造函数
 };
 
 
@@ -44,3 +45,5 @@ public:
 //现在购买和出售都集成再添加订单这里了
 //添加订单的函数，第一个参数是订单id，第二个参数是用户信息，第三个参数是意向价格，第四个参数是数量，第五个参数是买入和卖出的方向
 Order add_my_order(int order_id,Account*user,double price,int sum,std::string sym,bool side);
+int enroll(std::string _id, std::string _password);//注册
+int login(std::string _id, std::string _password);//登录

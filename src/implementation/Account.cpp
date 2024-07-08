@@ -1,27 +1,18 @@
 #include "Account.h"
-//bool Account::enroll(std::string _id,std::string _password)
-//{
-//	Account *user = new Account();//创建一个新的用户
-//	bool reg = true;//检测id是否有效
-//		std::cout << "Please create your id" << std::endl;
-//		setid(user,reg,_id);//设置id
-//		if (!reg)//如果输入的账户id有效，开始设置密码
-//		{
-//			std::cout << "Please set your password" << std::endl;
-//			setpassword(user,_password);//设置密码
-//			user->money = 50000;//启动资金
-//		}
-//		else
-//		{
-//			return false;//输入的账户id无效重新输入
-//		}
-//	acc.push_back(user);//将新创建的账户添加进入账户列表中，暂时没有数据库，先用一个数组
-//	My_stock*mynew = new My_stock("A",100);
-//	user->mystock.push_back(mynew);
-//	std::cout << "Congratulations,you can enter our sysytem" << std::endl;
-//	//system("cls");//清屏幕
-//	return true;//输入的id有效
-//}
+#include"database.h"
+Account::Account(std::string _id, std::string _password, double _money)
+{
+	id = _id;
+	//password = _password;
+	//money = _money;
+}
+
+
+int enroll(std::string _id,std::string _password)
+{
+
+	return db.addUser(_id, _password, 50000);
+}
 
 
 
@@ -55,10 +46,10 @@
 
 
 
-void Account::setpassword(Account *user,std::string s)
-{
-	user->password= s;
-}
+//void Account::setpassword(Account *user,std::string s)
+//{
+//	user->password= s;
+//}
 void Account::setmoney(double mm)
 {
 	this->money = mm;
@@ -67,51 +58,37 @@ void Account::setmoney(double mm)
 
 
 
-//bool Account::login(std::string _id, std::string _password)
-//{
-//	
-//	
-//
-//		std::cout << "enter your account" << std::endl;
-//		if (check(_id, _password))
-//		{
-//			std::cout << "Welcome back " << std::endl;
-//		}
-//		else
-//		{
-//			std::cout << "Sorry,you put the wrong data,Plsase try again" << std::endl;
-//			return false;
-//		}
-//		//Sleep(1000);
-//		//system("cls");
-//		return true;
-//}
+int login(std::string _id, std::string _password)
+{
+	
+	return db.CheckUser(_id, _password);
+
+}
 
 
 
 
-//bool Account::check(std::string id, std::string pass)
-//{
-//	for (auto tem : acc)
-//	{
-//		if (tem->id != id)//没有找到对应的id时候，继续找
-//		{
-//			continue;
-//		}
-//		else if (tem->id == id && tem->password == pass)//账号信息完全匹配
-//		{
-//			return true;
-//		}
-//		else
-//		{
-//			std::cout << "You may put the wrong id or wrong password" << std::endl;
-//		}
-//		
-//	}
-//	std::cout << "You may put the wrong id or wrong password" << std::endl;
-//	return false;
-//}
-
+bool Account::check(std::string id, std::string pass)
+{
+	for (auto tem : acc)
+	{
+		if (tem->id != id)//没有找到对应的id时候，继续找
+		{
+			continue;
+		}
+		else if (tem->id == id && tem->password == pass)//账号信息完全匹配
+		{
+			return true;
+		}
+		else
+		{
+			std::cout << "You may put the wrong id or wrong password" << std::endl;
+		}
+		
+	}
+	std::cout << "You may put the wrong id or wrong password" << std::endl;
+	return false;
+}
 
 
 bool Account::is_oktobuy(double price,Account *user)
@@ -195,17 +172,17 @@ Order add_my_order(int order_id, Account*user, double price, int sum,std::string
 	}
 	
 }
-//Account*Account::find_user(std::string _id)//找到对应id的用户
-//{
-//	for (auto tem : this->acc)
-//	{
-//		if (tem->get_id(tem) == _id)
-//		{
-//			return tem;//找到了指定id的用户
-//		}
-//	}
-//	return nullptr;//没找到，返回一个空指针
-//}
+Account*Account::find_user(std::string _id)//找到对应id的用户
+{
+	for (auto tem : this->acc)
+	{
+		if (tem->get_id(tem) == _id)
+		{
+			return tem;//找到了指定id的用户
+		}
+	}
+	return nullptr;//没找到，返回一个空指针
+}
 
 
 
