@@ -2,15 +2,13 @@
 #include "AllWindow/StockMarket.h"
 #include <QApplication>
 #pragma comment(lib, "user32.lib")
-
+#include <QPluginLoader>
+#include <QDir>
 int main(int argc, char *argv[])
 {
-    /*Py_SetPythonHome((wchar_t *)(L"./env"));
-    Py_Initialize();
-    if (!Py_IsInitialized())
-    {
-        return -1;
-    }*/
+    QString path = QDir::currentPath();
+    QApplication::addLibraryPath(path + QString("/plugins"));
+    QPluginLoader loader(path + QString("/plugins/sqldrivers/qsqlite.dll"));
     QApplication a(argc, argv);
     StockMarket w;
     w.show();
