@@ -66,9 +66,9 @@ int login(std::string _id, std::string _password)
 	return db.CheckUser(id, password);
 }
 
-bool Account::is_oktobuy(double price, Account *user)
+bool Account::is_oktobuy(double price)
 {
-	if (user->money < price) // 当订单需求满足余额的时候
+	if (this->money < price) // 当订单需求满足余额的时候
 	{
 		return false;
 	}
@@ -92,27 +92,33 @@ std::string Account::get_id(Account *user)
 {
 	return user->Username;
 }
-std::vector<My_stock *> Account::show_my_stock()
+std::vector<My_stock > Account::show_my_stock()
 {
 	return mystock;
 }
-Order add_my_order(int order_id, Account *user, double price, int sum, std::string sym, bool side)
+int Account::add_my_order(int &operatorId, double price, int quantity, const QString &symbol, bool side)
 {
+	//-3 refer to the lack  of this sorts of stock
+	//-2 refer to the sum of this stock is not enough
+	//-1 refer to the lack of money to buy so much stocks
+	//0 refer to  my stock is empty
 
-	std::vector<My_stock *> my = user->show_my_stock(); // 本质上是一个副本，更改这个副本不会对库存造成什么影响
+	std::vector<My_stock > my = db.getMyStock(operatorId); // 本质上是一个副本，更改这个副本不会对库存造成什么影响
 	if (!side)											// 买入订单
 	{
-		if (user->is_oktobuy(price * sum, user)) // 是否有足够的金额去提交买入订单
+		if (this->is_oktobuy(price * quantity)) // 是否有足够的金额去提交买入订单
 		{
-			Order mynew = Order(order_id, user->get_id(user), price, sum, sym, side); // 创建买入订单
+			//Order mynew = Order(order_id, user->get_id(user), price, sum, sym, side); // 创建买入订单
 			std::cout << "正在为您创建订单" << std::endl;
-			return mynew;
+			this->money -= price*quantity;//delete the money firstly
+
+			return db.addOrder(operatorId, price, quantity, symbol, side);
 		}
 		else
 		{
 			std::cout << "余额不足" << std::endl;
-			Order error = Order(); // 空订单，到时候看怎么判断错误
-			return error;
+			//Order error = Order(); // 空订单，到时候看怎么判断错误
+			return -1;
 		}
 	}
 	else // 卖出订单--匹配自己的库存是否有对应代号的股票和对应的数量的股票
@@ -120,40 +126,42 @@ Order add_my_order(int order_id, Account *user, double price, int sum, std::stri
 		if (my.empty()) // 如果我的仓库为空
 		{
 			std::cout << "仓库为空，无法交易" << std::endl;
-			Order error = Order(); // 创建买入订单
-			return error;
+			return 0;
 		}
 		for (auto tem : my) // 遍历整个库存
 		{
-			if (tem->get_name() == sym) // 当在自己的库存中找到了对应的股票代码
+			if (tem.get_name() == symbol.toStdString()) // 当在自己的库存中找到了对应的股票代码
 			{
-				if (sum <= tem->get_sum()) // 并且自己库存量还足够，提交卖出订单
+				if (quantity <= tem.get_sum()) // 并且自己库存量还足够，提交卖出订单
 				{
-					Order mynew = Order(order_id, user->get_id(user), price, sum, sym, side); // 创建订单
-					return mynew;
+					//Order mynew = Order(order_id, user->get_id(user), price, sum, sym, side); // 创建订单
+					int Sum = tem.get_sum() - quantity;//new quantity of my stock
+					tem.setnew_sum(Sum);
+					this->my_stock.assign(my.begin(), my.end());//local update
+					db.updateUserStock(operatorId, symbol, Sum);//update myStock data
+					return db.addOrder(operatorId, price, quantity, symbol, side);//Return the Order_id
 				}
 				else // 库存中股数不足以卖出这么多订单
 				{
                     //std::cout << "库存量不足，无法卖出" << sum << "个订单，请重新再输入" << std::endl;
-					Order error = Order(); // 空订单，到时候看怎么判断错误
-					return error;
+					//Order error = Order(); // 空订单，到时候看怎么判断错误
+					return -2;
 				}
 			}
 		}
         //std::cout << "你的库存里没有这类股票，无法进行卖出交易" << std::endl;
-		Order error = Order(); // 空订单，到时候看怎么判断错误
-		return error;
+		return -3;
 	}
 }
 
-void Account::upgrade(std::string _sym, int _sum, double price, Order &order) // 更新库存信息,根据指定的价格
+void Account::upgrade(std::string _sym, int _sum, double price, Order&order) // 更新库存信息,根据指定的价格
 {
 	if (!order.side) // 如果是买入信息
 	{
-		this->money -= price;	   // 买东西要交钱的
+		//this->money -= price;	   // 买东西要交钱的--- 钱已经在提交订单的时候交过了
 		if (this->mystock.empty()) // 如果仓库为空
 		{
-			My_stock *my_new = new My_stock(_sym, _sum);
+			My_stock my_new(_sym, _sum);
 			this->mystock.push_back(my_new); // 将新的股票信息存储进入库存中
 		}
 		else // 如果仓库不为空
@@ -161,9 +169,9 @@ void Account::upgrade(std::string _sym, int _sum, double price, Order &order) //
 			bool is_find = false; // 是否找到有该种股票
 			for (auto tem : mystock)
 			{
-				if (tem->get_name() == _sym) // 如果库存中有这个股票，就进行增加
+				if (tem.get_name() == _sym) // 如果库存中有这个股票，就进行增加
 				{
-					tem->setnew_sum(tem->get_sum() + _sum); // 设置新的数量
+					tem.setnew_sum(tem.get_sum() + _sum); // 设置新的数量
 					is_find = true;
 					break;
 				}
@@ -171,7 +179,7 @@ void Account::upgrade(std::string _sym, int _sum, double price, Order &order) //
 			// 如果库存中没有这种股票，那就添加进去
 			if (!is_find)
 			{
-				My_stock *my_new = new My_stock(_sym, _sum);
+				My_stock my_new(_sym, _sum);
 				this->mystock.push_back(my_new); // 将新的股票信息存储进入库存中
 			}
 		}
@@ -180,9 +188,9 @@ void Account::upgrade(std::string _sym, int _sum, double price, Order &order) //
 	{
 		for (auto tem : mystock)
 		{
-			if (_sym == tem->get_name()) // 找到了仓库的库存了
+			if (_sym == tem.get_name()) // 找到了仓库的库存了
 			{
-				tem->setnew_sum(tem->get_sum() - _sum); // 更新库存的数量
+				//tem->setnew_sum(tem->get_sum() - _sum); // 更新库存的数量---数量已经在卖出订单的提交更新了
 				this->money += price;					// 赚钱了
 				break;
 			}
