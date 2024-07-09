@@ -216,11 +216,6 @@ li.checked::marker { content: &quot;\2612&quot;; }
 border-radius:25px;    /*设置圆角半径 */
 font:bold 14px;		/*设置按钮文字和大小*/</string>
    </property>
-   <row>
-    <property name="text">
-     <string>新建行</string>
-    </property>
-   </row>
    <column>
     <property name="text">
      <string>股票ID</string>

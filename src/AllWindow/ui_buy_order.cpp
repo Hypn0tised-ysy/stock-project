@@ -1,10 +1,10 @@
-#include "jiaoyi.h"
-#include "ui_jiaoyi.h"
+#include "ui_buy_order.h"
+#include "ui_ui_buy_order.h"
 #include<QMessageBox>
-jiaoyi::jiaoyi(QWidget *parent)
+jiaoyi::jiaoyi(Account *_NowUser,QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::jiaoyi)
-{
+{   b_NowUser=_NowUser;
     ui->setupUi(this);
     setFixedSize(500, 600);
     ui->ID->setClearButtonEnabled(true);
@@ -40,12 +40,21 @@ void jiaoyi::on_queding_clicked()
             QString price=ui->jiage->text();
             QString number=ui->num->text();
             bool b_or_s=true;
+            int tmp1=b_NowUser->return_id();
+            int tmp=b_NowUser->add_my_order(tmp1,price.toDouble(),number.toInt(),ID,!b_or_s);
+            if(tmp<=0)
+            {
+                QMessageBox::information(this,"警告","订单信息有误，请您再次检查",QMessageBox::Close);
+                return;
+            }
+            else{
             emit send_it(ID,price,number,b_or_s);
             ui->ID->clear();
             ui->jiage->clear();
             ui->num->clear();
             QMessageBox::information(this,"提示","订单已提交",QMessageBox::Close);
             close();
+            }
         }
 
 }
@@ -53,6 +62,9 @@ void jiaoyi::on_queding_clicked()
 
 void jiaoyi::on_close_clicked()
 {
+    ui->ID->clear();
+    ui->jiage->clear();
+    ui->num->clear();
     close();
 }
 

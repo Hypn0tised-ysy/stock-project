@@ -1,5 +1,5 @@
-#include "gushi.h"
-#include "ui_gushi.h"
+#include "ui_stockmarket.h"
+#include "ui_ui_stockmarket.h"
 #include<QString>
 #include<string>
 #include<vector>

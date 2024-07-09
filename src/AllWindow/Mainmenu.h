@@ -4,10 +4,10 @@
 #include <QWidget>
 #include <QTime>
 #include <QWidget>
-#include "zhanghu.h"
-#include "ui_zhanghu.h"
-#include "gushi.h"
-#include "ui_gushi.h"
+#include "ui_account.h"
+#include "ui_ui_account.h"
+#include "ui_stockmarket.h"
+#include "ui_ui_stockmarket.h"
 #include "hangqing.h"
 #include "ui_hangqing.h"
 #include <QProgressBar>
@@ -49,7 +49,7 @@ private slots:
     void init();
 private:
     Ui::Widget *ui;
-    zhanghu z0;
+    zhanghu* z0;
     gushi g0;
     hangqing h0;
     QTime *w_time_record;

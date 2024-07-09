@@ -1,17 +1,18 @@
 #include "Mainmenu.h"
 #include "ui_Mainmenu.h"
-#include "zhanghu.h"
-#include "ui_zhanghu.h"
-#include "gushi.h"
-#include "ui_gushi.h"
-#include "jiaoyi.h"
-#include "ui_jiaoyi.h"
+#include "ui_account.h"
+#include "ui_ui_account.h"
+#include "ui_stockmarket.h"
+#include "ui_ui_stockmarket.h"
+#include "ui_buy_order.h"
+#include "ui_ui_buy_order.h"
 #include "hangqing.h"
 #include "ui_hangqing.h"
 MainMenu::MainMenu(Account *_NowUser, QWidget *parent)
     : QWidget(parent), ui(new Ui::Widget)
 {
     NowUser = _NowUser;
+    z0=new zhanghu(this->NowUser,nullptr);
     ui->setupUi(this);
     setFixedSize(1500, 800);
     w_timer = new QTimer;
@@ -55,9 +56,8 @@ void MainMenu::update_time()
 
 void MainMenu::on_zhanghuxinxi_clicked()
 {
-    //Account* NowUsers=NowUser;
-    //z0.get_account(NowUsers);
-    z0.show();
+
+    z0->show();
 }
 
 void MainMenu::on_tuichudenglu_clicked()

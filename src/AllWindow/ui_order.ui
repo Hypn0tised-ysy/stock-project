@@ -34,6 +34,11 @@ font:bold 14px;		/*设置按钮文字和大小*/</string>
    </column>
    <column>
     <property name="text">
+     <string>订单ID</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
      <string>所出价格</string>
     </property>
    </column>
@@ -44,7 +49,7 @@ font:bold 14px;		/*设置按钮文字和大小*/</string>
    </column>
    <column>
     <property name="text">
-     <string>买入/卖出股数</string>
+     <string>交易股数</string>
     </property>
    </column>
   </widget>
@@ -124,7 +129,7 @@ font:bold 14px;		/*设置按钮文字和大小*/
     </rect>
    </property>
    <property name="text">
-    <string>股票ID</string>
+    <string>订单ID</string>
    </property>
   </widget>
  </widget>

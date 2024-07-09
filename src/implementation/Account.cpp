@@ -17,13 +17,17 @@ int enroll(std::string _id, std::string _password)
 	QString password = QString::fromStdString(_password);
 	return db.addUser(Username, password, 50000);
 }
-    std::string Account::return_username()
+std::string Account::return_username()
 {
     return Username;
 }
-    int Account::return_id()
+int Account::return_id()
 {
     return id;
+}
+double Account::return_money()
+{
+    return money;
 }
 // void Account::setid(Account *user,bool &reg,std::string s)
 //{
@@ -109,14 +113,14 @@ int Account::add_my_order(int &operatorId, double price, int quantity, const QSt
 		if (this->is_oktobuy(price * quantity)) // 是否有足够的金额去提交买入订单
 		{
 			//Order mynew = Order(order_id, user->get_id(user), price, sum, sym, side); // 创建买入订单
-			std::cout << "正在为您创建订单" << std::endl;
+            //std::cout << "正在为您创建订单" << std::endl;
 			this->money -= price*quantity;//delete the money firstly
 
 			return db.addOrder(operatorId, price, quantity, symbol, side);
 		}
 		else
 		{
-			std::cout << "余额不足" << std::endl;
+            //std::cout << "余额不足" << std::endl;
 			//Order error = Order(); // 空订单，到时候看怎么判断错误
 			return -1;
 		}
@@ -125,7 +129,7 @@ int Account::add_my_order(int &operatorId, double price, int quantity, const QSt
 	{
 		if (my.empty()) // 如果我的仓库为空
 		{
-			std::cout << "仓库为空，无法交易" << std::endl;
+            //std::cout << "仓库为空，无法交易" << std::endl;
 			return 0;
 		}
 		for (auto tem : my) // 遍历整个库存
@@ -137,7 +141,7 @@ int Account::add_my_order(int &operatorId, double price, int quantity, const QSt
 					//Order mynew = Order(order_id, user->get_id(user), price, sum, sym, side); // 创建订单
 					int Sum = tem.get_sum() - quantity;//new quantity of my stock
 					tem.setnew_sum(Sum);
-					this->my_stock.assign(my.begin(), my.end());//local my_stock update
+                    this->mystock.assign(my.begin(), my.end());//local my_stock update
 					db.updateUserStock(operatorId, symbol, Sum);//update myStock data
 					return db.addOrder(operatorId, price, quantity, symbol, side);//Return the Order_id
 				}
@@ -228,10 +232,14 @@ int Account::removeOrder(int Orderid)
 			{
 				this->money += tem.price*tem.quantity;
 				if (db.removeOrder(Orderid))
-					return Orderid
+                    return Orderid;
 				else
 					return -1;
 			}
 		}
 	}
+}
+std::vector<Order> Account::show_my_order()
+{
+    return db.getMyOrdersList(this->return_id());
 }
