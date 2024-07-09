@@ -41,7 +41,7 @@ public:
     bool removeOrder(int orderId);
     bool updateOrder(int orderId, int &operatorId, double price, int quantity, QString &symbol, bool side);
     QVariantList getOrder(int orderId);
-
+    std::vector<Order> getOrdersList(QString symbol, bool side);
     // operate users' stock
     bool addUserStock(int userId, const QString &symbol, const QString &name, int quantity);
     bool removeUserStock(int userId, const QString &symbol);
