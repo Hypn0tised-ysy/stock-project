@@ -1,4 +1,4 @@
-#pragma once
+#pragma once;
 #include "Account.h"
 class Account_group
 {

@@ -10,12 +10,15 @@ zhanghu::zhanghu(QWidget *parent)
     connect(&j0,&jiaoyi::send_it,&d0,&dingdan::get_it);
     connect(&j1,&jiaoyi2::send_it,&d0,&dingdan::get_it);
     resizeit();
+
 }
 
 zhanghu::~zhanghu()
 {
     delete ui;
 }
+
+
 void zhanghu::resizeit(){
     int widths=this->width();
     int heights=this->height();

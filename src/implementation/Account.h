@@ -35,6 +35,9 @@ public:
 	// Account* find_user(std::string _id);//�ҵ�ָ����id���û�
 	void setmoney(double mm);
 	Account(int _id); // ���캯��
+    std::string return_username();
+    int return_id();
+
 };
 
 // ���ڹ���ͳ��۶����������Ӷ���������?

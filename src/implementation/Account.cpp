@@ -17,7 +17,14 @@ int enroll(std::string _id, std::string _password)
 	QString password = QString::fromStdString(_password);
 	return db.addUser(Username, password, 50000);
 }
-
+    std::string Account::return_username()
+{
+    return Username;
+}
+    int Account::return_id()
+{
+    return id;
+}
 // void Account::setid(Account *user,bool &reg,std::string s)
 //{
 //	if (acc.empty())//如果账号数据存储中没有账号信息，则
@@ -127,13 +134,13 @@ Order add_my_order(int order_id, Account *user, double price, int sum, std::stri
 				}
 				else // 库存中股数不足以卖出这么多订单
 				{
-					std::cout << "库存量不足，无法卖出" << sum << "个订单，请重新再输入" << std::endl;
+                    //std::cout << "库存量不足，无法卖出" << sum << "个订单，请重新再输入" << std::endl;
 					Order error = Order(); // 空订单，到时候看怎么判断错误
 					return error;
 				}
 			}
 		}
-		std::cout << "你的库存里没有这类股票，无法进行卖出交易" << std::endl;
+        //std::cout << "你的库存里没有这类股票，无法进行卖出交易" << std::endl;
 		Order error = Order(); // 空订单，到时候看怎么判断错误
 		return error;
 	}

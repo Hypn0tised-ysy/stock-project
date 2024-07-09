@@ -345,7 +345,7 @@ QVariantList getUserStocks(int userId)
     // result存储了userId对应用户持有的股票信息，result[0].toMap()["name"].toString();可以获取用户持有的第一支股票的名称
     //result[用户的第x支股票].toMap()[要查询的股票信息，symbol、name或者quantity].toInt()或者toString()取决于查询信息的种类
 }
-My_stock *getMyStock(int userId)
+/*My_stock *getMyStock(int userId)
 {
     // todo:
-}
+}*/

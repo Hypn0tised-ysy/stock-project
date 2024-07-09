@@ -21,8 +21,8 @@ void Stock::add_order(Order &order,Account_group &Ac) {
             }
         }
         else {
-            std::cout << "买入单不符合交易规则，订单已被退回。股票代码：" << symbol << " 订单号：" << order.Order_id << " 数量: "
-                << order.quantity << " 价格:" << order.price << std::endl;
+            //std::cout << "买入单不符合交易规则，订单已被退回。股票代码：" << symbol << " 订单号：" << order.Order_id << " 数量: "
+                //<< order.quantity << " 价格:" << order.price << std::endl;
         }
     }
     else {
@@ -44,8 +44,8 @@ void Stock::add_order(Order &order,Account_group &Ac) {
             }
         }
         else {
-            std::cout << "卖出单不符合交易规则，订单已被退回。股票代码：" << symbol << " 订单号：" << order.Order_id << " 数量: "
-                << order.quantity << " 价格:" << order.price << std::endl;
+            //std::cout << "卖出单不符合交易规则，订单已被退回。股票代码：" << symbol << " 订单号：" << order.Order_id << " 数量: "
+                //<< order.quantity << " 价格:" << order.price << std::endl;
         }
     }
     //根据价格优先原则撮合成交
@@ -80,8 +80,8 @@ void Stock::add_order(Order &order,Account_group &Ac) {
         if (buyi->next->order.price >= selli->next->order.price) {  //成交
             if (buyi->next->order.quantity <= selli->next->order.quantity) //买量小于等于卖量
 			{
-                std::cout << "成交：" << buyi->next->order.Order_id << " 股票代码：" << symbol << " 数量: " <<
-                    buyi->next->order.quantity << " 价格: " << selli->next->order.price << std::endl;
+               // std::cout << "成交：" << buyi->next->order.Order_id << " 股票代码：" << symbol << " 数量: " <<
+                    //buyi->next->order.quantity << " 价格: " << selli->next->order.price << std::endl;
                 //成交后订单生成可以在这里改。
                 selli->next->order.quantity -= buyi->next->order.quantity;//剩余票数               
 				Account*seller=Ac.find_user(selli->next->order.Peo_id);//找到卖家id所指向的用户
@@ -91,8 +91,8 @@ void Stock::add_order(Order &order,Account_group &Ac) {
 				buyi->next->order.quantity = 0;//订单清空
             }
             else {//买量大于卖量
-                std::cout << "部分成交：" << buyi->next->order.Order_id << " 股票代码：" << symbol << " 数量: " <<
-                    selli->next->order.quantity << " 价格:" << selli->next->order.price << std::endl;
+                //std::cout << "部分成交：" << buyi->next->order.Order_id << " 股票代码：" << symbol << " 数量: " <<
+                   // selli->next->order.quantity << " 价格:" << selli->next->order.price << std::endl;
                 buyi->next->order.quantity -= selli->next->order.quantity;
 				Account*buyer = Ac.find_user(buyi->next->order.Peo_id);//找到买家id所指向的用户
 				buyer->upgrade(buyi->next->order.symbol, selli->next->order.quantity, (selli->next->order.quantity*selli->next->order.price), buyi->next->order);

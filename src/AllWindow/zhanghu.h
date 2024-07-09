@@ -14,6 +14,7 @@
 #include"trade_details.h"
 #include"ui_trade_details.h"
 #include<QListWidget>
+
 namespace Ui {
 class zhanghu;
 }
@@ -26,6 +27,7 @@ public:
     explicit zhanghu(QWidget *parent = nullptr);
     ~zhanghu();
     void resizeit();
+
 private slots:
     void on_tuichu_clicked();
 
@@ -41,6 +43,7 @@ private slots:
 
 private:
     Ui::zhanghu *ui;
+
      jiaoyi j0;
     jiaoyi2 j1;
      dingdan d0;

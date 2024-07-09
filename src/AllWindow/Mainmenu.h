@@ -29,6 +29,7 @@ public:
     MainMenu(Account *NowUser, QWidget *parent = nullptr);
     ~MainMenu();
     void resizeit();
+
 public slots:
     void on_tuichudenglu_clicked();
 signals:
@@ -45,6 +46,7 @@ private slots:
 
     void update_time();
 
+    void init();
 private:
     Ui::Widget *ui;
     zhanghu z0;
