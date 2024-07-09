@@ -212,7 +212,7 @@ QVariantList Database::getStock(int stockId)
     stock << query.value("id") << query.value("symbol") << query.value("name") << query.value("price");
     return stock;
 }
-bool addOrder(QString &operatorId, double price, int quantity, QString &symbol, bool side)
+/*bool Database::addOrder(QString &operatorId, double price, int quantity, QString &symbol, bool side)
 {
     QSqlQuery query;
     query.prepare("INSERT INTO orders (operator,price, quantity,symbol,side) VALUES (?, ?, ?, ?, ?)");
@@ -228,8 +228,8 @@ bool addOrder(QString &operatorId, double price, int quantity, QString &symbol, 
         return false;
     }
     return true;
-}
-bool removeOrder(int orderId)
+}*/
+bool Database::removeOrder(int orderId)
 {
     QSqlQuery query;
     query.prepare("DELETE FROM orders WHERE id = ?");
@@ -242,7 +242,7 @@ bool removeOrder(int orderId)
     }
     return true;
 }
-bool updateOrder(int orderId, QString &operatorId, double price, int quantity, QString &symbol, bool side)
+bool Database::updateOrder(int orderId, QString &operatorId, double price, int quantity, QString &symbol, bool side)
 {
     QSqlQuery query;
     query.prepare("UPDATE orders SET operator = ?, price = ?, quantity = ?, symbol=?, side=? WHERE id = ?");
@@ -259,7 +259,7 @@ bool updateOrder(int orderId, QString &operatorId, double price, int quantity, Q
     }
     return true;
 }
-QVariantList getOrder(int orderId)
+QVariantList Database::getOrder(int orderId)
 {
     QSqlQuery query;
     query.prepare("SELECT * FROM orders WHERE id = ?");
@@ -275,7 +275,7 @@ QVariantList getOrder(int orderId)
     order << query.value("id") << query.value("operator") << query.value("price") << query.value("quantity") << query.value("symbol") << query.value("side");
     return order;
 }
-bool addUserStock(int userId, const QString &symbol, const QString &name, int quantity)
+bool Database::addUserStock(int userId, const QString &symbol, const QString &name, int quantity)
 {
     QSqlQuery query;
     query.prepare("INSERT INTO user_stocks (user_id, symbol, name,quantity) VALUES (?, ?, ?, ?)");
@@ -291,7 +291,7 @@ bool addUserStock(int userId, const QString &symbol, const QString &name, int qu
     }
     return true;
 }
-bool removeUserStock(int userId, const QString &symbol)
+bool Database::removeUserStock(int userId, const QString &symbol)
 {
     QSqlQuery query;
     query.prepare("DELETE FROM user_stocks WHERE user_id = ? AND symbol = ?");
@@ -305,7 +305,7 @@ bool removeUserStock(int userId, const QString &symbol)
     }
     return true;
 }
-bool updateUserStock(int userId, const QString &symbol, int quantity)
+bool Database::updateUserStock(int userId, const QString &symbol, int quantity)
 {
     QSqlQuery query;
     query.prepare("UPDATE user_stocks SET quantity = ? WHERE user_id = ? AND symbol = ?");
@@ -319,7 +319,7 @@ bool updateUserStock(int userId, const QString &symbol, int quantity)
     }
     return true;
 }
-QVariantList getUserStocks(int userId)
+QVariantList Database::getUserStocks(int userId)
 {
     QSqlQuery query;
     query.prepare("SELECT symbol,name, quantity FROM user_stocks WHERE user_id = ?");
@@ -349,3 +349,23 @@ QVariantList getUserStocks(int userId)
 {
     // todo:
 }*/
+std::vector<My_stock> Database::getMyStock(QString &username)
+{
+    QSqlQuery query;
+    query.prepare("SELECT symbol, name, quantity FROM user_stocks WHERE user_id = ?");
+    query.addBindValue(CheckUser(username, ""));
+    std::vector<My_stock> result;
+    if (!query.exec())
+    {
+        qDebug() << "Failed to fetch user stocks:" << query.lastError().text();
+        return result;
+    }
+
+    while (query.next())
+    {
+        My_stock stock(query.value("symbol").toString().toStdString(), query.value("quantity").toInt());
+        result.push_back(stock);
+    }
+
+    return result;
+}
