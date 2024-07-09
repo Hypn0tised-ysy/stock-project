@@ -25,7 +25,7 @@ Account *Account_group::find_user(std::string _id) // 找到对应id的用户
 {
 	for (auto tem : this->acc)
 	{
-		if (tem->get_id(tem) == _id)
+        if (tem->get_name(tem) == _id)
 		{
 			return tem; // 找到了指定id的用户
 		}
