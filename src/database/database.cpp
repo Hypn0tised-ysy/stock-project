@@ -370,3 +370,23 @@ std::vector<My_stock> Database::getMyStock(int userId)
         return result;
     }
 }
+std::vector<Stock> Database::getStocksList()
+{
+    QSqlQuery query;
+    query.prepare("SELECT * FROM stocks");
+    if (!query.exec())
+    {
+        qDebug() << "Failed to fetch stocks:" << query.lastError().text();
+        return std::vector<Stock>();
+    }
+    else
+    {
+        std::vector<Stock> result;
+        while (query.next())
+        {
+            Stock stock(query.value("symbol").toString().toStdString(), query.value("price").toDouble());
+            result.push_back(stock);
+        }
+        return result;
+    }
+}
