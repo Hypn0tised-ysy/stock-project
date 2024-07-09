@@ -52,6 +52,13 @@ bool Database::openDatabase(const QString &dbName)
                "name TEXT"
                "quantity INTEGER NOT NULL, "
                "FOREIGN KEY (user_id) REFERENCES users(id))");
+    // Create stock_prices table
+    query.exec("CREATE TABLE IF NOT EXISTS stock_prices ("
+               "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+               "symbol TEXT, "
+               "price REAL, "
+               "timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)");
+
 
     return true;
 }
@@ -412,6 +419,50 @@ std::vector<Order> Database::getOrdersList(QString symbol, bool side)
         return result;
     }
 }
+bool Database::addStockPrice(const QString &symbol, double price)//接受股票代码和价格为参数，时间戳默认是当前的时间戳
+{
+    QSqlQuery query;
+    query.prepare("INSERT INTO stock_prices (symbol, price) VALUES (?, ?)");
+    query.addBindValue(symbol);
+    query.addBindValue(price);
+
+    if (!query.exec())
+    {
+        qDebug() << "Failed to add stock price:" << query.lastError().text();
+        return false;
+    }
+    return true;
+}
+QVariantList Database::getStockPrice(const QString &symbol)
+{
+    QSqlQuery query;
+    query.prepare("SELECT * FROM stock_prices WHERE symbol = ? ORDER BY timestamp DESC");
+    query.addBindValue(symbol);
+
+    if (!query.exec())
+    {
+        qDebug() << "Failed to get stock price:" << query.lastError().text();
+        return QVariantList();
+    }
+
+    QVariantList priceRecord;
+
+    while (query.next()) {
+        QVariantMap priceRecordUnit;
+        priceRecordUnit["id"]=query.value("id");
+        priceRecordUnit["symbol"]= query.value("symbol");
+        priceRecordUnit["price"]=query.value("price");
+        priceRecordUnit["timestamp"]=query.value("timestamp");
+        priceRecord.append(priceRecordUnit);
+    }
+    return priceRecord;
+}
+/*
+    QVariantList stockPrices=db.getStockPrice("code");获取股票代码为code的股票历史数据
+    QVariantMap stockPriceMap=stockPrices[分钟数].toMap();股票x分钟前的数据
+    qDebug()<<stockPriceMap["id"].toInt();股票x分钟前的id信息
+    qDebug（）<<db.getStockPrice("code")[分钟数].toMap()["要获取的信息id,symbol,price,timestamp(Qstring)"].toInt()或者toString();
+*/
 std::vector<Order> Database::getMyOrdersList(int userId)
 {
     QSqlQuery query;
