@@ -52,6 +52,13 @@ bool Database::openDatabase(const QString &dbName)
                "name TEXT"
                "quantity INTEGER NOT NULL, "
                "FOREIGN KEY (user_id) REFERENCES users(id))");
+    // Create stock_prices table
+    query.exec("CREATE TABLE IF NOT EXISTS stock_prices ("
+               "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+               "symbol TEXT, "
+               "price REAL, "
+               "timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)");
+
 
     return true;
 }
