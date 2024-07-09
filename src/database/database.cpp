@@ -412,3 +412,41 @@ std::vector<Order> Database::getOrdersList(QString symbol, bool side)
         return result;
     }
 }
+bool Database::addStockPrice(const QString &symbol, double price)
+{
+    QSqlQuery query;
+    query.prepare("INSERT INTO stock_prices (symbol, price) VALUES (?, ?)");
+    query.addBindValue(symbol);
+    query.addBindValue(price);
+
+    if (!query.exec())
+    {
+        qDebug() << "Failed to add stock price:" << query.lastError().text();
+        return false;
+    }
+    return true;
+}
+QVariantList Database::getStockPrice(const QString &symbol)
+{
+    QSqlQuery query;
+    query.prepare("SELECT * FROM stock_prices WHERE symbol = ? ORDER BY timestamp DESC");
+    query.addBindValue(symbol);
+
+    if (!query.exec())
+    {
+        qDebug() << "Failed to get stock price:" << query.lastError().text();
+        return QVariantList();
+    }
+
+    QVariantList priceRecord;
+
+    while (query.next()) {
+        QVariantMap priceRecordUnit;
+        priceRecordUnit["id"]=query.value("id");
+        priceRecordUnit["symbol"]= query.value("symbol");
+        priceRecordUnit["price"]=query.value("price");
+        priceRecordUnit["timestamp"]=query.value("timestamp");
+        priceRecord.append(priceRecordUnit);
+    }
+    return priceRecord;
+}
