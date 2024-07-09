@@ -49,6 +49,8 @@ public:
     bool updateUserStock(int userId, const QString &symbol, int quantity);
     QVariantList getUserStocks(int userId);
     std::vector<My_stock> getMyStock(int userId);
+    bool addStockPrice(const QString &symbol, double price);
+    QVariantList getStockPrice(const QString &symbol);
 
 private:
     QSqlDatabase db;
