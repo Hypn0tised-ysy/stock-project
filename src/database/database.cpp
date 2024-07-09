@@ -349,23 +349,24 @@ QVariantList Database::getUserStocks(int userId)
 {
     // todo:
 }*/
-std::vector<My_stock> Database::getMyStock(QString &username)
+std::vector<My_stock> Database::getMyStock(int userId)
 {
     QSqlQuery query;
     query.prepare("SELECT symbol, name, quantity FROM user_stocks WHERE user_id = ?");
-    query.addBindValue(CheckUser(username, ""));
-    std::vector<My_stock> result;
+    query.addBindValue(userId);
     if (!query.exec())
     {
         qDebug() << "Failed to fetch user stocks:" << query.lastError().text();
+        return std::vector<My_stock>();
+    }
+    else
+    {
+        std::vector<My_stock> result;
+        while (query.next())
+        {
+            My_stock stock(query.value("symbol").toString().toStdString(), query.value("quantity").toInt());
+            result.push_back(stock);
+        }
         return result;
     }
-
-    while (query.next())
-    {
-        My_stock stock(query.value("symbol").toString().toStdString(), query.value("quantity").toInt());
-        result.push_back(stock);
-    }
-
-    return result;
 }
