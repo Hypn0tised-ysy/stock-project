@@ -29,16 +29,16 @@ public:
 	// bool check(std::string id, std::string pass);//����˺��Ƿ����?
 	bool is_oktobuy(double price); // �Ƿ����㹻�Ľ�Ǯ�ܹ�ȥ������Ʒ
 	// Account*Getaccount(bool is_ok);//������ж��Ƿ��?���ɹ����ɹ��ͷ���ע��ɹ����˻�ָ��?
-	std::string get_id(Account *user);									  // �鿴�ҵ��˻�id
-	std::vector<My_stock *> show_my_stock();							  // �鿴�ҵĹ�Ʊ������?
+	std::string get_name(Account *user);									  // �鿴�ҵ��˻�id
+	std::vector<My_stock> show_my_stock();							  // �鿴�ҵĹ�Ʊ������?
 	void upgrade(std::string _sym, int _sum, double price, Order &order); // ���¿�����?//
 	// Account* find_user(std::string _id);//�ҵ�ָ����id���û�
 	void setmoney(double mm);
 	Account(int _id); // ���캯��
     std::string return_username();
-    int return_id();
+    int return_id();//
 	int add_my_order(int &operatorId, double price, int quantity, const QString &symbol, bool side);//base the order Return orderId
-
+	int removeOrder(int Orderid);   
 };
 
 // ���ڹ���ͳ��۶����������Ӷ���������?

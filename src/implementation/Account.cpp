@@ -88,7 +88,7 @@ bool Account::is_oktobuy(double price)
 //		return nullptr;
 //	}
 // }
-std::string Account::get_id(Account *user)
+std::string Account::get_name(Account *user)
 {
 	return user->Username;
 }
@@ -137,7 +137,7 @@ int Account::add_my_order(int &operatorId, double price, int quantity, const QSt
 					//Order mynew = Order(order_id, user->get_id(user), price, sum, sym, side); // 创建订单
 					int Sum = tem.get_sum() - quantity;//new quantity of my stock
 					tem.setnew_sum(Sum);
-					this->my_stock.assign(my.begin(), my.end());//local update
+					this->my_stock.assign(my.begin(), my.end());//local my_stock update
 					db.updateUserStock(operatorId, symbol, Sum);//update myStock data
 					return db.addOrder(operatorId, price, quantity, symbol, side);//Return the Order_id
 				}
@@ -198,4 +198,40 @@ void Account::upgrade(std::string _sym, int _sum, double price, Order&order) // 
 	}
 }
 
-// 注释部分为第一版曾经用过的实现方式，现在添加了Account_group来存储账户信息，看起来更好看了
+
+int Account::removeOrder(int Orderid)
+{
+	std::vector<Order>myOrder = db.getMyOrdersList(this->return_id());//return User's Order list
+	if (myOrder.empty())
+	{
+		return -1;
+	}
+	for (auto tem : myOrder)
+	{
+		if (tem.Order_id == Orderid)//use the orderid to find the correct order to remove
+		{
+			if (tem.side)//If it is a sell order
+			{
+				for (auto stock1 : this->mystock)
+				{
+					if (stock1.get_name() == tem.symbol)//find the stock
+					{
+						stock1.setnew_sum(tem.quantity+stock1.get_sum());
+						if (db.removeOrder(Orderid))
+							return Orderid;
+						else
+							return -1;
+					}
+				}
+			}
+			else//If it is a buy order
+			{
+				this->money += tem.price*tem.quantity;
+				if (db.removeOrder(Orderid))
+					return Orderid
+				else
+					return -1;
+			}
+		}
+	}
+}
