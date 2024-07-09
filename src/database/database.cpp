@@ -39,7 +39,7 @@ bool Database::openDatabase(const QString &dbName)
     // Create orders table
     query.exec("CREATE TABLE IF NOT EXISTS orders("
                "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-               "operator TEXT,"
+               "operator INT,"
                "price REAL,"
                "quantity INT"
                "symbol TEXT"
@@ -212,7 +212,7 @@ QVariantList Database::getStock(int stockId)
     stock << query.value("id") << query.value("symbol") << query.value("name") << query.value("price");
     return stock;
 }
-/*bool Database::addOrder(QString &operatorId, double price, int quantity, QString &symbol, bool side)
+int Database::addOrder(int &operatorId, double price, int quantity, QString &symbol, bool side)
 {
     QSqlQuery query;
     query.prepare("INSERT INTO orders (operator,price, quantity,symbol,side) VALUES (?, ?, ?, ?, ?)");
@@ -225,10 +225,10 @@ QVariantList Database::getStock(int stockId)
     if (!query.exec())
     {
         qDebug() << "Failed to add order:" << query.lastError().text();
-        return false;
+        return -1;
     }
-    return true;
-}*/
+    return query.lastInsertId().toInt();
+}
 bool Database::removeOrder(int orderId)
 {
     QSqlQuery query;
@@ -242,7 +242,7 @@ bool Database::removeOrder(int orderId)
     }
     return true;
 }
-bool Database::updateOrder(int orderId, QString &operatorId, double price, int quantity, QString &symbol, bool side)
+bool Database::updateOrder(int orderId, int &operatorId, double price, int quantity, QString &symbol, bool side)
 {
     QSqlQuery query;
     query.prepare("UPDATE orders SET operator = ?, price = ?, quantity = ?, symbol=?, side=? WHERE id = ?");

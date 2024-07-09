@@ -37,9 +37,9 @@ public:
     std::vector<Stock> getStocksList();
 
     // operate orders' information
-    bool addOrder(int orderId, QString &operatorId, double price, int quantity, QString &symbol, bool side);
+    int addOrder(int &operatorId, double price, int quantity, QString &symbol, bool side);
     bool removeOrder(int orderId);
-    bool updateOrder(int orderId, QString &operatorId, double price, int quantity, QString &symbol, bool side);
+    bool updateOrder(int orderId, int &operatorId, double price, int quantity, QString &symbol, bool side);
     QVariantList getOrder(int orderId);
 
     // operate users' stock
