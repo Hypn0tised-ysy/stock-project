@@ -3,13 +3,13 @@ void Event::impact(Stock &stock)
 {
 	if (good_or_bad)//如果是好事件
 	{
-		if(stock.lowest_buy<=0.99)
-			stock.lowest_buy += 0.01;
+		stock.market_price *= 1.02;
+		stock.price_list.push_back(stock.market_price);
 	}
 	else//消极事件
 	{
-		if(stock.higest_sell>=1.01)
-			stock.higest_sell -= 0.01;
+		stock.market_price *= 0.99;
+		stock.price_list.push_back(stock.market_price);
 	}
 }
 Event::Event(std::string _name, bool gob)

@@ -463,3 +463,24 @@ QVariantList Database::getStockPrice(const QString &symbol)
     qDebug()<<stockPriceMap["id"].toInt();股票x分钟前的id信息
     qDebug（）<<db.getStockPrice("code")[分钟数].toMap()["要获取的信息id,symbol,price,timestamp(Qstring)"].toInt()或者toString();
 */
+std::vector<Order> Database::getMyOrdersList(int userId)
+{
+    QSqlQuery query;
+    query.prepare("SELECT * FROM orders WHERE operator = ?");
+    query.addBindValue(userId);
+    if (!query.exec())
+    {
+        qDebug() << "Failed to fetch orders:" << query.lastError().text();
+        return std::vector<Order>();
+    }
+    else
+    {
+        std::vector<Order> result;
+        while (query.next())
+        {
+            Order order(query.value("id").toInt(), query.value("operator").toString().toStdString(), query.value("price").toDouble(), query.value("quantity").toInt(), query.value("symbol").toString().toStdString(), query.value("side").toBool());
+            result.push_back(order);
+        }
+        return result;
+    }
+}
