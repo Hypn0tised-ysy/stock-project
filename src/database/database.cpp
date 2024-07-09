@@ -212,7 +212,7 @@ QVariantList Database::getStock(int stockId)
     stock << query.value("id") << query.value("symbol") << query.value("name") << query.value("price");
     return stock;
 }
-int Database::addOrder(int &operatorId, double price, int quantity, QString &symbol, bool side)
+int Database::addOrder(int &operatorId, double price, int quantity,const QString &symbol, bool side)
 {
     QSqlQuery query;
     query.prepare("INSERT INTO orders (operator,price, quantity,symbol,side) VALUES (?, ?, ?, ?, ?)");
@@ -242,7 +242,7 @@ bool Database::removeOrder(int orderId)
     }
     return true;
 }
-bool Database::updateOrder(int orderId, int &operatorId, double price, int quantity, QString &symbol, bool side)
+bool Database::updateOrder(int orderId, int &operatorId, double price, int quantity,const QString &symbol, bool side)
 {
     QSqlQuery query;
     query.prepare("UPDATE orders SET operator = ?, price = ?, quantity = ?, symbol=?, side=? WHERE id = ?");
