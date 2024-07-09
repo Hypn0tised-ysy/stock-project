@@ -412,7 +412,7 @@ std::vector<Order> Database::getOrdersList(QString symbol, bool side)
         return result;
     }
 }
-bool Database::addStockPrice(const QString &symbol, double price)
+bool Database::addStockPrice(const QString &symbol, double price)//接受股票代码和价格为参数，时间戳默认是当前的时间戳
 {
     QSqlQuery query;
     query.prepare("INSERT INTO stock_prices (symbol, price) VALUES (?, ?)");
@@ -450,3 +450,9 @@ QVariantList Database::getStockPrice(const QString &symbol)
     }
     return priceRecord;
 }
+/*
+    QVariantList stockPrices=db.getStockPrice("code");获取股票代码为code的股票历史数据
+    QVariantMap stockPriceMap=stockPrices[分钟数].toMap();股票x分钟前的数据
+    qDebug()<<stockPriceMap["id"].toInt();股票x分钟前的id信息
+    qDebug（）<<db.getStockPrice("code")[分钟数].toMap()["要获取的信息id,symbol,price,timestamp(Qstring)"].toInt()或者toString();
+*/
