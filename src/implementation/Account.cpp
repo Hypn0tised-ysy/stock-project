@@ -221,6 +221,7 @@ int Account::removeOrder(int Orderid)
 					if (stock1.get_name() == tem.symbol)//find the stock
 					{
 						stock1.setnew_sum(tem.quantity+stock1.get_sum());
+						db.updateUserStock(this->id, QString::fromStdString(tem.symbol),stock1.get_sum());
 						if (db.removeOrder(Orderid))
 							return Orderid;
 						else
