@@ -18,7 +18,7 @@ public:
     ~jiaoyi();
     void resizeit();
 signals:
-    void send_it(QString ID,QString price,QString number,bool b_or_s);
+    //void send_it(QString ID,QString price,QString number,bool b_or_s);
 private slots:
 
 

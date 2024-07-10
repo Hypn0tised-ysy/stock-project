@@ -48,7 +48,7 @@ void jiaoyi::on_queding_clicked()
                 return;
             }
             else{
-            emit send_it(ID,price,number,b_or_s);
+            //emit send_it(ID,price,number,b_or_s);
             ui->ID->clear();
             ui->jiage->clear();
             ui->num->clear();

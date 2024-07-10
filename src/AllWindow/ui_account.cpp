@@ -11,8 +11,8 @@ zhanghu::zhanghu(Account *_NowUser, QWidget *parent)
     d0=new dingdan(z_NowUser,nullptr);
     ui->setupUi(this);
     setFixedSize(1500, 800);
-    connect(j0,&jiaoyi::send_it,d0,&dingdan::get_it);
-    connect(j1,&jiaoyi2::send_it,d0,&dingdan::get_it);
+    /*connect(j0,&jiaoyi::send_it,d0,&dingdan::get_it);
+    connect(j1,&jiaoyi2::send_it,d0,&dingdan::get_it);*/
     init();
     resizeit();
     showit();
@@ -51,10 +51,10 @@ void zhanghu::resizeit(){
     ui->dindgan->setGeometry(widths*0.57,heights*0.85,widths*0.15,heights*0.1);
     ui->sold->setGeometry(widths*0.4,heights*0.85,widths*0.15,heights*0.1);
     ui->buy->setGeometry(widths*0.23,heights*0.85,widths*0.15,heights*0.1);
-    ui->yonghuxinxishezhi->setGeometry(widths*0.05,heights*0.85,widths*0.15,heights*0.1);
-    ui->jianjie->setGeometry(widths*0.03,heights*0.56,widths*0.2,heights*0.2);
-    ui->nicheng->setGeometry(widths*0.03,heights*0.43,widths*0.2,heights*0.1);
-    ui->ID->setGeometry(widths*0.03,heights*0.3,widths*0.2,heights*0.1);
+    ui->name->setGeometry(widths*0.03,heights*0.3,widths*0.2,heights*0.1);
+    ui->nicheng->setGeometry(widths*0.03,heights*0.4,widths*0.2,heights*0.1);
+    ui->ID_text->setGeometry(widths*0.03,heights*0.5,widths*0.2,heights*0.1);
+    ui->ID->setGeometry(widths*0.03,heights*0.6,widths*0.2,heights*0.1);
     ui->listWidget->setGeometry(widths*0.8,heights*0.5,widths*0.15,heights*0.3);
     ui->balance->setGeometry(widths*0.8,heights*0.35,widths*0.15,heights*0.1);
     ui->balance_text->setGeometry(widths*0.8,heights*0.1,widths*0.15,heights*0.2);

@@ -62,9 +62,11 @@ void MainMenu::on_zhanghuxinxi_clicked()
 
 void MainMenu::on_tuichudenglu_clicked()
 {
-    emit tuichudenglu();
     close();
+    emit tuichudenglu();
 }
+
+
 
 void MainMenu::on_chakangushi_clicked()
 {

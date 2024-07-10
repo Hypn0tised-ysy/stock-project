@@ -18,7 +18,7 @@ public:
     void resizeit();
 public slots:
     void showit();
-    void get_it(QString ID,QString price,QString number,bool b_or_s);
+    //void get_it(QString ID,QString price,QString number,bool b_or_s);
 private slots:
     void on_close_clicked();
 

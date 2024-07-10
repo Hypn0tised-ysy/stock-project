@@ -41,7 +41,7 @@ void dingdan::on_close_clicked()
 }
 
 
-std::vector<QString> vID;
+/*std::vector<QString> vID;
 std::vector<QString> vprice;
 std::vector<QString> vnumber;
 std::vector<bool> vb_or_s;
@@ -50,7 +50,7 @@ void dingdan::get_it(QString ID,QString price,QString number,bool b_or_s){
     vprice.push_back(price);
     vnumber.push_back(number);
     vb_or_s.push_back(b_or_s);
-}
+}*/
 
 
 

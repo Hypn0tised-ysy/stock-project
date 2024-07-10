@@ -118,6 +118,9 @@
      <height>18</height>
     </rect>
    </property>
+   <property name="cursor">
+    <cursorShape>OpenHandCursor</cursorShape>
+   </property>
    <property name="styleSheet">
     <string notr="true">QPushButton{
 	background-color: rgb(69, 109, 255);
@@ -141,6 +144,9 @@ font:bold 14px;		/*设置按钮文字和大小*/
      <width>80</width>
      <height>18</height>
     </rect>
+   </property>
+   <property name="cursor">
+    <cursorShape>ClosedHandCursor</cursorShape>
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton{
