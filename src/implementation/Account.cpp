@@ -222,6 +222,7 @@ int Account::removeOrder(int Orderid)
 					if (stock1.get_name() == tem.symbol)//find the stock
 					{
 						stock1.setnew_sum(tem.quantity+stock1.get_sum());
+						db.updateUserStock(this->id, QString::fromStdString(tem.symbol),stock1.get_sum());
 						if (db.removeOrder(Orderid))
 							return Orderid;
 						else
@@ -243,4 +244,16 @@ int Account::removeOrder(int Orderid)
 std::vector<Order> Account::show_my_order()
 {
     return db.getMyOrdersList(this->return_id());
+}
+
+int time(int duration, int id)//间隔时间，定位到第几号计时器
+{
+	static int srt[10];
+	int end = clock();//统计程序运行到此处的时间 clock函数
+	if (end - srt[id] > duration)  //duration 间隔时间
+	{
+		srt[id] = end;//开始时间改为上一次的结束时间
+		return 1;//返回真
+	}
+	return 0;//返回假
 }
