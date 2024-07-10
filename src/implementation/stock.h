@@ -9,11 +9,15 @@ class Stock
 public:
     std::string symbol;  // ��Ʊ����
     double market_price; // ��ǰ�ɼ�
-    Stock(std::string s, double p)
+    std::string name;
+    int databaseid;
+    Stock(std::string s, double p,std::string n,int d)
     { // ��ʼ�ɼۿ�������������
         symbol = s;
         market_price = p;
         price_list.push_back(p);
+        name = n;
+        databaseid=d;
     }
     Order_lk *orderlist_buy = new Order_lk(Order(-1, "0", -1, -1, "z", 0));
     Order_lk *orderlist_sell = new Order_lk(Order(-1, "0", -1, -1, "z", 1));

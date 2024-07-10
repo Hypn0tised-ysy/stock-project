@@ -391,7 +391,7 @@ std::vector<Stock> Database::getStocksList()
         std::vector<Stock> result;
         while (query.next())
         {
-            Stock stock(query.value("symbol").toString().toStdString(), query.value("price").toDouble());
+            Stock stock(query.value("symbol").toString().toStdString(), query.value("price").toDouble(),query.value("name").toString().toStdString(),query.value("id").toInt());
             result.push_back(stock);
         }
         return result;
