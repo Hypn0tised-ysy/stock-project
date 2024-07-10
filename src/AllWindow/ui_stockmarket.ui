@@ -60,17 +60,12 @@ font:bold 14px;		/*设置按钮文字和大小*/</string>
    </column>
    <column>
     <property name="text">
-     <string>股票发行公司</string>
+     <string>股票名称</string>
     </property>
    </column>
    <column>
     <property name="text">
-     <string>股价 元/股</string>
-    </property>
-   </column>
-   <column>
-    <property name="text">
-     <string>剩余股数</string>
+     <string>定价 元/股</string>
     </property>
    </column>
   </widget>
@@ -95,19 +90,6 @@ font:bold 14px;		/*设置按钮文字和大小*/
    </property>
    <property name="text">
     <string>退出</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="show">
-   <property name="geometry">
-    <rect>
-     <x>80</x>
-     <y>270</y>
-     <width>80</width>
-     <height>18</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>renew</string>
    </property>
   </widget>
   <widget class="QLCDNumber" name="times">

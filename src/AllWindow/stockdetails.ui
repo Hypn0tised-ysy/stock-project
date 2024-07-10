@@ -68,7 +68,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>股票数量:</string>
+    <string>股票名称:</string>
    </property>
   </widget>
   <widget class="QLabel" name="number">
@@ -87,7 +87,7 @@
     </font>
    </property>
    <property name="text">
-    <string>number</string>
+    <string>name</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_6">
@@ -138,7 +138,17 @@ font:bold 14px;		/*设置按钮文字和大小*/</string>
    </property>
    <column>
     <property name="text">
-     <string>ID</string>
+     <string>交易人员ID</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>订单ID</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>买入/卖出</string>
     </property>
    </column>
    <column>
@@ -148,7 +158,7 @@ font:bold 14px;		/*设置按钮文字和大小*/</string>
    </column>
    <column>
     <property name="text">
-     <string>预入股数</string>
+     <string>交易股数</string>
     </property>
    </column>
   </widget>

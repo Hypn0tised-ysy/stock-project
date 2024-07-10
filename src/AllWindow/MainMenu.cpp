@@ -18,6 +18,7 @@ MainMenu::MainMenu(Account *_NowUser, QWidget *parent)
     z0=new zhanghu(this->NowUser,nullptr);
     z0->all_stocks=all_stocks;
     ui->setupUi(this);
+    g0.all_stocks=all_stocks;
     setFixedSize(1500, 800);
     w_timer = new QTimer;
     w_time_record = new QTime;
@@ -26,7 +27,6 @@ MainMenu::MainMenu(Account *_NowUser, QWidget *parent)
     w_timer->start(100);
     connect(w_timer, SIGNAL(timeout()), this, SLOT(update_time()));
     init();
-
     resizeit();
 }
 

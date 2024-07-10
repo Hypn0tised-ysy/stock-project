@@ -9,7 +9,6 @@ dingdan::dingdan(Account *_NowUser,QWidget *parent)
 {   o_NowUser=_NowUser;
     ui->setupUi(this);
     setFixedSize(600, 500);
-    ui->deleteID->setClearButtonEnabled(true);
     resizeit();
 }
 
@@ -22,9 +21,7 @@ void dingdan::resizeit(){
     int widths=this->width();
     int heights=this->height();
     ui->close->setGeometry(widths*0.7,heights*0.85,widths*0.2,heights*0.1);
-    ui->deleteID->setGeometry(widths*0.05,heights*0.85,widths*0.2,heights*0.1);
-    ui->delete_2->setGeometry(widths*0.3,heights*0.85,widths*0.2,heights*0.1);
-    ui->label->setGeometry(widths*0.05,heights*0.75,widths*0.2,heights*0.1);
+    ui->delete_2->setGeometry(widths*0.2,heights*0.85,widths*0.2,heights*0.1);
     ui->tableWidget->setGeometry(widths*0.1,heights*0.1,widths*0.8,heights*0.6);
     ui->tableWidget->setColumnWidth(0,widths*0.15);
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(0,QHeaderView::Fixed);
@@ -45,24 +42,12 @@ void dingdan::on_close_clicked()
     close();
 }
 
-
-/*std::vector<QString> vID;
-std::vector<QString> vprice;
-std::vector<QString> vnumber;
-std::vector<bool> vb_or_s;
-void dingdan::get_it(QString ID,QString price,QString number,bool b_or_s){
-    vID.push_back(ID);
-    vprice.push_back(price);
-    vnumber.push_back(number);
-    vb_or_s.push_back(b_or_s);
-}*/
-
-
-
 void dingdan::showit()
 {   std::vector<Order> tmp=o_NowUser->show_my_order();
     ui->tableWidget->setRowCount(tmp.size());
     for(int i=0;i<tmp.size();i++){
+        ui->tableWidget->setRowHeight(i,10);
+        ui->tableWidget->verticalHeader()->setSectionResizeMode(i,QHeaderView::Fixed);
         QString s1,s2,s3,s4,s5;
         s1=QString::fromStdString(tmp[i].symbol);
         QTableWidgetItem *item=new QTableWidgetItem(s1);
@@ -94,28 +79,7 @@ void dingdan::showit()
     }
 }
 void dingdan::on_delete_2_clicked()
-{   /*int k=-1;
-    QString tmp=ui->deleteID->text();
-    for(int i=0;i<vID.size();i++){
-        if(vID[i]==tmp)
-        {   k=i;
-            break;}
-    }
-    if(k==-1)
-    {
-        QMessageBox::information(this,"警告","未找到相应订单",QMessageBox::Close);
-        ui->deleteID->clear();
-        return;
-    }
-    else {
-        vID.erase(vID.begin()+k);
-        vprice.erase(vprice.begin()+k);
-        vnumber.erase(vnumber.begin()+k);
-        vb_or_s.erase(vb_or_s.begin()+k);
-        QMessageBox::information(this,"提示","订单已删除",QMessageBox::Close);
-        ui->deleteID->clear();
-        showit();
-    }*/
+{
     if(delete_ID==-1)
     {
         QMessageBox::information(this,"警告","未选择相应订单",QMessageBox::Close);

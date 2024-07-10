@@ -109,38 +109,6 @@ font:bold 14px;		/*设置按钮文字和大小*/
     <string>删除订单</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="deleteID">
-   <property name="geometry">
-    <rect>
-     <x>50</x>
-     <y>260</y>
-     <width>81</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>14</pointsize>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">border-radius:25px;  </string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label">
-   <property name="geometry">
-    <rect>
-     <x>70</x>
-     <y>240</y>
-     <width>40</width>
-     <height>12</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>订单ID</string>
-   </property>
-  </widget>
  </widget>
  <resources/>
  <connections/>

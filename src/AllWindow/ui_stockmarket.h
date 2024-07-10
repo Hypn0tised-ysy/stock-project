@@ -6,6 +6,8 @@
 #include <QDialog>
 #include<QTime>
 #include<QTimer>
+#include "../implementation/My_stock.h"
+#include "../implementation/stock.h"
 namespace Ui {
 class gushi;
 }
@@ -13,11 +15,11 @@ class gushi;
 class gushi : public QWidget
 {
     Q_OBJECT
-    enum colnum{ID=0,gongsi,gujia,gushu };
 public:
     explicit gushi(QWidget *parent = nullptr);
     ~gushi();
     void resizeit();
+    std::vector<Stock> all_stocks;
 signals:
     void send(int i);
     void send1(QString ID);
@@ -34,7 +36,6 @@ private slots:
 
     void update_time();
 
-    void on_show_clicked();
 
     void on_tableWidget_cellDoubleClicked(int row, int column);
 
@@ -42,6 +43,7 @@ private:
     Ui::gushi *ui;
     QTime *time_record;
     QTimer *timer;
+
 };
 
 #endif // UI_STOCKMARKET_H

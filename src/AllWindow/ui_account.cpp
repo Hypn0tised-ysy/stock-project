@@ -1,5 +1,7 @@
 #include"ui_account.h"
 #include "ui_ui_account.h"
+#include "../database/database.h"
+extern Database db;
 zhanghu::zhanghu(Account *_NowUser, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::zhanghu)
@@ -30,8 +32,10 @@ void zhanghu::init(){
 void zhanghu::showit()
 {
     ui->tableWidget->setRowCount(ms.size());
+    ms=z_NowUser->show_my_stock();
     for(int i=0;i<ms.size();i++){
         ui->tableWidget->setRowHeight(i,10);
+        ui->tableWidget->verticalHeader()->setSectionResizeMode(i,QHeaderView::Fixed);
         QTableWidgetItem *item=new QTableWidgetItem(QString::fromStdString(ms[i].get_name()));
         item->setFlags(Qt::ItemIsEnabled);
         ui->tableWidget->setItem(i,0,item);
@@ -45,8 +49,8 @@ void zhanghu::showit()
         item->setFlags(Qt::ItemIsEnabled);
         ui->tableWidget->setItem(i,1,item);
         item=new QTableWidgetItem(QString::fromStdString(std::to_string(ms[i].get_sum())));
-        item->setFlags(Qt::ItemIsEnabled);
         ui->tableWidget->setItem(i,2,item);
+        item->setFlags(Qt::ItemIsEnabled);
     }
 }
 void zhanghu::resizeit(){
