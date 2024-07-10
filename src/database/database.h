@@ -12,6 +12,7 @@
 #include "../implementation/order.h"
 #include "../implementation/Stock.h"
 #include "../implementation/My_stock.h"
+#include "../implementation/StockPrice.h"
 class Database : public QObject
 {
     Q_OBJECT
@@ -49,8 +50,8 @@ public:
     bool updateUserStock(int userId, const QString &symbol, int quantity);
     QVariantList getUserStocks(int userId);
     std::vector<My_stock> getMyStock(int userId);
-    bool addStockPrice(const QString &symbol, double price);
-    QVariantList getStockPrice(const QString &symbol);
+    bool addStockPrice(const QString &symbol, double price, int &time);
+    std::vector<StockPrice> getStockPrice(const QString &symbol);
 
 private:
     QSqlDatabase db;

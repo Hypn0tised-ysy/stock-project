@@ -137,7 +137,7 @@ int Account::add_my_order(int &operatorId, double price, int quantity, const QSt
 					//Order mynew = Order(order_id, user->get_id(user), price, sum, sym, side); // ´´½¨¶©µ¥
 					int Sum = tem.get_sum() - quantity;//new quantity of my stock
 					tem.setnew_sum(Sum);
-					this->my_stock.assign(my.begin(), my.end());//local my_stock update
+					this->mystock.assign(my.begin(), my.end());//local my_stock update
 					db.updateUserStock(operatorId, symbol, Sum);//update myStock data
 					return db.addOrder(operatorId, price, quantity, symbol, side);//Return the Order_id
 				}
@@ -228,7 +228,7 @@ int Account::removeOrder(int Orderid)
 			{
 				this->money += tem.price*tem.quantity;
 				if (db.removeOrder(Orderid))
-					return Orderid
+					return Orderid;
 				else
 					return -1;
 			}

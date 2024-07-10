@@ -57,7 +57,7 @@ bool Database::openDatabase(const QString &dbName)
                "id INTEGER PRIMARY KEY AUTOINCREMENT, "
                "symbol TEXT, "
                "price REAL, "
-               "timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)");
+               "timestamp   INT)");
 
 
     return true;
@@ -419,13 +419,13 @@ std::vector<Order> Database::getOrdersList(QString symbol, bool side)
         return result;
     }
 }
-bool Database::addStockPrice(const QString &symbol, double price)//接受股票代码和价格为参数，时间戳默认是当前的时间戳
+bool Database::addStockPrice(const QString &symbol, double price,int &time)//接受股票代码和价格为参数，时间戳默认是当前的时间戳
 {
     QSqlQuery query;
-    query.prepare("INSERT INTO stock_prices (symbol, price) VALUES (?, ?)");
+    query.prepare("INSERT INTO stock_prices (symbol, price, timestamp) VALUES (?, ?, ?)");
     query.addBindValue(symbol);
     query.addBindValue(price);
-
+    query.addBindValue(time);
     if (!query.exec())
     {
         qDebug() << "Failed to add stock price:" << query.lastError().text();
@@ -433,29 +433,29 @@ bool Database::addStockPrice(const QString &symbol, double price)//接受股票�
     }
     return true;
 }
-QVariantList Database::getStockPrice(const QString &symbol)
+std::vector<StockPrice> Database::getStockPrice(const QString &symbol)
 {
     QSqlQuery query;
-    query.prepare("SELECT * FROM stock_prices WHERE symbol = ? ORDER BY timestamp DESC");
+    query.prepare("SELECT * FROM stock_prices WHERE symbol = ?");
     query.addBindValue(symbol);
-
     if (!query.exec())
     {
-        qDebug() << "Failed to get stock price:" << query.lastError().text();
-        return QVariantList();
+        qDebug() << "Failed to fetch stock prices:" << query.lastError().text();
+        return std::vector<StockPrice>();
     }
-
-    QVariantList priceRecord;
-
-    while (query.next()) {
-        QVariantMap priceRecordUnit;
-        priceRecordUnit["id"]=query.value("id");
-        priceRecordUnit["symbol"]= query.value("symbol");
-        priceRecordUnit["price"]=query.value("price");
-        priceRecordUnit["timestamp"]=query.value("timestamp");
-        priceRecord.append(priceRecordUnit);
+    else
+    {
+        std::vector<StockPrice> result;
+        while (query.next())
+        {
+            StockPrice stockPrice;
+            stockPrice.symbol = query.value("symbol").toString();
+            stockPrice.price = query.value("price").toDouble();
+            stockPrice.time = query.value("timestamp").toInt();
+            result.push_back(stockPrice);
+        }
+        return result;
     }
-    return priceRecord;
 }
 /*
     QVariantList stockPrices=db.getStockPrice("code");获取股票代码为code的股票历史数据
