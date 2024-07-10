@@ -98,7 +98,8 @@ std::string Account::get_name(Account *user)
 }
 std::vector<My_stock > Account::show_my_stock()
 {
-	return mystock;
+    mystock=db.getMyStock(this->id);
+    return mystock;
 }
 int Account::add_my_order(int &operatorId, double price, int quantity, const QString &symbol, bool side)
 {

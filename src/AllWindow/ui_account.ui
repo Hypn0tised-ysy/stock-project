@@ -152,6 +152,11 @@ font:bold 14px;		/*设置按钮文字和大小*/</string>
    </column>
    <column>
     <property name="text">
+     <string>股票名称</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
      <string>持有股票数</string>
     </property>
    </column>

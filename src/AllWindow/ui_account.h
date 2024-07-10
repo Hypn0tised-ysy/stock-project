@@ -17,6 +17,7 @@
 #include<QListWidget>
 #include "../implementation/Account.h"
 #include "../implementation/My_stock.h"
+#include "../implementation/stock.h"
 namespace Ui {
 class zhanghu;
 }
@@ -31,6 +32,7 @@ public:
     void resizeit();
     void showit();
     void init();
+    std::vector<Stock> all_stocks;
 private slots:
     void on_tuichu_clicked();
 

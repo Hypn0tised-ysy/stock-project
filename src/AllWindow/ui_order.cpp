@@ -124,7 +124,7 @@ void dingdan::on_delete_2_clicked()
     else
     {
        int tmp= o_NowUser->removeOrder(delete_ID);
-        if(tmp==-1)
+        if(tmp<=0)
        {
            QMessageBox::information(this,"警告","无法删除相应订单",QMessageBox::Close);
             return;

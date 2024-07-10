@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <QTime>
 #include <QWidget>
+//#include<utility>
+//#include<map>
 #include "ui_account.h"
 #include "ui_ui_account.h"
 #include "ui_stockmarket.h"
@@ -14,6 +16,7 @@
 #include <QMessageBox>
 #include <QPushButton>
 #include "../implementation/Account.h"
+#include "../implementation/stock.h"
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
@@ -29,7 +32,8 @@ public:
     MainMenu(Account *NowUser, QWidget *parent = nullptr);
     ~MainMenu();
     void resizeit();
-
+    //std::map<std::string,Stock> map1;太麻烦，先用数组
+    std::vector<Stock> all_stocks;
 public slots:
     void on_tuichudenglu_clicked();
 signals:
@@ -47,6 +51,8 @@ private slots:
     void update_time();
 
     void init();
+
+    void init_stocks();
 private:
     Ui::Widget *ui;
     zhanghu* z0;
