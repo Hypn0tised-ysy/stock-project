@@ -9,6 +9,7 @@
 #include <QDir>
 #include <string>
 #include "./database/database.h"
+//#include "./AllWindow/PriceChart.h"
 int main(int argc, char *argv[])
 {
   
