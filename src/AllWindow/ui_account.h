@@ -1,20 +1,22 @@
-#ifndef ZHANGHU_H
-#define ZHANGHU_H
+#ifndef UI_ACCOUNT_H
+#define UI_ACCOUNT_H
 
 #include <QWidget>
 #include <QDialog>
-#include"jiaoyi.h"
-#include"ui_jiaoyi.h"
-#include"jiaoyi2.h"
-#include"ui_jiaoyi2.h"
-#include"dingdan.h"
-#include"ui_dingdan.h"
+#include <vector>
+#include"ui_buy_order.h"
+#include"ui_buy_order.h"
+#include"ui_sold_order.h"
+#include"ui_sold_order.h"
+#include"ui_order.h"
+#include"ui_ui_order.h"
 #include"balance.h"
 #include"ui_balance.h"
 #include"trade_details.h"
 #include"ui_trade_details.h"
 #include<QListWidget>
-
+#include "../implementation/Account.h"
+#include "../implementation/My_stock.h"
 namespace Ui {
 class zhanghu;
 }
@@ -24,10 +26,11 @@ class zhanghu : public QWidget
     Q_OBJECT
 
 public:
-    explicit zhanghu(QWidget *parent = nullptr);
+    zhanghu(Account *NowUser,QWidget *parent = nullptr);
     ~zhanghu();
     void resizeit();
-
+    void showit();
+    void init();
 private slots:
     void on_tuichu_clicked();
 
@@ -43,12 +46,13 @@ private slots:
 
 private:
     Ui::zhanghu *ui;
-
-     jiaoyi j0;
-    jiaoyi2 j1;
-     dingdan d0;
+    jiaoyi* j0;
+    jiaoyi2* j1;
+    dingdan* d0;
     balance b0;
-     trade_details t0;
+    trade_details t0;
+    Account *z_NowUser;
+    std::vector<My_stock> ms;
 };
 
-#endif // ZHANGHU_H
+#endif // UI_ACCOUNT_H

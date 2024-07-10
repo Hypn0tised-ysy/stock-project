@@ -1,5 +1,5 @@
-#ifndef GUSHI_H
-#define GUSHI_H
+#ifndef UI_STOCKMARKET_H
+#define UI_STOCKMARKET_H
 #include"stockdetails.h"
 #include"ui_stockdetails.h"
 #include <QWidget>
@@ -44,5 +44,5 @@ private:
     QTimer *timer;
 };
 
-#endif // GUSHI_H
+#endif // UI_STOCKMARKET_H
 

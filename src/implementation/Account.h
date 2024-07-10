@@ -35,10 +35,12 @@ public:
 	// Account* find_user(std::string _id);//ï¿½Òµï¿½Ö¸ï¿½ï¿½ï¿½ï¿½idï¿½ï¿½ï¿½Ã»ï¿½
 	void setmoney(double mm);
 	Account(int _id); // ï¿½ï¿½ï¿½ìº¯ï¿½ï¿½
-    std::string return_username();
+    std::string return_username();//
     int return_id();//
+    double return_money();//
 	int add_my_order(int &operatorId, double price, int quantity, const QString &symbol, bool side);//base the order Return orderId
-	int removeOrder(int Orderid);   
+    int removeOrder(int Orderid);
+    std::vector<Order> show_my_order();//zsz²¹³ä
 };
 
 // ï¿½ï¿½ï¿½Ú¹ï¿½ï¿½ï¿½Í³ï¿½ï¿½Û¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿?

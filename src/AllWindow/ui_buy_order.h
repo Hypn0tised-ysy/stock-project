@@ -1,9 +1,10 @@
-#ifndef JIAOYI_H
-#define JIAOYI_H
+#ifndef UI_BUY_ORDER_H
+#define UI_BUY_ORDER_H
 
 #include <QWidget>
 #include <QDialog>
 #include<QLineEdit>
+#include "../implementation/Account.h"
 namespace Ui {
 class jiaoyi;
 }
@@ -13,7 +14,7 @@ class jiaoyi : public QWidget
     Q_OBJECT
 
 public:
-    explicit jiaoyi(QWidget *parent = nullptr);
+    jiaoyi(Account *NowUser,QWidget *parent = nullptr);
     ~jiaoyi();
     void resizeit();
 signals:
@@ -27,6 +28,7 @@ private slots:
 
 private:
     Ui::jiaoyi *ui;
+    Account *b_NowUser;
 };
 
-#endif // JIAOYI_H
+#endif // UI_BUY_ORDER_H
