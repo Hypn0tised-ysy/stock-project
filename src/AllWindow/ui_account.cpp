@@ -27,7 +27,7 @@ void zhanghu::init(){
     ui->nicheng->setText(QString::fromStdString(z_NowUser->return_username()));
     ui->ID->setText(QString::fromStdString(std::to_string(z_NowUser->return_id())));
 
-    ui->balance_text->setText(QString::fromStdString(std::to_string(z_NowUser->return_money())));
+    ui->balance_text->setText(QString::number(z_NowUser->return_money(),'f',2));
     ms=z_NowUser->show_my_stock();
 }
 void zhanghu::showit()
@@ -60,7 +60,9 @@ void zhanghu::resizeit(){
     ui->balance_text->setGeometry(widths*0.8,heights*0.1,widths*0.15,heights*0.2);
     ui->tableWidget->setGeometry(widths*0.3,heights*0.1,widths*0.35,heights*0.7);
     ui->tableWidget->setColumnWidth(0,widths*0.158);
+     ui->tableWidget->horizontalHeader()->setSectionResizeMode(0,QHeaderView::Fixed);
     ui->tableWidget->setColumnWidth(1,widths*0.158);
+      ui->tableWidget->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Fixed);
     ui->label->setGeometry(widths*0.03,heights*0.05,widths*0.15,heights*0.2);
 }
 void zhanghu::on_tuichu_clicked()

@@ -4,6 +4,7 @@
 #include "order_lk.h"
 #include "Account.h"
 #include "Account_group.h"
+#include"order.h"
 class Stock
 {
 public:

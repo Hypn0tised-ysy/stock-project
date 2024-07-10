@@ -14,10 +14,13 @@
    <string>订单</string>
   </property>
   <widget class="QTableWidget" name="tableWidget">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>11</y>
+     <x>-10</x>
+     <y>10</y>
      <width>451</width>
      <height>221</height>
     </rect>

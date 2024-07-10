@@ -27,10 +27,15 @@ void dingdan::resizeit(){
     ui->label->setGeometry(widths*0.05,heights*0.75,widths*0.2,heights*0.1);
     ui->tableWidget->setGeometry(widths*0.1,heights*0.1,widths*0.8,heights*0.6);
     ui->tableWidget->setColumnWidth(0,widths*0.15);
+    ui->tableWidget->horizontalHeader()->setSectionResizeMode(0,QHeaderView::Fixed);
     ui->tableWidget->setColumnWidth(1,widths*0.15);
+    ui->tableWidget->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Fixed);
     ui->tableWidget->setColumnWidth(2,widths*0.15);
+    ui->tableWidget->horizontalHeader()->setSectionResizeMode(2,QHeaderView::Fixed);
     ui->tableWidget->setColumnWidth(3,widths*0.15);
+    ui->tableWidget->horizontalHeader()->setSectionResizeMode(3,QHeaderView::Fixed);
     ui->tableWidget->setColumnWidth(4,widths*0.15);
+    ui->tableWidget->horizontalHeader()->setSectionResizeMode(4,QHeaderView::Fixed);
 
 }
 
