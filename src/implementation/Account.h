@@ -8,6 +8,9 @@
 #include "My_stock.h"
 #include "order.h"
 #include <Qstring>
+#include<time.h>
+#include<ctime>
+#include<cstdlib>
 // 注锟酵达拷锟诫部锟斤拷为锟斤拷一锟斤拷锟斤拷锟斤拷锟矫癸拷锟斤拷实锟街凤拷式锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷Account_group锟斤拷锟芥储锟剿伙拷锟斤拷息锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟矫匡拷锟斤拷,注锟酵诧拷锟街放碉拷锟斤拷Account_group
 
 class Account
@@ -48,3 +51,4 @@ public:
 
 int enroll(std::string _id, std::string _password); // 注锟斤拷
 int login(std::string _id, std::string _password);	// 锟斤拷录
+int time(int duration, int id);//计时器，。间隔时间，定位到第几号计时器(使用方法，第一个参数传间隔时间(单位毫秒)，第二个参数输入几号计时器，现在搞了十个)
