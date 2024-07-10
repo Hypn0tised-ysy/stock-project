@@ -3,7 +3,7 @@
 Database db;
 Database::Database(QObject *parent) : QObject(parent)
 {
-    this->openDatabase("stock");
+    this->openDatabase("stock.db");
 }
 
 Database::~Database()
@@ -41,15 +41,15 @@ bool Database::openDatabase(const QString &dbName)
                "id INTEGER PRIMARY KEY AUTOINCREMENT,"
                "operator INT,"
                "price REAL,"
-               "quantity INT"
-               "symbol TEXT"
-               "side INT");
+               "quantity INT,"
+               "symbol TEXT,"
+               "side INT)");
     // Create user_stocks table
     query.exec("CREATE TABLE IF NOT EXISTS user_stocks ("
                "id INTEGER PRIMARY KEY AUTOINCREMENT, "
                "user_id INTEGER NOT NULL, "
                "symbol TEXT NOT NULL, "
-               "name TEXT"
+               "name TEXT,"
                "quantity INTEGER NOT NULL, "
                "FOREIGN KEY (user_id) REFERENCES users(id))");
     // Create stock_prices table

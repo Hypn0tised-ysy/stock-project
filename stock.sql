@@ -1,0 +1,1 @@
+INSERT INTO user_stocks (user_id, symbol, name,quantity) VALUES (1, "100003","useless", dd)
