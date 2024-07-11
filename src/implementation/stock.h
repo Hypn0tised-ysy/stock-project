@@ -31,6 +31,6 @@ public:
     double lowest_buy = 0.95;  // 最低买入价格
     double higest_sell = 1.05; // 最高卖出价格
 	
-    void add_order(Order &order, Account_group &Ac); // ���Ӷ���,���ҵ������ݿ�
+    void add_order(Order &order); // ���Ӷ���,���ҵ������ݿ�
 	double show_price();//Return current market_price
 };

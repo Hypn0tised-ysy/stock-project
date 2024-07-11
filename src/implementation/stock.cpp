@@ -1,6 +1,6 @@
 #include"stock.h"
 
-void Stock::add_order(Order &order,Account_group &Ac) {
+void Stock::add_order(Order &order) {
     Order_lk* p = new Order_lk(order);
 	
     if (!order.side) {
@@ -85,21 +85,24 @@ void Stock::add_order(Order &order,Account_group &Ac) {
                     //buyi->next->order.quantity << " 价格: " << selli->next->order.price << std::endl;
                 //成交后订单生成可以在这里改。
                 selli->next->order.quantity -= buyi->next->order.quantity;//剩余票数               
-				Account*seller=Ac.find_user(selli->next->order.Peo_id);//找到卖家id所指向的用户
-				seller->upgrade(selli->next->order.symbol, buyi->next->order.quantity, (buyi->next->order.quantity*selli->next->order.price),selli->next->order);
-				Account*buyer = Ac.find_user(buyi->next->order.Peo_id);//找到买家id所指向的用户
-				buyer->upgrade(buyi->next->order.symbol, buyi->next->order.quantity,(buyi->next->order.quantity*selli->next->order.price), buyi->next->order);
+				//Account*seller=Ac.find_user(selli->next->order.Peo_id);//找到卖家id所指向的用户
+				Account seller(selli->next->order.Peo_id);
+				seller.upgrade(selli->next->order.symbol, buyi->next->order.quantity, (buyi->next->order.quantity*selli->next->order.price),selli->next->order);
+				//Account*buyer = Ac.find_user(buyi->next->order.Peo_id);//找到买家id所指向的用户
+				Account buyer(buyi->next->order.Peo_id);
+				buyer.upgrade(buyi->next->order.symbol, buyi->next->order.quantity,(buyi->next->order.quantity*selli->next->order.price), buyi->next->order);
 				buyi->next->order.quantity = 0;//订单清空
             }
             else {//买量大于卖量
                 //std::cout << "部分成交：" << buyi->next->order.Order_id << " 股票代码：" << symbol << " 数量: " <<
                    // selli->next->order.quantity << " 价格:" << selli->next->order.price << std::endl;
                 buyi->next->order.quantity -= selli->next->order.quantity;
-				Account*buyer = Ac.find_user(buyi->next->order.Peo_id);//找到买家id所指向的用户
-				buyer->upgrade(buyi->next->order.symbol, selli->next->order.quantity, (selli->next->order.quantity*selli->next->order.price), buyi->next->order);
-
-				Account*seller = Ac.find_user(selli->next->order.Peo_id);//找到卖家id所指向的用户
-				seller->upgrade(selli->next->order.symbol, selli->next->order.quantity, (selli->next->order.quantity*selli->next->order.price), selli->next->order);
+				//Account*buyer = Ac.find_user(buyi->next->order.Peo_id);//找到买家id所指向的用户
+				Account buyer(buyi->next->order.Peo_id);
+				buyer.upgrade(buyi->next->order.symbol, selli->next->order.quantity, (selli->next->order.quantity*selli->next->order.price), buyi->next->order);
+				Account seller(selli->next->order.Peo_id);
+				//Account*seller = Ac.find_user(selli->next->order.Peo_id);//找到卖家id所指向的用户
+				seller.upgrade(selli->next->order.symbol, selli->next->order.quantity, (selli->next->order.quantity*selli->next->order.price), selli->next->order);
                 selli->next->order.quantity = 0;//clear the quantity
             }
             market_price = selli->next->order.price; //更新股价！
