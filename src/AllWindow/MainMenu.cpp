@@ -8,12 +8,17 @@
 #include "ui_ui_buy_order.h"
 #include "hangqing.h"
 #include "ui_hangqing.h"
+#include "../database/database.h"
+extern Database db;
 MainMenu::MainMenu(Account *_NowUser, QWidget *parent)
     : QWidget(parent), ui(new Ui::Widget)
 {
     NowUser = _NowUser;
+    init_stocks();
     z0=new zhanghu(this->NowUser,nullptr);
+    z0->all_stocks=all_stocks;
     ui->setupUi(this);
+    g0.all_stocks=all_stocks;
     setFixedSize(1500, 800);
     w_timer = new QTimer;
     w_time_record = new QTime;
@@ -37,7 +42,10 @@ void MainMenu::init()
     ui->ID->setText(s_id);
 
 }
-
+void MainMenu::init_stocks()
+{
+    all_stocks=db.getStocksList();
+}
 void MainMenu::init_time()
 {
     w_time_record->setHMS(0, 8, 0);
@@ -56,15 +64,17 @@ void MainMenu::update_time()
 
 void MainMenu::on_zhanghuxinxi_clicked()
 {
-
+    z0->showit();
     z0->show();
 }
 
 void MainMenu::on_tuichudenglu_clicked()
 {
-    emit tuichudenglu();
     close();
+    emit tuichudenglu();
 }
+
+
 
 void MainMenu::on_chakangushi_clicked()
 {

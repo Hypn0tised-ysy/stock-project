@@ -2,6 +2,7 @@
 
 void Stock::add_order(Order &order,Account_group &Ac) {
     Order_lk* p = new Order_lk(order);
+	
     if (!order.side) {
         if (order.price <= market_price * highest_buy) {  //价格合规
             if (orderlist_buy->next == NULL)
@@ -99,13 +100,34 @@ void Stock::add_order(Order &order,Account_group &Ac) {
 
 				Account*seller = Ac.find_user(selli->next->order.Peo_id);//找到卖家id所指向的用户
 				seller->upgrade(selli->next->order.symbol, selli->next->order.quantity, (selli->next->order.quantity*selli->next->order.price), selli->next->order);
-                selli->next->order.quantity = 0;
+                selli->next->order.quantity = 0;//clear the quantity
             }
             market_price = selli->next->order.price; //更新股价！
         }
         else {
             buyi = buyi->next;
         }
-        price_list.push_back(market_price);//这个列表存储了历史的股价，可以用来绘制图形？
+        price_list.push_back(market_price);//这个列表存储了每次的股价，可以用来绘制图形？
     }
+}
+double Stock::show_price()//show the current price 
+{
+	if (price_list.empty())//if there is no order in this special time
+	{
+		if (Historic_price.empty())
+			return market_price;//Return the lasttime;
+		else
+			return Historic_price.back();
+	}
+		
+	else
+	{
+		double sum = std::accumulate(price_list.begin(), price_list.end(), 0.0);//get the Addsum
+		double mean = sum / price_list.size();//get the mean
+		market_price = mean;//update current price
+		Historic_price.push_back(mean);//restore the mean
+		price_list.clear();//reset the price list
+		return mean;
+	}
+
 }

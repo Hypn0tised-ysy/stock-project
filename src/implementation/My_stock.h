@@ -1,5 +1,6 @@
 #pragma once
 #include<string>
+
 class My_stock//库存仓库，用于存储股票信息
 {
 private:

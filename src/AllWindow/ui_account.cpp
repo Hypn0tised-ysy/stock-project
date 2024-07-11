@@ -1,6 +1,7 @@
 #include"ui_account.h"
 #include "ui_ui_account.h"
-
+#include "../database/database.h"
+extern Database db;
 zhanghu::zhanghu(Account *_NowUser, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::zhanghu)
@@ -11,8 +12,6 @@ zhanghu::zhanghu(Account *_NowUser, QWidget *parent)
     d0=new dingdan(z_NowUser,nullptr);
     ui->setupUi(this);
     setFixedSize(1500, 800);
-    connect(j0,&jiaoyi::send_it,d0,&dingdan::get_it);
-    connect(j1,&jiaoyi2::send_it,d0,&dingdan::get_it);
     init();
     resizeit();
     showit();
@@ -27,21 +26,31 @@ void zhanghu::init(){
     ui->nicheng->setText(QString::fromStdString(z_NowUser->return_username()));
     ui->ID->setText(QString::fromStdString(std::to_string(z_NowUser->return_id())));
 
-    ui->balance_text->setText(QString::fromStdString(std::to_string(z_NowUser->return_money())));
+    ui->balance_text->setText(QString::number(z_NowUser->return_money(),'f',2));
     ms=z_NowUser->show_my_stock();
 }
 void zhanghu::showit()
-{   My_stock m1("A",100),m2("B",200);//
-    ms.push_back(m1);ms.push_back(m2);//for test
+{
     ui->tableWidget->setRowCount(ms.size());
+    ms=z_NowUser->show_my_stock();
     for(int i=0;i<ms.size();i++){
         ui->tableWidget->setRowHeight(i,10);
+        ui->tableWidget->verticalHeader()->setSectionResizeMode(i,QHeaderView::Fixed);
         QTableWidgetItem *item=new QTableWidgetItem(QString::fromStdString(ms[i].get_name()));
         item->setFlags(Qt::ItemIsEnabled);
         ui->tableWidget->setItem(i,0,item);
-        item=new QTableWidgetItem(QString::fromStdString(std::to_string(ms[i].get_sum())));
+        for(int j=0;j<this->all_stocks.size();j++){
+            if(ms[i].get_name()==this->all_stocks[j].symbol)
+            {
+                item=new QTableWidgetItem(QString::fromStdString(this->all_stocks[j].name));
+                break;
+            }
+        }
         item->setFlags(Qt::ItemIsEnabled);
         ui->tableWidget->setItem(i,1,item);
+        item=new QTableWidgetItem(QString::fromStdString(std::to_string(ms[i].get_sum())));
+        ui->tableWidget->setItem(i,2,item);
+        item->setFlags(Qt::ItemIsEnabled);
     }
 }
 void zhanghu::resizeit(){
@@ -51,16 +60,20 @@ void zhanghu::resizeit(){
     ui->dindgan->setGeometry(widths*0.57,heights*0.85,widths*0.15,heights*0.1);
     ui->sold->setGeometry(widths*0.4,heights*0.85,widths*0.15,heights*0.1);
     ui->buy->setGeometry(widths*0.23,heights*0.85,widths*0.15,heights*0.1);
-    ui->yonghuxinxishezhi->setGeometry(widths*0.05,heights*0.85,widths*0.15,heights*0.1);
-    ui->jianjie->setGeometry(widths*0.03,heights*0.56,widths*0.2,heights*0.2);
-    ui->nicheng->setGeometry(widths*0.03,heights*0.43,widths*0.2,heights*0.1);
-    ui->ID->setGeometry(widths*0.03,heights*0.3,widths*0.2,heights*0.1);
+    ui->name->setGeometry(widths*0.03,heights*0.3,widths*0.2,heights*0.1);
+    ui->nicheng->setGeometry(widths*0.03,heights*0.4,widths*0.2,heights*0.1);
+    ui->ID_text->setGeometry(widths*0.03,heights*0.5,widths*0.2,heights*0.1);
+    ui->ID->setGeometry(widths*0.03,heights*0.6,widths*0.2,heights*0.1);
     ui->listWidget->setGeometry(widths*0.8,heights*0.5,widths*0.15,heights*0.3);
     ui->balance->setGeometry(widths*0.8,heights*0.35,widths*0.15,heights*0.1);
     ui->balance_text->setGeometry(widths*0.8,heights*0.1,widths*0.15,heights*0.2);
     ui->tableWidget->setGeometry(widths*0.3,heights*0.1,widths*0.35,heights*0.7);
-    ui->tableWidget->setColumnWidth(0,widths*0.158);
-    ui->tableWidget->setColumnWidth(1,widths*0.158);
+    ui->tableWidget->setColumnWidth(0,widths*0.113);
+    ui->tableWidget->horizontalHeader()->setSectionResizeMode(0,QHeaderView::Fixed);
+    ui->tableWidget->setColumnWidth(1,widths*0.113);
+    ui->tableWidget->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Fixed);
+    ui->tableWidget->setColumnWidth(2,widths*0.113);
+    ui->tableWidget->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Fixed);
     ui->label->setGeometry(widths*0.03,heights*0.05,widths*0.15,heights*0.2);
 }
 void zhanghu::on_tuichu_clicked()
