@@ -14,7 +14,7 @@ public:
     explicit Predictor(Database *db, QObject *parent = nullptr);
     bool enoughData(const QString &symbol);//判断是否有足够数据，如果返回为true再调用getPrices函数
     QVariantList predictStockPrices(const QString &symbol);
-    std::vector<double> getPrices(const QString &symbol);//返回值result，result[0]得到预测的第一项price数据，类型为double,共有Predictor::Predict项数据
+    std::vector<double> getPrices(const QString &symbol);//返回值result，result[0]得到预测的第一项price数据，类型为double,共有Predict项数据
 private:
     Database *dbPtr;
     Eigen::VectorXd linearRegression(const Eigen::MatrixXd &data);
