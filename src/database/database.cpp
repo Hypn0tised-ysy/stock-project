@@ -126,7 +126,7 @@ bool Database::updateUser(int userId, const QString &username, const QString &pa
     return true;
 }
 
-Account Database::getUser(int userId)
+QVariantList Database::getUser(int userId)
 {
     QSqlQuery query;
     query.prepare("SELECT * FROM users WHERE id = ?");
@@ -135,10 +135,11 @@ Account Database::getUser(int userId)
     if (!query.exec() || !query.next())
     {
         qDebug() << "Failed to get user:" << query.lastError().text();
-        return Account();
+        return QVariantList();
     }
 
-    Account user(userId,query.value("username").toString().toStdString(), query.value("password").toString().toStdString(), query.value("balance").toDouble());
+    QVariantList user;
+    user << query.value("id") << query.value("username") << query.value("password") << query.value("balance");
     return user;
 }
 int Database::CheckUser(const QString &username, const QString &password)
