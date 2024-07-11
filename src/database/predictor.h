@@ -20,5 +20,6 @@ private:
     Eigen::VectorXd linearRegression(const Eigen::MatrixXd &data);
     Eigen::VectorXd predict(const Eigen::VectorXd &beta, int start, int end);
 };
+extern Predictor predictor;
 
 #endif // PREDICTOR_H

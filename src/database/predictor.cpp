@@ -4,6 +4,7 @@
 #include <cstdlib>
 
 extern Database db;
+Predictor predictor;
 Predictor::Predictor(Database *database, QObject *parent) :
     QObject(parent), dbPtr(db)
 {
