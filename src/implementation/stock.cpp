@@ -84,7 +84,8 @@ void Stock::add_order(Order &order) {
                // std::cout << "成交：" << buyi->next->order.Order_id << " 股票代码：" << symbol << " 数量: " <<
                     //buyi->next->order.quantity << " 价格: " << selli->next->order.price << std::endl;
                 //成交后订单生成可以在这里改。
-                selli->next->order.quantity -= buyi->next->order.quantity;//剩余票数               
+                selli->next->order.quantity -= buyi->next->order.quantity;//剩余票数          
+				db.updateOrder(selli->next->order.Order_id, selli->next->order.userid, selli->next->order.price, selli->next->order.quantity, QString::fromStdString(selli->next->order.symbol), selli->next->order.side);
 				//Account*seller=Ac.find_user(selli->next->order.userid);//找到卖家id所指向的用户
 				Account seller(selli->next->order.userid);
 				seller.upgrade(selli->next->order.symbol, buyi->next->order.quantity, (buyi->next->order.quantity*selli->next->order.price),selli->next->order);
@@ -92,11 +93,13 @@ void Stock::add_order(Order &order) {
 				Account buyer(buyi->next->order.userid);
 				buyer.upgrade(buyi->next->order.symbol, buyi->next->order.quantity,(buyi->next->order.quantity*selli->next->order.price), buyi->next->order);
 				buyi->next->order.quantity = 0;//订单清空
+				db.removeOrder(buyi->next->order.Order_id);//
             }
             else {//买量大于卖量
                 //std::cout << "部分成交：" << buyi->next->order.Order_id << " 股票代码：" << symbol << " 数量: " <<
                    // selli->next->order.quantity << " 价格:" << selli->next->order.price << std::endl;
                 buyi->next->order.quantity -= selli->next->order.quantity;
+				db.updateOrder(buyi->next->order.Order_id, buyi->next->order.userid, buyi->next->order.price, buyi->next->order.quantity, QString::fromStdString(buyi->next->order.symbol), buyi->next->order.side);
 				//Account*buyer = Ac.find_user(buyi->next->order.userid);//找到买家id所指向的用户
 				Account buyer(buyi->next->order.userid);
 				buyer.upgrade(buyi->next->order.symbol, selli->next->order.quantity, (selli->next->order.quantity*selli->next->order.price), buyi->next->order);
@@ -104,6 +107,7 @@ void Stock::add_order(Order &order) {
 				//Account*seller = Ac.find_user(selli->next->order.userid);//找到卖家id所指向的用户
 				seller.upgrade(selli->next->order.symbol, selli->next->order.quantity, (selli->next->order.quantity*selli->next->order.price), selli->next->order);
                 selli->next->order.quantity = 0;//clear the quantity
+				db.removeOrder(selli->next->order.Order_id);//
             }
             market_price = selli->next->order.price; //更新股价！
         }
