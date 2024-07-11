@@ -28,7 +28,7 @@ public:
     bool removeUser(int userId);
     bool updateUser(int userId, const QString &username, const QString &password, double balance);
     int CheckUser(const QString &username, const QString &password);
-    QVariantList getUser(int userId);
+    Account getUser(int userId);
 
     // operate stocks' information
     bool addStock(const QString &symbol, const QString &name, double price);
@@ -50,8 +50,10 @@ public:
     bool updateUserStock(int userId, const QString &symbol, int quantity);
     QVariantList getUserStocks(int userId);
     std::vector<My_stock> getMyStock(int userId);
+    int getStockQuantity(int userId, const QString &symbol);
     bool addStockPrice(const QString &symbol, double price, int &time);
     std::vector<StockPrice> getStockPrice(const QString &symbol);
+    int getNewestTime();
 
 private:
     QSqlDatabase db;

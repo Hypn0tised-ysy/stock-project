@@ -126,7 +126,7 @@ bool Database::updateUser(int userId, const QString &username, const QString &pa
     return true;
 }
 
-QVariantList Database::getUser(int userId)
+Account Database::getUser(int userId)
 {
     QSqlQuery query;
     query.prepare("SELECT * FROM users WHERE id = ?");
@@ -135,11 +135,10 @@ QVariantList Database::getUser(int userId)
     if (!query.exec() || !query.next())
     {
         qDebug() << "Failed to get user:" << query.lastError().text();
-        return QVariantList();
+        return Account();
     }
 
-    QVariantList user;
-    user << query.value("id") << query.value("username") << query.value("password") << query.value("balance");
+    Account user(userId,query.value("username").toString().toStdString(), query.value("password").toString().toStdString(), query.value("balance").toDouble());
     return user;
 }
 int Database::CheckUser(const QString &username, const QString &password)
@@ -483,4 +482,35 @@ std::vector<Order> Database::getMyOrdersList(int userId)
         }
         return result;
     }
+}
+int Database::getNewestTime()
+{
+    QSqlQuery query;
+    query.prepare("SELECT MAX(timestamp) FROM stock_prices");
+    if (!query.exec() || !query.next())
+    {
+        qDebug() << "Failed to get newest time:" << query.lastError().text();
+        return -1;
+    }
+    return query.value(0).toInt();
+
+}
+int Database::getStockQuantity(int userId, const QString &symbol)
+{
+    QSqlQuery query;
+    query.prepare("SELECT quantity FROM user_stocks WHERE user_id = ? AND symbol = ?");
+    query.addBindValue(userId);
+    query.addBindValue(symbol);
+    if (!query.exec())
+    {
+        qDebug() << "Failed to get stock quantity:" << query.lastError().text();
+        return -1;
+    }
+    //如果没有数据说明原来是0
+    if (!query.next())
+    {
+        return 0;
+    }
+    
+    return query.value(0).toInt();
 }
