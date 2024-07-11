@@ -51,13 +51,44 @@ protected:
         QPointF mousePos = chart()->mapToValue(event->pos());
 
         // Find the closest point on the line series
+       //找到line series中最接近鼠标X坐标的点
         QLineSeries *series = static_cast<QLineSeries *>(chart()->series().at(0));
-        QPointF closestPoint = series->pointAt(series->closestPoint(mousePos));
+        QPointF closestPoint;
+        qreal distance = std::numeric_limits<qreal>::max();
+        for (int i = 0; i < series->count(); ++i) {
+            QPointF point = series->at(i);
+            qreal dx = point.x() - mousePos.x();
+            qreal dy = point.y() - mousePos.y();
+            qreal d = abs(dx);
+            if (d < distance) {
+                distance = d;
+                closestPoint = point;
+            }
+        }
+    shouldDraw = true;
+    drawRect = QRectF(event->pos(), QSizeF(100, 50));
+    drawText = QString("X: %1\nY: %2").arg(closestPoint.x()).arg(closestPoint.y());
 
+    // 请求更新，这将导致 paintEvent 被调用
+    update();
+
+    QChartView::mouseMoveEvent(event);
         // Display the data of the closest point
-        qDebug() << "X: " << closestPoint.x() << ", Y: " << closestPoint.y();
 
-        QChartView::mouseMoveEvent(event);
     }
+    void paintEvent(QPaintEvent *event) {
+    QChartView::paintEvent(event); // 调用基类的 paintEvent
+
+    if (shouldDraw) {
+        QPainter painter(viewport());
+        painter.setPen(Qt::blue);
+        painter.drawRect(drawRect);
+        painter.drawText(drawRect, Qt::AlignCenter, drawText);
+    }
+}
+    private:
+    bool shouldDraw = false;
+    QRectF drawRect;
+    QString drawText;
 };
 
