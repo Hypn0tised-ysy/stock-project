@@ -170,8 +170,9 @@ void PriceChart::leaveEvent(QEvent *pEvent)
     cursor_text->setVisible(false);
     QChartView::leaveEvent(pEvent);
 }
-/*
- QCandlestickSeries *acmeSeries = new QCandlestickSeries();
+QChartView* BuildPriceChart()
+{
+     QCandlestickSeries *acmeSeries = new QCandlestickSeries();
     acmeSeries->setName("Acme Ltd");
     acmeSeries->setIncreasingColor(QColor(Qt::green));
     acmeSeries->setDecreasingColor(QColor(Qt::red));
@@ -183,7 +184,7 @@ void PriceChart::leaveEvent(QEvent *pEvent)
     // 示例数据
     QFile acmeData("E:/StockMarket/src/acme_data.txt");
     if (!acmeData.open(QIODevice::ReadOnly | QIODevice::Text))
-        return 1;
+        return nullptr;
 
     QStringList categories;
 
@@ -218,4 +219,6 @@ void PriceChart::leaveEvent(QEvent *pEvent)
 
     QChartView *chartView = new PriceChart(chart);
     // 抗锯齿
-    chartView->setRenderHint(QPainter::Antialiasing);*/
+    chartView->setRenderHint(QPainter::Antialiasing);
+    return chartView;
+}

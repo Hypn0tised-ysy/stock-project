@@ -20,8 +20,16 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     StockMarket w;
     w.show();
-    PriceChart priceChart;
+    /*
+    QChartView *pchart;
+    //创建一个空windows
+    pchart=BuildPriceChart();
+    QMainWindow window;
+    window.setCentralWidget(pchart);
+    window.resize(800, 600);
+    window.show();
     //priceChart.show();
+    */
     return a.exec();
     // 以下为测试代码
 }
