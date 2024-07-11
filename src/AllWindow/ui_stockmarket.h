@@ -28,7 +28,7 @@ signals:
 
 public slots:
     void showit();
-
+    void tips();
 private slots:
     void on_close_clicked();
 
@@ -43,7 +43,7 @@ private:
     Ui::gushi *ui;
     QTime *time_record;
     QTimer *timer;
-
+    bool first=true;
 };
 
 #endif // UI_STOCKMARKET_H

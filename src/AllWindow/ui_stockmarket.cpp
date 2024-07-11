@@ -3,7 +3,7 @@
 #include<QString>
 #include<string>
 #include<vector>
-
+#include<QMessageBox>
 gushi::gushi(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::gushi)
@@ -61,6 +61,7 @@ void gushi::on_close_clicked()
 
 
 void gushi::showit(){
+
     ui->tableWidget->setRowCount(all_stocks.size());
     for(int i=0;i<all_stocks.size();i++){
         ui->tableWidget->setRowHeight(i,10);
@@ -82,7 +83,12 @@ void gushi::showit(){
     //根据数据库中的股票数据来自动显示股票信息。
 }
 
-
+void gushi::tips(){
+    if(first){
+        QMessageBox::information(this,"提示","双击股票后查看股票的详情",QMessageBox::Close);
+        first=false;
+    }
+}
 
 
 void gushi::on_tableWidget_cellDoubleClicked(int row, int column)

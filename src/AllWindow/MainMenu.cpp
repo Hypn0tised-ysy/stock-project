@@ -9,6 +9,7 @@
 #include "hangqing.h"
 #include "ui_hangqing.h"
 #include "../database/database.h"
+#include "../implementation/Account.h"
 extern Database db;
 MainMenu::MainMenu(Account *_NowUser, QWidget *parent)
     : QWidget(parent), ui(new Ui::Widget)
@@ -21,11 +22,8 @@ MainMenu::MainMenu(Account *_NowUser, QWidget *parent)
     g0.all_stocks=all_stocks;
     setFixedSize(1500, 800);
     w_timer = new QTimer;
-    w_time_record = new QTime;
-    ui->times->setDigitCount(8);
-    init_time();
-    w_timer->start(100);
-    connect(w_timer, SIGNAL(timeout()), this, SLOT(update_time()));
+    w_timer->start(10);
+    connect(w_timer, SIGNAL(timeout()), this, SLOT(update_ticks()));
     init();
     resizeit();
 }
@@ -46,20 +44,18 @@ void MainMenu::init_stocks()
 {
     all_stocks=db.getStocksList();
 }
-void MainMenu::init_time()
-{
-    w_time_record->setHMS(0, 8, 0);
-    ui->times->display(w_time_record->toString("hh:mm:ss"));
-}
 
-void MainMenu::update_time()
-{
-    *w_time_record = w_time_record->addSecs(1);
-    if (w_time_record->hour() == 15)
-    {
-        init_time();
+
+void MainMenu::update_ticks(){
+    int times=ticks_time(1000,0);
+    if(times){
+        ticks+=times;
+        g0.showit();
+        ui->ticks->setText(QString::fromStdString(std::to_string(ticks)));
     }
-    ui->times->display(w_time_record->toString("hh:mm:ss"));
+    else
+        return;
+
 }
 
 void MainMenu::on_zhanghuxinxi_clicked()
@@ -74,12 +70,10 @@ void MainMenu::on_tuichudenglu_clicked()
     emit tuichudenglu();
 }
 
-
-
 void MainMenu::on_chakangushi_clicked()
 {
-    g0.showit();
     g0.show();
+    g0.tips();
 }
 
 void MainMenu::on_hangqing_clicked()
@@ -100,6 +94,6 @@ void MainMenu::resizeit()
     ui->ID->setGeometry(widths * 0.3, heights * 0.4, widths * 0.4, heights * 0.1);
     ui->ID1->setGeometry(widths * 0.4, heights * 0.35, widths * 0.2, heights * 0.05);
     ui->label->setGeometry(widths * 0.4, heights * 0.1, widths * 0.2, heights * 0.2);
-    ui->times->setGeometry(widths * 0.7, heights * 0.1, widths * 0.1, heights * 0.05);
+    ui->ticks->setGeometry(widths * 0.7, heights * 0.1, widths * 0.1, heights * 0.05);
     // 位置重设；
 }

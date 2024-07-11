@@ -246,7 +246,7 @@ std::vector<Order> Account::show_my_order()
     return db.getMyOrdersList(this->return_id());
 }
 
-int time(int duration, int id)//间隔时间，定位到第几号计时器
+int ticks_time(int duration, int id)//间隔时间，定位到第几号计时器
 {
 	static int srt[10];
 	int end = clock();//统计程序运行到此处的时间 clock函数

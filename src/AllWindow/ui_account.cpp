@@ -1,6 +1,7 @@
 #include"ui_account.h"
 #include "ui_ui_account.h"
 #include "../database/database.h"
+
 extern Database db;
 zhanghu::zhanghu(Account *_NowUser, QWidget *parent)
     : QWidget(parent)
@@ -52,6 +53,7 @@ void zhanghu::showit()
         ui->tableWidget->setItem(i,2,item);
         item->setFlags(Qt::ItemIsEnabled);
     }
+    ui->balance_text->setText(QString::number(z_NowUser->return_money(),'f',2));
 }
 void zhanghu::resizeit(){
     int widths=this->width();
@@ -93,8 +95,8 @@ void zhanghu::on_sold_clicked()
 
 void zhanghu::on_dindgan_clicked()
 {
-    d0->showit();
     d0->show();
+    d0->showit();
 }
 
 void zhanghu::on_listWidget_itemDoubleClicked(QListWidgetItem *item)

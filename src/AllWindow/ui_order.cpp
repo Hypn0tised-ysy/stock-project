@@ -33,7 +33,6 @@ void dingdan::resizeit(){
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(3,QHeaderView::Fixed);
     ui->tableWidget->setColumnWidth(4,widths*0.15);
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(4,QHeaderView::Fixed);
-
 }
 
 
@@ -43,39 +42,41 @@ void dingdan::on_close_clicked()
 }
 
 void dingdan::showit()
-{   std::vector<Order> tmp=o_NowUser->show_my_order();
+{
+    std::vector<Order> tmp=o_NowUser->show_my_order();
     ui->tableWidget->setRowCount(tmp.size());
     for(int i=0;i<tmp.size();i++){
         ui->tableWidget->setRowHeight(i,10);
         ui->tableWidget->verticalHeader()->setSectionResizeMode(i,QHeaderView::Fixed);
-        QString s1,s2,s3,s4,s5;
-        s1=QString::fromStdString(tmp[i].symbol);
-        QTableWidgetItem *item=new QTableWidgetItem(s1);
+
+        QTableWidgetItem *item=new QTableWidgetItem(QString::fromStdString(tmp[i].symbol));
         item->setFlags(Qt::ItemIsEnabled);
         ui->tableWidget->setItem(i,0,item);
 
-        s2=QString::fromStdString(std::to_string(tmp[i].Order_id));
-        item=new QTableWidgetItem(s2);
+        item=new QTableWidgetItem(QString::fromStdString(std::to_string(tmp[i].Order_id)));
         item->setFlags(Qt::ItemIsEnabled);
         ui->tableWidget->setItem(i,1,item);
 
-        s3=QString::fromStdString(std::to_string(tmp[i].price));
-        item=new QTableWidgetItem(s3);
+
+        item=new QTableWidgetItem(QString::number(tmp[i].price,'f',2));
         item->setFlags(Qt::ItemIsEnabled);
         ui->tableWidget->setItem(i,2,item);
 
-        bool bs=tmp[i].side;
+        bool bs=tmp[i].side;QString s4;
         if(!bs)
-            s4="买入";
+             s4="买入";
         else s4="卖出";
         item=new QTableWidgetItem(s4);
         item->setFlags(Qt::ItemIsEnabled);
         ui->tableWidget->setItem(i,3,item);
 
-        s5=QString::fromStdString(std::to_string(tmp[i].quantity));
-        item=new QTableWidgetItem(s5);
+        item=new QTableWidgetItem(QString::fromStdString(std::to_string(tmp[i].quantity)));
         item->setFlags(Qt::ItemIsEnabled);
         ui->tableWidget->setItem(i,4,item);
+    }
+    if(first){
+        QMessageBox::information(this,"提示","双击后选择想要删除的的订单",QMessageBox::Close);
+        first=false;
     }
 }
 void dingdan::on_delete_2_clicked()

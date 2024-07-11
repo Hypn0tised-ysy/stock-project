@@ -4,8 +4,6 @@
 #include <QWidget>
 #include <QTime>
 #include <QWidget>
-//#include<utility>
-//#include<map>
 #include "ui_account.h"
 #include "ui_ui_account.h"
 #include "ui_stockmarket.h"
@@ -32,7 +30,6 @@ public:
     MainMenu(Account *NowUser, QWidget *parent = nullptr);
     ~MainMenu();
     void resizeit();
-    //std::map<std::string,Stock> map1;太麻烦，先用数组
     std::vector<Stock> all_stocks;
 public slots:
     void on_tuichudenglu_clicked();
@@ -46,20 +43,18 @@ private slots:
 
     void on_hangqing_clicked();
 
-    void init_time();
-
-    void update_time();
-
     void init();
 
     void init_stocks();
+
+    void update_ticks();
 private:
     Ui::Widget *ui;
     zhanghu* z0;
     gushi g0;
     hangqing h0;
-    QTime *w_time_record;
     QTimer *w_timer;
     Account *NowUser;
+    int ticks=0;
 };
 #endif // WIDGET_H
