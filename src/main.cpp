@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     StockMarket w;
     w.show();
-    /*
+    
     QChartView *pchart;
     //创建一个空windows
     pchart=BuildPriceChart();
@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
     window.resize(800, 600);
     window.show();
     //priceChart.show();
-    */
+    
     return a.exec();
     // 以下为测试代码
 }
