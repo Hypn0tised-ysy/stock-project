@@ -9,7 +9,7 @@
 #include <QDir>
 #include <string>
 #include "./database/database.h"
-//#include "./AllWindow/PriceChart.h"
+#include "./AllWindow/PriceChart.h"
 int main(int argc, char *argv[])
 {
   
@@ -20,6 +20,8 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     StockMarket w;
     w.show();
+    PriceChart priceChart;
+    //priceChart.show();
     return a.exec();
     // 以下为测试代码
 }
