@@ -21,24 +21,24 @@ QVariantList Predictor::predictStockPrices(const QString &symbol)
 {
     std::vector<StockPrice> stocks=dbPtr->getStockPrice(symbol);
 
-    if (stocks.size() < Predictor::End-Predictor::Start) {
+    if (stocks.size() < End-Start) {
         qDebug() << "Not enough data to perform prediction.";
         return QVariantList();
     }
 
-    Eigen::MatrixXd data(Predictor::End-Predictor::Start, 2);//Predictor::End-Predictor::Start个向量，每个向量2个元素
-    for (int i = 0; i < Predictor::End-Predictor::Start; ++i) {
+    Eigen::MatrixXd data(End-Start, 2);//Predictor::End-Predictor::Start个向量，每个向量2个元素
+    for (int i = 0; i < End-Start; ++i) {
         data(i, 0) = i;
         data(i, 1) = stocks[i].price;
     }
 
     Eigen::VectorXd beta = linearRegression(data);
-    Eigen::VectorXd predictions = predict(beta, Predictor::End-Predictor::Start, Predictor::End-Predictor::Start+Predictor::Predict);//Predictor::End-Predictor::Start+Predictor::Predict项预测数据
+    Eigen::VectorXd predictions = predict(beta, End-Start, End-Start+Predict);
 
     QVariantList result;
     for (int i = 0; i < predictions.size(); ++i) {
         QVariantMap prediction;
-        prediction["minute"] = Predictor::End-Predictor::Start + i;
+        prediction["minute"] = End-Start + i;
         prediction["predictedPrice"] = predictions(i);
         result.append(prediction);
     }
