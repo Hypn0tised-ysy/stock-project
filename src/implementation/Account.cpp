@@ -168,6 +168,7 @@ void Account::upgrade(std::string _sym, int _sum, double price, Order&order) // 
 		{
 			My_stock my_new(_sym, _sum);
 			this->mystock.push_back(my_new); // ���µĹ�Ʊ��Ϣ�洢��������
+			db.addUserStock(this->id, QString::fromStdString(_sym), QString::fromStdString(_sym), _sum);
 		}
 		else // ����ֿⲻΪ��
 		{
@@ -178,6 +179,7 @@ void Account::upgrade(std::string _sym, int _sum, double price, Order&order) // 
 				{
 					tem.setnew_sum(tem.get_sum() + _sum); // �����µ�����
 					is_find = true;
+					db.updateUserStock(this->id, QString::fromStdString(_sym),tem.get_sum());
 					break;
 				}
 			}
@@ -186,6 +188,7 @@ void Account::upgrade(std::string _sym, int _sum, double price, Order&order) // 
 			{
 				My_stock my_new(_sym, _sum);
 				this->mystock.push_back(my_new); // ���µĹ�Ʊ��Ϣ�洢��������
+				db.addUserStock(this->id, QString::fromStdString(_sym), QString::fromStdString(_sym), _sum);
 			}
 		}
 	}
@@ -197,6 +200,7 @@ void Account::upgrade(std::string _sym, int _sum, double price, Order&order) // 
 			{
 				//tem->setnew_sum(tem->get_sum() - _sum); // ���¿�������---�����Ѿ��������������ύ������
 				this->money += price;					// ׬Ǯ��
+				db.updateUser(this->id, QString::fromStdString(this->Username), QString::fromStdString(this->password), this->money);
 				break;
 			}
 		}
