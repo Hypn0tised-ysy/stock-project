@@ -2,7 +2,8 @@
 #include<string>
 struct Order {    //原始订单
     int Order_id; //订单号（唯一标志）
-    std::string Peo_id;   //操作者id
+    std::string Peo_id;
+    int userid;   //操作者id
     double price;    //意向价格
     int quantity; //意向数量
 	std::string symbol;//股票的类型
@@ -11,7 +12,7 @@ struct Order {    //原始订单
 		Order_id = oid; Peo_id = pid; side = s; price = p; quantity = q; symbol = sym;
     }
     Order(const Order& o) {
-		Order_id = o.Order_id; Peo_id = o.Peo_id; side = o.side; price = o.price; quantity = o.quantity; symbol = o.symbol;
+		Order_id = o.Order_id; Peo_id = o.Peo_id; side = o.side; price = o.price; quantity = o.quantity; symbol = o.symbol;userid = o.userid;
     }
     bool operator==(const Order& o) {
         return Order_id == o.Order_id;
