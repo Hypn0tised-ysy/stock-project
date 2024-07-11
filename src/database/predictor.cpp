@@ -27,7 +27,7 @@ QVariantList Predictor::predictStockPrices(const QString &symbol)
         return QVariantList();
     }
 
-    Eigen::MatrixXd data(End-Start, 2);//Predictor::End-Predictor::Start个向量，每个向量2个元素
+    Eigen::MatrixXd data(End-Start, 2);//End-Start个向量，每个向量2个元素
     for (int i = 0; i < End-Start; ++i) {
         data(i, 0) = i;
         data(i, 1) = stocks[i].price;
