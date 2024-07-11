@@ -11,14 +11,16 @@ SOURCES += \
     $$files($$PWD/src/database/*.cpp) \
     $$files($$PWD/src/implementation/*.cpp) \
     $$files($$PWD/src/implementation/Accountdata/*.cpp) \
-    $$files($$PWD/src/*.cpp)
+    $$files($$PWD/src/*.cpp) \
+    src/database/predictor.cpp
 
 HEADERS += \
     $$files($$PWD/src/AllWindow/*.h) \
     $$files($$PWD/src/database/*.h) \
     $$files($$PWD/src/implementation/*.h) \
     $$files($$PWD/src/implementation/Accountdata/*.h) \
-    $$files($$PWD/src/*.h)
+    $$files($$PWD/src/*.h) \
+    src/database/predictor.h
 
 FORMS += \
     $$files($$PWD/src/AllWindow/*.ui) \
