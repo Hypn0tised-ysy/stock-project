@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
     StockMarket w;
     w.show();
     PriceChart priceChart;
-    priceChart.show();
+    //priceChart.show();
     return a.exec();
     // 以下为测试代码
 }
