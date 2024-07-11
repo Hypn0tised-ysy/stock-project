@@ -26,6 +26,7 @@ FORMS += \
     src/AllWindow/stockdetails.ui \
     src/AllWindow/trade_details.ui
 INCLUDEPATH += -I $$PWD/env/include
+INCLUDEPATH += -I $$PWD/eigen-3.4.0
 DEPENDPATH += $$PWD/env/include
 LIBS += -L$$PWD/env/libs -lpython39
 # Default rules for deployment.
