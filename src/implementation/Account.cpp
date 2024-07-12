@@ -116,7 +116,7 @@ int Account::add_my_order(int &operatorId, double price, int quantity, const QSt
 			//Order mynew = Order(order_id, user->get_id(user), price, sum, sym, side); // �������붩��
             //std::cout << "����Ϊ����������" << std::endl;
 			this->money -= price*quantity;//delete the money firstly
-			db.updateUser(this->id, QString::fromStdString(this->Username), QString::fromStdString(this->password) , this->price);
+			db.updateUser(this->id, QString::fromStdString(this->Username), QString::fromStdString(this->password) , this->money);
 			return db.addOrder(operatorId, price, quantity, symbol, side);
 		}
 		else
