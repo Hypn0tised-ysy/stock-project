@@ -12,14 +12,15 @@ SOURCES += \
     $$files($$PWD/src/implementation/*.cpp) \
     $$files($$PWD/src/implementation/Accountdata/*.cpp) \
     $$files($$PWD/src/*.cpp) \
-    src/implementation/StockMap.cpp
+    src/database/predictor.cpp
 
 HEADERS += \
     $$files($$PWD/src/AllWindow/*.h) \
     $$files($$PWD/src/database/*.h) \
     $$files($$PWD/src/implementation/*.h) \
     $$files($$PWD/src/implementation/Accountdata/*.h) \
-    $$files($$PWD/src/*.h)
+    $$files($$PWD/src/*.h) \
+    src/database/predictor.h
 
 FORMS += \
     $$files($$PWD/src/AllWindow/*.ui) \
@@ -27,6 +28,7 @@ FORMS += \
     src/AllWindow/stockdetails.ui \
     src/AllWindow/trade_details.ui
 INCLUDEPATH += -I $$PWD/env/include
+INCLUDEPATH += -I $$PWD/eigen-3.4.0
 DEPENDPATH += $$PWD/env/include
 LIBS += -L$$PWD/env/libs -lpython39
 # Default rules for deployment.
