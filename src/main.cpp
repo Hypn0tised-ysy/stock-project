@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
     
     QChartView *pchart;
     //创建一个空windows
-    pchart=BuildPriceChart();
+    pchart=BuildPriceChart("100001");
     QMainWindow window;
     window.setCentralWidget(pchart);
     window.resize(800, 600);

@@ -1,7 +1,7 @@
 #include "PriceChart.h"
 #include "../candlestickdatareader.h"
 QT_CHARTS_USE_NAMESPACE
-QChartView* BuildPriceChart()
+QChartView* BuildPriceChart(QString stockId,int Starttime)
 {
      QCandlestickSeries *acmeSeries = new QCandlestickSeries();
     //acmeSeries->setName("Acme Ltd");
@@ -11,33 +11,27 @@ QChartView* BuildPriceChart()
     QLineSeries *closeSeries = new QLineSeries();
     //closeSeries->setName("close");
     closeSeries->setColor(QColor(Qt::black));
-
-    // 示例数据
-    QFile acmeData("E:/StockMarket/src/acme_data.txt");
-    if (!acmeData.open(QIODevice::ReadOnly | QIODevice::Text))
-        return nullptr;
-
     QStringList categories;
-
-    CandlestickDataReader dataReader(&acmeData);
+    std::vector<QCandlestickSet* > series=BuildPriceChartSeries(stockId,Starttime);
     int i = 0;
-    while (!dataReader.atEnd()) {
-        QCandlestickSet *set = dataReader.readCandlestickSet();
+    for(auto set:series) {
         if (set) {
             acmeSeries->append(set);
             closeSeries->append(QPointF(i++, set->close()));
             categories << QString::number(i);  
         }
     }
-
     QChart *chart = new QChart();
-    chart->addSeries(acmeSeries);
+    chart->addSeries(acmeSeries); 
     chart->addSeries(closeSeries);
     chart->setAnimationOptions(QChart::SeriesAnimations);
-    
     chart->createDefaultAxes();
     QBarCategoryAxis *axisX = qobject_cast<QBarCategoryAxis *>(chart->axes(Qt::Horizontal).at(0));
     axisX->setCategories(categories);
+    if(i>11)
+    {
+        axisX->setRange(categories[i-11],categories[i-1]);
+    }
     QValueAxis *axisY = qobject_cast<QValueAxis *>(chart->axes(Qt::Vertical).at(0));
     axisY->setMax(axisY->max() * 1.01);
     axisY->setMin(axisY->min() * 0.99);    
@@ -187,7 +181,7 @@ std::vector<QCandlestickSet* > BuildPriceChartSeries(QString stockId,int Startti
     {
         checktime++;
     }
-    for(int i=0;i<NowStockPrice.size();i=i+30)//认为30tick为一天
+    for(int i=0;i+30<NowStockPrice.size();i=i+30)//认为30tick为一天
     {
         int StartPrice=NowStockPrice[i].price;
         int EndPrice=NowStockPrice[i+29].price;

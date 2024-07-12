@@ -42,7 +42,7 @@ private:
     QGraphicsSimpleTextItem* y_text;
     QGraphicsSimpleTextItem* cursor_text;
 };
-QChartView *BuildPriceChart();
+QChartView *BuildPriceChart(QString stockId,int Starttime=0);
 std::vector<QCandlestickSet* > BuildPriceChartSeries(QString stockId,int Starttime=0);
 
 
