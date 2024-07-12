@@ -56,6 +56,19 @@ std::vector<double> Predictor::getPrices(const QString &symbol)
     }
     return result;
 }
+std::vector<double> Predictor::getPricesArma(const QString &symbol)
+{
+    armaModel=new ARMA(2,2);//这里把p和q分别设置成2和2
+    std::vector<StockPrice> stocks=dbPtr->getStockPrice(symbol);
+    std::vector<double> data;
+    for(auto item:stocks)
+    {
+        data.push_back(item.price);
+    }
+    armaModel->fit(data);
+    std::vector<double> result=armaModel->predict(Predict);
+    return result;
+}
 
 Eigen::VectorXd Predictor::linearRegression(const MatrixXd &data)
 {
