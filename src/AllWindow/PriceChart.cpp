@@ -178,9 +178,9 @@ void PriceChart::leaveEvent(QEvent *pEvent)
     cursor_text->setVisible(false);
     QChartView::leaveEvent(pEvent);
 }
-std::vector<QCandlestickSet > BuildPriceChartSeries(QString stockId,int Starttime)
+std::vector<QCandlestickSet* > BuildPriceChartSeries(QString stockId,int Starttime)
 {
-    std::vector<QCandlestickSet > series;
+    std::vector<QCandlestickSet* > series;
     std::vector<StockPrice> NowStockPrice=db.getStockPrice(stockId);
     int checktime=0;
     while(NowStockPrice[checktime].time<Starttime)
@@ -204,8 +204,8 @@ std::vector<QCandlestickSet > BuildPriceChartSeries(QString stockId,int Starttim
                 LowPrice=NowStockPrice[j].price;
             }
         }
-        QCandlestickSet acmeSeries(StartPrice,HighPrice,LowPrice,EndPrice);
-        series.push_back(acmeSeries);
+        auto  TodayPrice=new QCandlestickSet(StartPrice,HighPrice,LowPrice,EndPrice);
+        series.push_back(TodayPrice);
     }
     return series;
 } 
