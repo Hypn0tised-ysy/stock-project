@@ -12,7 +12,7 @@ class dingdan : public QWidget
 {
     Q_OBJECT
 public:
-    dingdan(Account *NowUser,QWidget *parent = nullptr);
+    dingdan(QWidget *parent = nullptr);
     ~dingdan();
     void resizeit();
 public slots:
@@ -22,12 +22,10 @@ private slots:
 
     void on_delete_2_clicked();
 
-
     void on_tableWidget_cellDoubleClicked(int row, int column);
 
 private:
     Ui::dingdan *ui;
-    Account* o_NowUser;
     int delete_ID=-1;
     bool first=true;
 };

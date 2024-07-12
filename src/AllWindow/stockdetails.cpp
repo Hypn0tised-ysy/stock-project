@@ -73,7 +73,7 @@ void stockdetails::showit(){
         item=new QTableWidgetItem(QString::fromStdString(std::to_string(tmp1[i].Order_id)));
         item->setFlags(Qt::ItemIsEnabled);
         ui->tableWidget->setItem(i,1,item);
-        item=new QTableWidgetItem("买入");
+        item=new QTableWidgetItem("卖出");
         item->setFlags(Qt::ItemIsEnabled);
         ui->tableWidget->setItem(i,2,item);
         item=new QTableWidgetItem(QString::number(tmp1[i].price,'f',2));
@@ -93,7 +93,7 @@ void stockdetails::showit(){
         item=new QTableWidgetItem(QString::fromStdString(std::to_string(tmp2[j].Order_id)));
         item->setFlags(Qt::ItemIsEnabled);
         ui->tableWidget->setItem(i,1,item);
-        item=new QTableWidgetItem("卖出");
+        item=new QTableWidgetItem("买入");
         item->setFlags(Qt::ItemIsEnabled);
         ui->tableWidget->setItem(i,2,item);
         item=new QTableWidgetItem(QString::number(tmp2[j].price,'f',2));
@@ -102,6 +102,7 @@ void stockdetails::showit(){
         item=new QTableWidgetItem(QString::fromStdString(std::to_string(tmp2[j].quantity)));
         item->setFlags(Qt::ItemIsEnabled);
         ui->tableWidget->setItem(i,4,item);
+        i++;
     }
 }
 void stockdetails::on_close_clicked()

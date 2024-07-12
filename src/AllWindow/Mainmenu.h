@@ -15,6 +15,8 @@
 #include <QPushButton>
 #include "../implementation/Account.h"
 #include "../implementation/stock.h"
+#include "../implementation/StockMap.h"
+#include "../database/database.h"
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
@@ -30,7 +32,6 @@ public:
     MainMenu(Account *NowUser, QWidget *parent = nullptr);
     ~MainMenu();
     void resizeit();
-    std::vector<Stock> all_stocks;
 public slots:
     void on_tuichudenglu_clicked();
 signals:
@@ -50,11 +51,10 @@ private slots:
     void update_ticks();
 private:
     Ui::Widget *ui;
-    zhanghu* z0;
-    gushi g0;
+    zhanghu *z0;
+    gushi *g0;
     hangqing h0;
     QTimer *w_timer;
-    Account *NowUser;
     int ticks=0;
 };
 #endif // WIDGET_H

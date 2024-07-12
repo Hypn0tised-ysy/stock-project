@@ -17,7 +17,7 @@
 #include <QtCharts/QCandlestickSet>
 #include <QtCharts/QCandlestickSeries>
 #include "../candlestickdatareader.h"
-QT_CHARTS_USE_NAMESPACE
+//QT_CHARTS_USE_NAMESPACE
 class PriceChart : public QChartView
 {
 public:
@@ -28,7 +28,7 @@ protected:
     virtual void mousePressEvent(QMouseEvent *pEvent) override;
     virtual void mouseReleaseEvent(QMouseEvent *pEvent) override;
     virtual void wheelEvent(QWheelEvent *pEvent) override;
-    virtual void enterEvent(QEvent *pEvent)override;
+    //virtual void enterEvent(QEvent *pEvent)override;
     virtual void leaveEvent(QEvent *pEvent)override;
 
 private:
@@ -155,13 +155,13 @@ void PriceChart::wheelEvent(QWheelEvent *pEvent)
     QChartView::wheelEvent(pEvent);
 }
 
-void PriceChart::enterEvent(QEvent *pEvent)
+/*void PriceChart::enterEvent(QEvent *pEvent)
 {
     x_line->setVisible(true);
     y_line->setVisible(true);
     cursor_text->setVisible(true);
     QChartView::enterEvent(pEvent);
-}
+}*/
 
 void PriceChart::leaveEvent(QEvent *pEvent)
 {

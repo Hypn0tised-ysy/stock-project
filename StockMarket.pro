@@ -11,7 +11,8 @@ SOURCES += \
     $$files($$PWD/src/database/*.cpp) \
     $$files($$PWD/src/implementation/*.cpp) \
     $$files($$PWD/src/implementation/Accountdata/*.cpp) \
-    $$files($$PWD/src/*.cpp)
+    $$files($$PWD/src/*.cpp) \
+    src/implementation/StockMap.cpp
 
 HEADERS += \
     $$files($$PWD/src/AllWindow/*.h) \

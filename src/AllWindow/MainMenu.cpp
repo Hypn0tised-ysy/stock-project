@@ -8,18 +8,22 @@
 #include "ui_ui_buy_order.h"
 #include "hangqing.h"
 #include "ui_hangqing.h"
-#include "../database/database.h"
+
 #include "../implementation/Account.h"
 extern Database db;
+Account *real_NowUser;
+std::map<std::string, Stock> mp1;
+std::vector<Stock> all_stocks;
 MainMenu::MainMenu(Account *_NowUser, QWidget *parent)
     : QWidget(parent), ui(new Ui::Widget)
 {
-    NowUser = _NowUser;
+    real_NowUser = _NowUser;
     init_stocks();
-    z0=new zhanghu(this->NowUser,nullptr);
-    z0->all_stocks=all_stocks;
+    z0=new zhanghu(nullptr);
+    g0=new gushi(nullptr);
+    z0->mp1=mp1;
     ui->setupUi(this);
-    g0.all_stocks=all_stocks;
+    g0->all_stocks=all_stocks;
     setFixedSize(1500, 800);
     w_timer = new QTimer;
     w_timer->start(10);
@@ -34,24 +38,47 @@ MainMenu::~MainMenu()
 }
 void MainMenu::init()
 {
-    QString s_username=QString::fromStdString(NowUser->return_username());
+    QString s_username=QString::fromStdString(real_NowUser->return_username());
     ui->name->setText(s_username);
-    QString s_id=QString::fromStdString(std::to_string(NowUser->return_id()));
+    QString s_id=QString::fromStdString(std::to_string(real_NowUser->return_id()));
     ui->ID->setText(s_id);
-
+    for(int i=0;i<all_stocks.size();i++)
+    {
+        std::vector<Order> tmp1=db.getOrdersList(QString::fromStdString(all_stocks[i].symbol),true);
+        std::vector<Order> tmp2=db.getOrdersList(QString::fromStdString(all_stocks[i].symbol),false);
+        for(int j=0;j<tmp1.size();j++){
+            mp1[all_stocks[i].symbol].add_order(tmp1[j]);
+        }
+        for(int k=0;k<tmp2.size();k++){
+            mp1[all_stocks[i].symbol].add_order(tmp2[k]);
+        }
+    }
 }
 void MainMenu::init_stocks()
 {
     all_stocks=db.getStocksList();
+    mp1=BuildStockMap(all_stocks);
 }
 
 
 void MainMenu::update_ticks(){
-    int times=ticks_time(1000,0);
+    int times=ticks_time(5000,0);
     if(times){
         ticks+=times;
-        g0.showit();
+        g0->showit();
+        z0->showit();
         ui->ticks->setText(QString::fromStdString(std::to_string(ticks)));
+        /*for(int i=0;i<all_stocks.size();i++)
+        {
+            std::vector<Order> tmp1=db.getOrdersList(QString::fromStdString(all_stocks[i].symbol),true);
+            std::vector<Order> tmp2=db.getOrdersList(QString::fromStdString(all_stocks[i].symbol),false);
+            for(int j=0;j<tmp1.size();j++){
+                all_stocks[i].add_order(tmp1[j]);
+            }
+            for(int k=0;k<tmp2.size();k++){
+                all_stocks[i].add_order(tmp2[k]);
+            }
+        }*/
     }
     else
         return;
@@ -72,8 +99,8 @@ void MainMenu::on_tuichudenglu_clicked()
 
 void MainMenu::on_chakangushi_clicked()
 {
-    g0.show();
-    g0.tips();
+    g0->show();
+    g0->tips();
 }
 
 void MainMenu::on_hangqing_clicked()

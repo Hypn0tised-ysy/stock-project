@@ -18,6 +18,7 @@
 #include "../implementation/Account.h"
 #include "../implementation/My_stock.h"
 #include "../implementation/stock.h"
+#include "../implementation/StockMap.h"
 namespace Ui {
 class zhanghu;
 }
@@ -27,12 +28,12 @@ class zhanghu : public QWidget
     Q_OBJECT
 
 public:
-    zhanghu(Account *NowUser,QWidget *parent = nullptr);
+    zhanghu(QWidget *parent = nullptr);
     ~zhanghu();
     void resizeit();
     void showit();
     void init();
-    std::vector<Stock> all_stocks;
+    std::map<std::string, Stock> mp1;
 private slots:
     void on_tuichu_clicked();
 
@@ -48,12 +49,11 @@ private slots:
 
 private:
     Ui::zhanghu *ui;
-    jiaoyi* j0;
-    jiaoyi2* j1;
-    dingdan* d0;
+    jiaoyi j0;
+    jiaoyi2 j1;
+    dingdan d0;
     balance b0;
     trade_details t0;
-    Account *z_NowUser;
     std::vector<My_stock> ms;
 };
 

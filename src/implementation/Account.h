@@ -38,6 +38,13 @@ public:
     // Account* find_user(std::string _id);//????????id?????
     void setmoney(double mm);
     Account(int _id); // ??????
+    Account(int _id,std::string _Username,std::string password,double money)
+    {
+        id=_id;
+        Username=_Username;
+        this->password=password;
+        this->money=money;
+    }    // ???
     std::string return_username();//
     int return_id();//
     double return_money();//

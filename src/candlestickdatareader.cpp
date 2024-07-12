@@ -28,7 +28,7 @@
 ****************************************************************************/
 
 #include "candlestickdatareader.h"
-
+#include<QString>
 CandlestickDataReader::CandlestickDataReader(QIODevice *device)
     : QTextStream(device)
 {
@@ -52,7 +52,8 @@ QCandlestickSet *CandlestickDataReader::readCandlestickSet()
     //! [1]
 
     //! [2]
-    QStringList strList = line.split(" ", QString::SkipEmptyParts);
+    QStringList strList = line.split(" ", Qt::SkipEmptyParts);//6.60
+    //QStringList strList = line.split(" ", QString::SkipEmptyParts);6.51
     if (strList.count() != 5)
         return 0;
     //! [2]

@@ -5,6 +5,8 @@
 #include <QDialog>
 #include<QLineEdit>
 #include "../implementation/Account.h"
+#include "../implementation/stock.h"
+#include "../implementation/order.h"
 namespace Ui {
 class jiaoyi;
 }
@@ -14,7 +16,7 @@ class jiaoyi : public QWidget
     Q_OBJECT
 
 public:
-    jiaoyi(Account *NowUser,QWidget *parent = nullptr);
+    jiaoyi(QWidget *parent = nullptr);
     ~jiaoyi();
     void resizeit();
 signals:
@@ -28,7 +30,6 @@ private slots:
 
 private:
     Ui::jiaoyi *ui;
-    Account *b_NowUser;
 };
 
 #endif // UI_BUY_ORDER_H

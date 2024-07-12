@@ -1,16 +1,13 @@
 #include"ui_account.h"
 #include "ui_ui_account.h"
 #include "../database/database.h"
-
+#include"Mainmenu.h"
+extern Account* real_NowUser;
 extern Database db;
-zhanghu::zhanghu(Account *_NowUser, QWidget *parent)
+zhanghu::zhanghu(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::zhanghu)
-{
-    z_NowUser=_NowUser;
-    j0=new jiaoyi(z_NowUser,nullptr);
-    j1=new jiaoyi2(z_NowUser,nullptr);
-    d0=new dingdan(z_NowUser,nullptr);
+{ 
     ui->setupUi(this);
     setFixedSize(1500, 800);
     init();
@@ -24,36 +21,30 @@ zhanghu::~zhanghu()
 }
 
 void zhanghu::init(){
-    ui->nicheng->setText(QString::fromStdString(z_NowUser->return_username()));
-    ui->ID->setText(QString::fromStdString(std::to_string(z_NowUser->return_id())));
+    ui->nicheng->setText(QString::fromStdString(real_NowUser->return_username()));
+    ui->ID->setText(QString::fromStdString(std::to_string(real_NowUser->return_id())));
 
-    ui->balance_text->setText(QString::number(z_NowUser->return_money(),'f',2));
-    ms=z_NowUser->show_my_stock();
+    ui->balance_text->setText(QString::number(real_NowUser->return_money(),'f',2));
+    ms=real_NowUser->show_my_stock();
 }
 void zhanghu::showit()
 {
     ui->tableWidget->setRowCount(ms.size());
-    ms=z_NowUser->show_my_stock();
+    ms=real_NowUser->show_my_stock();
     for(int i=0;i<ms.size();i++){
         ui->tableWidget->setRowHeight(i,10);
         ui->tableWidget->verticalHeader()->setSectionResizeMode(i,QHeaderView::Fixed);
         QTableWidgetItem *item=new QTableWidgetItem(QString::fromStdString(ms[i].get_name()));
         item->setFlags(Qt::ItemIsEnabled);
         ui->tableWidget->setItem(i,0,item);
-        for(int j=0;j<this->all_stocks.size();j++){
-            if(ms[i].get_name()==this->all_stocks[j].symbol)
-            {
-                item=new QTableWidgetItem(QString::fromStdString(this->all_stocks[j].name));
-                break;
-            }
-        }
+        item=new QTableWidgetItem(QString::fromStdString(this->mp1[ms[i].get_name()].name));
         item->setFlags(Qt::ItemIsEnabled);
         ui->tableWidget->setItem(i,1,item);
         item=new QTableWidgetItem(QString::fromStdString(std::to_string(ms[i].get_sum())));
         ui->tableWidget->setItem(i,2,item);
         item->setFlags(Qt::ItemIsEnabled);
     }
-    ui->balance_text->setText(QString::number(z_NowUser->return_money(),'f',2));
+    ui->balance_text->setText(QString::number(real_NowUser->return_money(),'f',2));
 }
 void zhanghu::resizeit(){
     int widths=this->width();
@@ -85,18 +76,18 @@ void zhanghu::on_tuichu_clicked()
 
 void zhanghu::on_buy_clicked()
 {
-    j0->show();
+    j0.show();
 }
 
 void zhanghu::on_sold_clicked()
 {
-    j1->show();
+    j1.show();
 }
 
 void zhanghu::on_dindgan_clicked()
 {
-    d0->show();
-    d0->showit();
+    d0.show();
+    d0.showit();
 }
 
 void zhanghu::on_listWidget_itemDoubleClicked(QListWidgetItem *item)

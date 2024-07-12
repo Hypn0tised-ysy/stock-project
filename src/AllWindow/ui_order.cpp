@@ -3,10 +3,12 @@
 #include<vector>
 #include<QString>
 #include<QMessageBox>
-dingdan::dingdan(Account *_NowUser,QWidget *parent)
+#include"Mainmenu.h"
+extern Account* real_NowUser;
+dingdan::dingdan(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::dingdan)
-{   o_NowUser=_NowUser;
+{
     ui->setupUi(this);
     setFixedSize(600, 500);
     resizeit();
@@ -43,7 +45,7 @@ void dingdan::on_close_clicked()
 
 void dingdan::showit()
 {
-    std::vector<Order> tmp=o_NowUser->show_my_order();
+    std::vector<Order> tmp=real_NowUser->show_my_order();
     ui->tableWidget->setRowCount(tmp.size());
     for(int i=0;i<tmp.size();i++){
         ui->tableWidget->setRowHeight(i,10);
@@ -88,7 +90,7 @@ void dingdan::on_delete_2_clicked()
     }
     else
     {
-       int tmp= o_NowUser->removeOrder(delete_ID);
+       int tmp= real_NowUser->removeOrder(delete_ID);
         if(tmp<=0)
        {
            QMessageBox::information(this,"警告","无法删除相应订单",QMessageBox::Close);

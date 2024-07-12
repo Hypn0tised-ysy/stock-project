@@ -23,6 +23,7 @@ void balance::resizeit()
     ui->textBrowser->setGeometry(widths*0.6,heights*0.25,widths*0.3,heights*0.1);
     ui->label->setGeometry(widths*0.1,heights*0.1,widths*0.2,heights*0.1);
     ui->tableWidget->setGeometry(widths*0.05,heights*0.25,widths*0.5,heights*0.6);
+
 }
 void balance::on_close_clicked()
 {

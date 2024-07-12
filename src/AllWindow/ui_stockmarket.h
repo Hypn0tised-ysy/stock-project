@@ -32,17 +32,17 @@ public slots:
 private slots:
     void on_close_clicked();
 
-    void init_time();
+    //void init_time();
 
-    void update_time();
+    //void update_time();
 
 
     void on_tableWidget_cellDoubleClicked(int row, int column);
 
 private:
     Ui::gushi *ui;
-    QTime *time_record;
-    QTimer *timer;
+   // QTime *time_record;
+   // QTimer *timer;
     bool first=true;
 };
 
