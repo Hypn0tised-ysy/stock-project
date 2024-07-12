@@ -237,6 +237,7 @@ int Account::removeOrder(int Orderid)
 			else//If it is a buy order
 			{
 				this->money += tem.price*tem.quantity;
+				db.updateUser(this->id, QString::fromStdString(this->Username), QString::fromStdString(this->password), this->money);
 				if (db.removeOrder(Orderid))
                     return Orderid;
 				else

@@ -94,6 +94,10 @@ void Stock::add_order(Order &order) {
 				buyer.upgrade(buyi->next->order.symbol, buyi->next->order.quantity,(buyi->next->order.quantity*selli->next->order.price), buyi->next->order);
 				buyi->next->order.quantity = 0;//订单清空
 				db.removeOrder(buyi->next->order.Order_id);//
+				if (selli->next->order.quantity == 0)
+				{
+					db.removeOrder(selli->next->order.Order_id);
+				}
             }
             else {//买量大于卖量
                 //std::cout << "部分成交：" << buyi->next->order.Order_id << " 股票代码：" << symbol << " 数量: " <<
