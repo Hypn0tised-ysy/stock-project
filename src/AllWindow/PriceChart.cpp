@@ -27,11 +27,14 @@ QChartView* BuildPriceChart(QString stockId,int Starttime)
     chart->setAnimationOptions(QChart::SeriesAnimations);
     chart->createDefaultAxes();
     QBarCategoryAxis *axisX = qobject_cast<QBarCategoryAxis *>(chart->axes(Qt::Horizontal).at(0));
+    QValueAxis *axisX2= qobject_cast<QValueAxis *>(chart->axes(Qt::Horizontal).at(1));
     axisX->setCategories(categories);
-    if(i>11)
+    if(i>21)
     {
-        axisX->setRange(categories[i-11],categories[i-1]);
+        axisX->setRange(categories[i-21],categories[i-1]);
+        axisX2->setRange(i-21,i-1);
     }
+    axisX2->setVisible(false);
     QValueAxis *axisY = qobject_cast<QValueAxis *>(chart->axes(Qt::Vertical).at(0));
     axisY->setMax(axisY->max() * 1.01);
     axisY->setMin(axisY->min() * 0.99);    
@@ -93,7 +96,7 @@ void PriceChart::mouseMoveEvent(QMouseEvent *pEvent)
     if (x>=candle->count()) x = candle->count()-1;
     auto d = candle->sets().at(x)->close();
     cursor_text->setText(QString("sit:%1:%2").arg(x).arg(d));
-    y_text->setText(QString("y:%1").arg(chart()->mapToValue(pEvent->pos()).y()));
+    y_text->setText(QString("y:%1").arg(std::round(chart()->mapToValue(pEvent->pos()).y()*100)/100));
     // 调整显示内容到鼠标右上
     auto pos = pEvent->pos();
     pos.setY(pos.ry()-20);
@@ -181,21 +184,21 @@ std::vector<QCandlestickSet* > BuildPriceChartSeries(QString stockId,int Startti
     {
         checktime++;
     }
-    for(int i=0;i+30<NowStockPrice.size();i=i+30)//认为30tick为一天
+    for(int i=0;i+600<NowStockPrice.size();i=i+600)//认为300tick为一天
     {
-        int StartPrice=NowStockPrice[i].price;
-        int EndPrice=NowStockPrice[i+29].price;
-        int HighPrice=NowStockPrice[i].price;
-        int LowPrice=NowStockPrice[i].price;
-        for(int j=i;j<i+30;j++)
+        double StartPrice = std::round(NowStockPrice[i].price * 100) / 100;
+        double EndPrice=std::round(NowStockPrice[i+599].price*100)/100;
+        double HighPrice=std::round(NowStockPrice[i].price*100)/100;
+        double LowPrice=std::round(NowStockPrice[i].price*100)/100;
+        for(int j=i;j<i+600;j++)
         {
             if(NowStockPrice[j].price>HighPrice)
             {
-                HighPrice=NowStockPrice[j].price;
+                HighPrice=std::round(NowStockPrice[j].price*100)/100;
             }
             if(NowStockPrice[j].price<LowPrice)
             {
-                LowPrice=NowStockPrice[j].price;
+                LowPrice=std::round(NowStockPrice[j].price*100)/100;
             }
         }
         auto  TodayPrice=new QCandlestickSet(StartPrice,HighPrice,LowPrice,EndPrice);
