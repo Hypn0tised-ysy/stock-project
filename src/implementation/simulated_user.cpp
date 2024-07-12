@@ -1,51 +1,128 @@
 #include "simulated_user.h"
-Simulated_user::Simulated_user(std::string _id,double _money){
-    id = _id;
-    money = _money;
-}
+#include "../database/database.h"
+extern Database db;
+
 
 void Simulated_user::create_s_acc() {
     for (int i = 0; i < 1000; i++) {
-        std::string id = "s_user" + std::to_string(i); // 生成用户id
+        std::string name = "s_user" + std::to_string(i+1); // 生成用户id
         std::string password = "111111111";
-        enroll(id, password);
+        enroll(name, password);
     }
 }
 void Simulated_user::simulated_trade() {
-    // 定义计时器周期为60秒
-    const std::chrono::seconds timerInterval(60);
+    // 定义计时器周期为tick
+    const std::chrono::seconds timerInterval(tick);
 
     // 启动计时器
     while (true) {
         // 获取当前时间点
         auto startTime = std::chrono::steady_clock::now();
+        //设置随机数种子
+        srand(time(NULL));
+        //随机事件名称
+        std::string ev = "Event";
+        //股价涨跌
+        bool gob = rand() % 2;
+        //发生事件e
+        Event e(ev, gob);
+        //获取股票总数
+        int n = db.getStocksList.size();
+        //股票编号
+        int s_id = rand() % n+1;
+        //获取股票类型
+        Stock s=db.getStock(s_id);
 
-        std::string peo_id = "s_user" + std::to_string(rand() % 1000);
-        srand((unsigned int)time(NULL));
+        Event.impact(s);
+       
         // 模拟10个用户进行交易
         for (int i = 0; i < 10; i++) {
             // 随机生成交易订单数据
-            int d = 0;
-            for (int j = 0; j < 7; j++)
-            {
-                d = d * 10 + rand() % 9 + 1;
-            }
-            int order_id = d;
-            std::string peo_id = "s_user" + std::to_string(rand()%1000);
-            int j = rand() % 9;
-            double price = stock.stk[j].market_price;
-            int quantity = rand() % 100 + 1; // 随机生成数量
-            bool side = rand() % 2; // 0为买入，1为卖出
+           
+            int peo_id = rand() % 1000+1;
+            double price;
+            int quantity;
+            double ra = (rand() % 5 + 1) / 100;
+                //胆大型用户（编号1到300）
+                if (1 <= peo_id <= 300) {
+                    //根据当前形势决定高价买入上涨股票或是低卖出下跌股票
+                    //如果事件可能导致s股票上涨
+                    if (gob) {
+                        //高价买入大量股票
+                        price = s.market_price * (1 + ra);
+                        quantity = 20* (rand() % 9 + 1);
+                        add_my_order(peo_id, price, quantity, s.symbol, !gob);
+                    }
+                    //如果事件不利于s股票
+                    else {
+                        //检查仓库有无s股票，如果有，低价卖出
+                        for (int i = 0; i < db.getMyStock(peo_id).size(); i++)
+                        {
+                            if (s.symbol == db.getMyStock(peo_id)[i].symbol)
+                            {
+                                price = s.market_price * (1 - ra);
+                                //卖出一半s股票
+                                quantity = db.getMyStock(peo_id)[i].sum /2;
+                                add_my_order(peo_id, price, quantity, s.symbol, !gob);
+                                break;
+                            }
+                        }
+                    }
+                }
+            //无脑型用户（编号301到700）
+                else if (300 < peo_id <= 700)
+                {
+                    bool ra2 = rand() % 2;
+                    //高价买入s股票
+                    if (ra2)
+                    {
 
-            Order order(order_id, peo_id, price, quantity,stk[j].symbol, side);
+                        price = s.market_price*1.01;
+                        quantity = 10 * (rand() % 9 + 1);
+                        add_my_order(peo_id, price, quantity, s.symbol, !ra2);
+                    }
+                    else
+                    {//如果仓库存在股票，低价售出
+                        for (int i = 0; i < db.getMyStock(peo_id).size(); i++)
+                        {
+                            if (s.symbol == db.getMyStock(peo_id)[i].symbol)
+                            {
+                                price = s.market_price * 0.98;
+                                quantity = db.getMyStock(peo_id)[i].sum / 2;
+                                add_my_order(peo_id, price, quantity, s.symbol, ra2);
+                                break;
+                            }
+                        }
+                    }
 
-            
+                }
+            //胆小型用户（编号701到1000）
+                else if(700<peo_id<=1000)
+                {
+                    //如果事件有利于s股票，谨慎购入
+                    if (gob)
+                    {
+                        price = s.market_price * (1 + ra);
+                        quantity = 10 * (rand() % 9 + 1);
+                        add_my_order(peo_id, price, quantity, s.symbol, !gob);
 
-            // 添加订单到股票交易系统中
-            stock.add_order(order);
-
-            
-        }
+                    }
+                    else
+                    {
+                        //检查仓库有无s股票，如果有，低价卖出
+                        for (int i = 0; i < db.getMyStock(peo_id).size(); i++)
+                        {
+                            if (s.symbol == db.getMyStock(peo_id)[i].symbol)
+                            {
+                                price = s.market_price * (1 - ra);
+                                //卖出全部股票
+                                quantity = db.getMyStock(peo_id)[i].sum ;
+                                add_my_order(peo_id, price, quantity, s.symbol, !gob);
+                                break;
+                            }
+                        }
+                    }
+                }
 
         // 计算下一个时间点
         auto endTime = std::chrono::steady_clock::now();
@@ -59,103 +136,6 @@ void Simulated_user::simulated_trade() {
 }
 
 
-void Simulated_user::upgrade(std::string _sym, int _sum, double price, Order& order)//更新库存信息,根据指定的价格
-{
-    if (!order.side)//如果是买入信息
-    {
-        this->money -= price;  
-        if (this->stocks.empty())//如果仓库为空
-        {
-            stocks* my_new = new My_stock(_sym, _sum);
-            this->stocks.push_back(my_new);//将新的股票信息存储进入库存中
-        }
-        else//如果仓库不为空
-        {
-            bool is_find = false;//是否找到有该种股票
-            for (auto tem : stocks)
-            {
-                if (tem->get_name() == _sym)//如果库存中有这个股票，就进行增加
-                {
-                    tem->setnew_sum(tem->get_sum() + _sum);//设置新的数量
-                    is_find = true;
-                    break;
-                }
-            }
-            //如果库存中没有这种股票，那就添加进去
-            if (!is_find)
-            {
-                My_stock* my_new = new My_stock(_sym, _sum);
-                this->stocks.push_back(my_new);//将新的股票信息存储进入库存中
-            }
 
-        }
-
-    }
-    else//如果是卖出信息,//之前已经判定过仓库要有对应东西才能卖出，所以这里应该默认仓库是有对应的东西的
-    {
-        for (auto tem : stocks)
-        {
-            if (_sym == tem->get_name())//找到了仓库的库存了
-            {
-                tem->setnew_sum(tem->get_sum() - _sum);//更新库存的数量
-                this->money += price;//赚钱了
-                break;
-            }
-        }
-    }
-}
-
-
-Order add_my_order(int order_id, Simulated_user* user, double price, int sum, std::string sym, bool side)
-{
-
-    std::vector<My_stock*> my = user->show_my_stock(); 
-    if (!side)											// 买入订单
-    {
-        if (user->is_oktobuy(price * sum, user)) // 是否有足够的金额去提交买入订单
-        {
-            Order mynew = Order(order_id, user->get_id(user), price, sum, sym, side); // 创建买入订单
-
-            return mynew;
-        }
-        else
-        {
-            
-            Order error = Order(); 
-            return error;
-        }
-
-    }
-    else // 卖出订单--匹配自己的库存是否有对应代号的股票和对应的数量的股票
-    {
-        // 如果仓库为空
-        if (my.empty()) 
-        {
-            
-            Order error = Order(); // 创建买入订单
-            return error;
-        }
-        for (auto tem : my) 
-        {
-            if (tem->get_name() == sym) // 当在自己的库存中找到了对应的股票代码
-            {
-                if (sum <= tem->get_sum()) // 并且自己库存量还足够，提交卖出订单
-                {
-                    Order mynew = Order(order_id, user->get_id(user), price, sum, sym, side); // 创建订单
-                    return mynew;
-                }
-                else // 库存中股数不足以卖出这么多订单
-                {
-                    
-                    Order error = Order(); // 空订单，到时候看怎么判断错误
-                    return error;
-                }
-            }
-        }
-      
-        Order error = Order(); // 空订单，到时候看怎么判断错误
-        return error;
-    }
-}
 
 
