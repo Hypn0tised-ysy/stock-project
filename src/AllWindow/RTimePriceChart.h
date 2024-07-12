@@ -12,19 +12,18 @@
 #include <QtCharts/QLineSeries>
 #include <QtCharts/QChartView>
 #include <QtCharts/QValueAxis>
-#include <QDebug>
-#include <QObject>
 #include <QtCharts/QCandlestickSet>
 #include <QtCharts/QCandlestickSeries>
 #include "../candlestickdatareader.h"
 #include <vector>
 #include "../database/database.h"
+#include "../implementation/StockPrice.h"
 QT_CHARTS_USE_NAMESPACE
-class PriceChart : public QChartView
+class RTimePriceChart : public QChartView
 {
 public:
-    PriceChart(QChart* chart = nullptr);
-    virtual ~PriceChart();
+    RTimePriceChart(double StartPrice,QChart* chart = nullptr);
+    virtual ~RTimePriceChart();
 protected:
     virtual void mouseMoveEvent(QMouseEvent *pEvent) override;
     virtual void mousePressEvent(QMouseEvent *pEvent) override;
@@ -41,8 +40,22 @@ private:
     QGraphicsLineItem* y_line;
     QGraphicsSimpleTextItem* y_text;
     QGraphicsSimpleTextItem* cursor_text;
+    QGraphicsLineItem* StartPriceLine;
 };
-QChartView *BuildPriceChart(QString stockId,int Starttime=0);
-std::vector<QCandlestickSet* > BuildPriceChartSeries(QString stockId,int Starttime=0);
-
-
+class RTimePriceChartView:public  QChartView
+{
+    Q_OBJECT
+    private:
+    
+    std::vector<double> SecondStockPrice;
+    std::vector<double> MinuteStockPrice;
+   
+    public:
+    RTimePriceChartView(std::vector<StockPrice> _StockPrice,QChart *chart=nullptr);
+    void UpdateNewSecond(double price);
+    ~RTimePriceChartView(); 
+    RTimePriceChart *RTimechart;
+    QLineSeries *secondSeries;
+    QLineSeries *minuteSeries;
+    QChart* ShowChart;
+};
