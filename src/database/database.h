@@ -12,6 +12,7 @@
 #include "../implementation/order.h"
 #include "../implementation/Stock.h"
 #include "../implementation/My_stock.h"
+#include "../implementation/StockPrice.h"
 class Database : public QObject
 {
     Q_OBJECT
@@ -42,20 +43,19 @@ public:
     bool updateOrder(int orderId, int &operatorId, double price, int quantity,const QString &symbol, bool side);
     QVariantList getOrder(int orderId);
     std::vector<Order> getOrdersList(QString symbol, bool side);
+    std::vector<Order> getMyOrdersList(int userId);
     // operate users' stock
     bool addUserStock(int userId, const QString &symbol, const QString &name, int quantity);
     bool removeUserStock(int userId, const QString &symbol);
     bool updateUserStock(int userId, const QString &symbol, int quantity);
     QVariantList getUserStocks(int userId);
     std::vector<My_stock> getMyStock(int userId);
+    int getStockQuantity(int userId, const QString &symbol);
+    bool addStockPrice(const QString &symbol, double price, int &time);
+    std::vector<StockPrice> getStockPrice(const QString &symbol);
+    int getNewestTime();
 
 private:
     QSqlDatabase db;
 };
 extern Database db;
-/*
- * 先声明一个Database对象，
- * QSqlDatabase db;
- * 调用openDatabase函数（指定一个数据库名stock之类的），对数据库操作完毕后，调用closeDatabase函数
- * /
- */

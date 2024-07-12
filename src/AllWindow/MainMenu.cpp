@@ -1,25 +1,33 @@
 #include "Mainmenu.h"
 #include "ui_Mainmenu.h"
-#include "zhanghu.h"
-#include "ui_zhanghu.h"
-#include "gushi.h"
-#include "ui_gushi.h"
-#include "jiaoyi.h"
-#include "ui_jiaoyi.h"
+#include "ui_account.h"
+#include "ui_ui_account.h"
+#include "ui_stockmarket.h"
+#include "ui_ui_stockmarket.h"
+#include "ui_buy_order.h"
+#include "ui_ui_buy_order.h"
 #include "hangqing.h"
 #include "ui_hangqing.h"
+
+#include "../implementation/Account.h"
+extern Database db;
+Account *real_NowUser;
+std::map<std::string, Stock> mp1;
+std::vector<Stock> all_stocks;
 MainMenu::MainMenu(Account *_NowUser, QWidget *parent)
     : QWidget(parent), ui(new Ui::Widget)
 {
-    NowUser = _NowUser;
+    real_NowUser = _NowUser;
+    init_stocks();
+    z0=new zhanghu(nullptr);
+    g0=new gushi(nullptr);
+    z0->mp1=mp1;
     ui->setupUi(this);
+    g0->all_stocks=all_stocks;
     setFixedSize(1500, 800);
     w_timer = new QTimer;
-    w_time_record = new QTime;
-    ui->times->setDigitCount(8);
-    init_time();
-    w_timer->start(100);
-    connect(w_timer, SIGNAL(timeout()), this, SLOT(update_time()));
+    w_timer->start(10);
+    connect(w_timer, SIGNAL(timeout()), this, SLOT(update_ticks()));
     init();
     resizeit();
 }
@@ -30,46 +38,69 @@ MainMenu::~MainMenu()
 }
 void MainMenu::init()
 {
-    QString s_username=QString::fromStdString(NowUser->return_username());
+    QString s_username=QString::fromStdString(real_NowUser->return_username());
     ui->name->setText(s_username);
-    QString s_id=QString::fromStdString(std::to_string(NowUser->return_id()));
+    QString s_id=QString::fromStdString(std::to_string(real_NowUser->return_id()));
     ui->ID->setText(s_id);
-
-}
-
-void MainMenu::init_time()
-{
-    w_time_record->setHMS(0, 8, 0);
-    ui->times->display(w_time_record->toString("hh:mm:ss"));
-}
-
-void MainMenu::update_time()
-{
-    *w_time_record = w_time_record->addSecs(1);
-    if (w_time_record->hour() == 15)
+    for(int i=0;i<all_stocks.size();i++)
     {
-        init_time();
+        std::vector<Order> tmp1=db.getOrdersList(QString::fromStdString(all_stocks[i].symbol),true);
+        std::vector<Order> tmp2=db.getOrdersList(QString::fromStdString(all_stocks[i].symbol),false);
+        for(int j=0;j<tmp1.size();j++){
+            mp1[all_stocks[i].symbol].add_order(tmp1[j]);
+        }
+        for(int k=0;k<tmp2.size();k++){
+            mp1[all_stocks[i].symbol].add_order(tmp2[k]);
+        }
     }
-    ui->times->display(w_time_record->toString("hh:mm:ss"));
+}
+void MainMenu::init_stocks()
+{
+    all_stocks=db.getStocksList();
+    mp1=BuildStockMap(all_stocks);
+}
+
+
+void MainMenu::update_ticks(){
+    int times=ticks_time(5000,0);
+    if(times){
+        ticks+=times;
+        g0->showit();
+        z0->showit();
+        ui->ticks->setText(QString::fromStdString(std::to_string(ticks)));
+        /*for(int i=0;i<all_stocks.size();i++)
+        {
+            std::vector<Order> tmp1=db.getOrdersList(QString::fromStdString(all_stocks[i].symbol),true);
+            std::vector<Order> tmp2=db.getOrdersList(QString::fromStdString(all_stocks[i].symbol),false);
+            for(int j=0;j<tmp1.size();j++){
+                all_stocks[i].add_order(tmp1[j]);
+            }
+            for(int k=0;k<tmp2.size();k++){
+                all_stocks[i].add_order(tmp2[k]);
+            }
+        }*/
+    }
+    else
+        return;
+
 }
 
 void MainMenu::on_zhanghuxinxi_clicked()
 {
-    //Account* NowUsers=NowUser;
-    //z0.get_account(NowUsers);
-    z0.show();
+    z0->showit();
+    z0->show();
 }
 
 void MainMenu::on_tuichudenglu_clicked()
 {
-    emit tuichudenglu();
     close();
+    emit tuichudenglu();
 }
 
 void MainMenu::on_chakangushi_clicked()
 {
-    g0.showit();
-    g0.show();
+    g0->show();
+    g0->tips();
 }
 
 void MainMenu::on_hangqing_clicked()
@@ -90,6 +121,6 @@ void MainMenu::resizeit()
     ui->ID->setGeometry(widths * 0.3, heights * 0.4, widths * 0.4, heights * 0.1);
     ui->ID1->setGeometry(widths * 0.4, heights * 0.35, widths * 0.2, heights * 0.05);
     ui->label->setGeometry(widths * 0.4, heights * 0.1, widths * 0.2, heights * 0.2);
-    ui->times->setGeometry(widths * 0.7, heights * 0.1, widths * 0.1, heights * 0.05);
+    ui->ticks->setGeometry(widths * 0.7, heights * 0.1, widths * 0.1, heights * 0.05);
     // 位置重设；
 }

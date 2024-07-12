@@ -4,16 +4,19 @@
 #include <QWidget>
 #include <QTime>
 #include <QWidget>
-#include "zhanghu.h"
-#include "ui_zhanghu.h"
-#include "gushi.h"
-#include "ui_gushi.h"
+#include "ui_account.h"
+#include "ui_ui_account.h"
+#include "ui_stockmarket.h"
+#include "ui_ui_stockmarket.h"
 #include "hangqing.h"
 #include "ui_hangqing.h"
 #include <QProgressBar>
 #include <QMessageBox>
 #include <QPushButton>
 #include "../implementation/Account.h"
+#include "../implementation/stock.h"
+#include "../implementation/StockMap.h"
+#include "../database/database.h"
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
@@ -29,7 +32,6 @@ public:
     MainMenu(Account *NowUser, QWidget *parent = nullptr);
     ~MainMenu();
     void resizeit();
-
 public slots:
     void on_tuichudenglu_clicked();
 signals:
@@ -42,18 +44,17 @@ private slots:
 
     void on_hangqing_clicked();
 
-    void init_time();
-
-    void update_time();
-
     void init();
+
+    void init_stocks();
+
+    void update_ticks();
 private:
     Ui::Widget *ui;
-    zhanghu z0;
-    gushi g0;
+    zhanghu *z0;
+    gushi *g0;
     hangqing h0;
-    QTime *w_time_record;
     QTimer *w_timer;
-    Account *NowUser;
+    int ticks=0;
 };
 #endif // WIDGET_H

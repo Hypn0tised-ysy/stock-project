@@ -17,17 +17,21 @@ int enroll(std::string _id, std::string _password)
 	QString password = QString::fromStdString(_password);
 	return db.addUser(Username, password, 50000);
 }
-    std::string Account::return_username()
+std::string Account::return_username()
 {
     return Username;
 }
-    int Account::return_id()
+int Account::return_id()
 {
     return id;
 }
+double Account::return_money()
+{
+    return money;
+}
 // void Account::setid(Account *user,bool &reg,std::string s)
 //{
-//	if (acc.empty())//Èç¹ûÕËºÅÊı¾İ´æ´¢ÖĞÃ»ÓĞÕËºÅĞÅÏ¢£¬Ôò
+//	if (acc.empty())//ï¿½ï¿½ï¿½ï¿½Ëºï¿½ï¿½ï¿½ï¿½İ´æ´¢ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Ëºï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½
 //	{
 //		user->id = s;
 //		reg = false;
@@ -35,18 +39,18 @@ int enroll(std::string _id, std::string _password)
 //
 //	else
 //	{
-//		for (auto t : acc)//±éÀúÕË»§µÄÊı¾İ´æ´¢¿â
+//		for (auto t : acc)//ï¿½ï¿½ï¿½ï¿½ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½İ´æ´¢ï¿½ï¿½
 //		{
-//			if (s == t->id)//µ±ÄãÊäÈëµÄÕËºÅĞÅÏ¢ÓëÊı¾İ¿âÖĞ´æÔÚµÄĞÅÏ¢ÓĞÖØ¸´µÄÊ±ºò
+//			if (s == t->id)//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëºï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½İ¿ï¿½ï¿½Ğ´ï¿½ï¿½Úµï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½Ø¸ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
 //			{
 //				std::cout << "somebody use this id,Please try another one" << std::endl;
-//				reg = true;//ÖØĞÂÊäÒ»±é
+//				reg = true;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½
 //				return;
 //			}
 //		}
-//		user->id = s;//×¢²áĞÅÏ¢Í¨¹ıÒªÇó£¬¿ÉÒÔ×¢²á
+//		user->id = s;//×¢ï¿½ï¿½ï¿½ï¿½Ï¢Í¨ï¿½ï¿½Òªï¿½ó£¬¿ï¿½ï¿½ï¿½×¢ï¿½ï¿½
 //
-//		reg = false;//¸ü¸ÄÅĞ¶¨Ìõ¼ş
+//		reg = false;//ï¿½ï¿½ï¿½ï¿½ï¿½Ğ¶ï¿½ï¿½ï¿½ï¿½ï¿½
 //	}
 // }
 
@@ -66,9 +70,9 @@ int login(std::string _id, std::string _password)
 	return db.CheckUser(id, password);
 }
 
-bool Account::is_oktobuy(double price, Account *user)
+bool Account::is_oktobuy(double price)
 {
-	if (user->money < price) // µ±¶©µ¥ĞèÇóÂú×ãÓà¶îµÄÊ±ºò
+	if (this->money < price) // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
 	{
 		return false;
 	}
@@ -77,117 +81,186 @@ bool Account::is_oktobuy(double price, Account *user)
 		return true;
 	}
 }
-// Account* Account::Getaccount(bool is_ok)//¿ÉÒÔ°ÑÄÇ¸öenrollµÄº¯Êı·ÅÔÚÕâÀï½øĞĞÅĞ¶¨
+// Account* Account::Getaccount(bool is_ok)//ï¿½ï¿½ï¿½Ô°ï¿½ï¿½Ç¸ï¿½enrollï¿½Äºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ¶ï¿½
 //{
-//	if (is_ok)//µ±³É¹¦×¢²áÕËºÅ
+//	if (is_ok)//ï¿½ï¿½ï¿½É¹ï¿½×¢ï¿½ï¿½ï¿½Ëºï¿½
 //	{
-//		return acc.back();//»ñÈ¡µ±Ç°ÁĞ±íµÄ×îĞÂÕË»§
+//		return acc.back();//ï¿½ï¿½È¡ï¿½ï¿½Ç°ï¿½Ğ±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë»ï¿½
 //	}
 //	else
 //	{
 //		return nullptr;
 //	}
 // }
-std::string Account::get_id(Account *user)
+std::string Account::get_name(Account *user)
 {
 	return user->Username;
 }
-std::vector<My_stock *> Account::show_my_stock()
+std::vector<My_stock > Account::show_my_stock()
 {
-	return mystock;
+    mystock=db.getMyStock(this->id);
+    return mystock;
 }
-Order add_my_order(int order_id, Account *user, double price, int sum, std::string sym, bool side)
+int Account::add_my_order(int &operatorId, double price, int quantity, const QString &symbol, bool side)
 {
+	//-3 refer to the lack  of this sorts of stock
+	//-2 refer to the sum of this stock is not enough
+	//-1 refer to the lack of money to buy so much stocks
+	//0 refer to  my stock is empty
 
-	std::vector<My_stock *> my = user->show_my_stock(); // ±¾ÖÊÉÏÊÇÒ»¸ö¸±±¾£¬¸ü¸ÄÕâ¸ö¸±±¾²»»á¶Ô¿â´æÔì³ÉÊ²Ã´Ó°Ïì
-	if (!side)											// ÂòÈë¶©µ¥
+	std::vector<My_stock > my = db.getMyStock(operatorId); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¿ï¿½ï¿½ï¿½ï¿½ï¿½Ê²Ã´Ó°ï¿½ï¿½
+	if (!side)											// ï¿½ï¿½ï¿½ë¶©ï¿½ï¿½
 	{
-		if (user->is_oktobuy(price * sum, user)) // ÊÇ·ñÓĞ×ã¹»µÄ½ğ¶îÈ¥Ìá½»ÂòÈë¶©µ¥
+		if (this->is_oktobuy(price * quantity)) // ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ã¹»ï¿½Ä½ï¿½ï¿½È¥ï¿½á½»ï¿½ï¿½ï¿½ë¶©ï¿½ï¿½
 		{
-			Order mynew = Order(order_id, user->get_id(user), price, sum, sym, side); // ´´½¨ÂòÈë¶©µ¥
-			std::cout << "ÕıÔÚÎªÄú´´½¨¶©µ¥" << std::endl;
-			return mynew;
+			//Order mynew = Order(order_id, user->get_id(user), price, sum, sym, side); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ë¶©ï¿½ï¿½
+            //std::cout << "ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" << std::endl;
+			this->money -= price*quantity;//delete the money firstly
+            bool tmp=db.updateUser(this->id, QString::fromStdString(this->Username), QString::fromStdString(this->password) , this->money);
+			return db.addOrder(operatorId, price, quantity, symbol, side);
 		}
 		else
 		{
-			std::cout << "Óà¶î²»×ã" << std::endl;
-			Order error = Order(); // ¿Õ¶©µ¥£¬µ½Ê±ºò¿´ÔõÃ´ÅĞ¶Ï´íÎó
-			return error;
+            //std::cout << "ï¿½ï¿½î²»ï¿½ï¿½" << std::endl;
+			//Order error = Order(); // ï¿½Õ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Ã´ï¿½Ğ¶Ï´ï¿½ï¿½ï¿½
+			return -1;
 		}
 	}
-	else // Âô³ö¶©µ¥--Æ¥Åä×Ô¼ºµÄ¿â´æÊÇ·ñÓĞ¶ÔÓ¦´úºÅµÄ¹ÉÆ±ºÍ¶ÔÓ¦µÄÊıÁ¿µÄ¹ÉÆ±
+	else // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½--Æ¥ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½Ç·ï¿½ï¿½Ğ¶ï¿½Ó¦ï¿½ï¿½ï¿½ÅµÄ¹ï¿½Æ±ï¿½Í¶ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¹ï¿½Æ±
 	{
-		if (my.empty()) // Èç¹ûÎÒµÄ²Ö¿âÎª¿Õ
+		if (my.empty()) // ï¿½ï¿½ï¿½ï¿½ÒµÄ²Ö¿ï¿½Îªï¿½ï¿½
 		{
-			std::cout << "²Ö¿âÎª¿Õ£¬ÎŞ·¨½»Ò×" << std::endl;
-			Order error = Order(); // ´´½¨ÂòÈë¶©µ¥
-			return error;
+            //std::cout << "ï¿½Ö¿ï¿½Îªï¿½Õ£ï¿½ï¿½Ş·ï¿½ï¿½ï¿½ï¿½ï¿½" << std::endl;
+			return 0;
 		}
-		for (auto tem : my) // ±éÀúÕû¸ö¿â´æ
+		for (auto tem : my) // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		{
-			if (tem->get_name() == sym) // µ±ÔÚ×Ô¼ºµÄ¿â´æÖĞÕÒµ½ÁË¶ÔÓ¦µÄ¹ÉÆ±´úÂë
+			if (tem.get_name() == symbol.toStdString()) // ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½Òµï¿½ï¿½Ë¶ï¿½Ó¦ï¿½Ä¹ï¿½Æ±ï¿½ï¿½ï¿½ï¿½
 			{
-				if (sum <= tem->get_sum()) // ²¢ÇÒ×Ô¼º¿â´æÁ¿»¹×ã¹»£¬Ìá½»Âô³ö¶©µ¥
+				if (quantity <= tem.get_sum()) // ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ã¹»ï¿½ï¿½ï¿½á½»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				{
-					Order mynew = Order(order_id, user->get_id(user), price, sum, sym, side); // ´´½¨¶©µ¥
-					return mynew;
+					//Order mynew = Order(order_id, user->get_id(user), price, sum, sym, side); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+					int Sum = tem.get_sum() - quantity;//new quantity of my stock
+					tem.setnew_sum(Sum);
+					this->mystock.assign(my.begin(), my.end());//local my_stock update
+					db.updateUserStock(operatorId, symbol, Sum);//update myStock data
+					return db.addOrder(operatorId, price, quantity, symbol, side);//Return the Order_id
 				}
-				else // ¿â´æÖĞ¹ÉÊı²»×ãÒÔÂô³öÕâÃ´¶à¶©µ¥
+				else // ï¿½ï¿½ï¿½ï¿½Ğ¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã´ï¿½à¶©ï¿½ï¿½
 				{
-                    //std::cout << "¿â´æÁ¿²»×ã£¬ÎŞ·¨Âô³ö" << sum << "¸ö¶©µ¥£¬ÇëÖØĞÂÔÙÊäÈë" << std::endl;
-					Order error = Order(); // ¿Õ¶©µ¥£¬µ½Ê±ºò¿´ÔõÃ´ÅĞ¶Ï´íÎó
-					return error;
+                    //std::cout << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ã£¬ï¿½Ş·ï¿½ï¿½ï¿½ï¿½ï¿½" << sum << "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" << std::endl;
+					//Order error = Order(); // ï¿½Õ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Ã´ï¿½Ğ¶Ï´ï¿½ï¿½ï¿½
+					return -2;
 				}
 			}
 		}
-        //std::cout << "ÄãµÄ¿â´æÀïÃ»ÓĞÕâÀà¹ÉÆ±£¬ÎŞ·¨½øĞĞÂô³ö½»Ò×" << std::endl;
-		Order error = Order(); // ¿Õ¶©µ¥£¬µ½Ê±ºò¿´ÔõÃ´ÅĞ¶Ï´íÎó
-		return error;
+        //std::cout << "ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ±ï¿½ï¿½ï¿½Ş·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" << std::endl;
+		return -3;
 	}
 }
 
-void Account::upgrade(std::string _sym, int _sum, double price, Order &order) // ¸üĞÂ¿â´æĞÅÏ¢,¸ù¾İÖ¸¶¨µÄ¼Û¸ñ
-{
-	if (!order.side) // Èç¹ûÊÇÂòÈëĞÅÏ¢
+void Account::upgrade(std::string _sym, int _sum, double price, Order&order) // ï¿½ï¿½ï¿½Â¿ï¿½ï¿½ï¿½ï¿½Ï¢,ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½Ä¼Û¸ï¿½
+{   //this->mystock.assign(db.getMyStock(this->id).begin(), db.getMyStock(this->id).end());
+    std::vector<My_stock> v1 = db.getMyStock(this->id);
+    this->mystock.assign(v1.begin(),v1.end());
+	if (!order.side) // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
 	{
-		this->money -= price;	   // Âò¶«Î÷Òª½»Ç®µÄ
-		if (this->mystock.empty()) // Èç¹û²Ö¿âÎª¿Õ
+		//this->money -= price;	   // ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½Ç®ï¿½ï¿½--- Ç®ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½á½»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ò½»¹ï¿½ï¿½ï¿½
+		if (this->mystock.empty()) // ï¿½ï¿½ï¿½ï¿½Ö¿ï¿½Îªï¿½ï¿½
 		{
-			My_stock *my_new = new My_stock(_sym, _sum);
-			this->mystock.push_back(my_new); // ½«ĞÂµÄ¹ÉÆ±ĞÅÏ¢´æ´¢½øÈë¿â´æÖĞ
+			My_stock my_new(_sym, _sum);
+			this->mystock.push_back(my_new); // ï¿½ï¿½ï¿½ÂµÄ¹ï¿½Æ±ï¿½ï¿½Ï¢ï¿½æ´¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			db.addUserStock(this->id, QString::fromStdString(_sym), QString::fromStdString(_sym), _sum);
 		}
-		else // Èç¹û²Ö¿â²»Îª¿Õ
+		else // ï¿½ï¿½ï¿½ï¿½Ö¿â²»Îªï¿½ï¿½
 		{
-			bool is_find = false; // ÊÇ·ñÕÒµ½ÓĞ¸ÃÖÖ¹ÉÆ±
+			bool is_find = false; // ï¿½Ç·ï¿½ï¿½Òµï¿½ï¿½Ğ¸ï¿½ï¿½Ö¹ï¿½Æ±
 			for (auto tem : mystock)
 			{
-				if (tem->get_name() == _sym) // Èç¹û¿â´æÖĞÓĞÕâ¸ö¹ÉÆ±£¬¾Í½øĞĞÔö¼Ó
+				if (tem.get_name() == _sym) // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ±ï¿½ï¿½ï¿½Í½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				{
-					tem->setnew_sum(tem->get_sum() + _sum); // ÉèÖÃĞÂµÄÊıÁ¿
+					tem.setnew_sum(tem.get_sum() + _sum); // ï¿½ï¿½ï¿½ï¿½ï¿½Âµï¿½ï¿½ï¿½ï¿½ï¿½
 					is_find = true;
+					db.updateUserStock(this->id, QString::fromStdString(_sym),tem.get_sum());
 					break;
 				}
 			}
-			// Èç¹û¿â´æÖĞÃ»ÓĞÕâÖÖ¹ÉÆ±£¬ÄÇ¾ÍÌí¼Ó½øÈ¥
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½Ö¹ï¿½Æ±ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ó½ï¿½È¥
 			if (!is_find)
 			{
-				My_stock *my_new = new My_stock(_sym, _sum);
-				this->mystock.push_back(my_new); // ½«ĞÂµÄ¹ÉÆ±ĞÅÏ¢´æ´¢½øÈë¿â´æÖĞ
+				My_stock my_new(_sym, _sum);
+				this->mystock.push_back(my_new); // ï¿½ï¿½ï¿½ÂµÄ¹ï¿½Æ±ï¿½ï¿½Ï¢ï¿½æ´¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+				db.addUserStock(this->id, QString::fromStdString(_sym), QString::fromStdString(_sym), _sum);
 			}
 		}
 	}
-	else // Èç¹ûÊÇÂô³öĞÅÏ¢,//Ö®Ç°ÒÑ¾­ÅĞ¶¨¹ı²Ö¿âÒªÓĞ¶ÔÓ¦¶«Î÷²ÅÄÜÂô³ö£¬ËùÒÔÕâÀïÓ¦¸ÃÄ¬ÈÏ²Ö¿âÊÇÓĞ¶ÔÓ¦µÄ¶«Î÷µÄ
+	else // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢,//Ö®Ç°ï¿½Ñ¾ï¿½ï¿½Ğ¶ï¿½ï¿½ï¿½ï¿½Ö¿ï¿½Òªï¿½Ğ¶ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½Ä¬ï¿½Ï²Ö¿ï¿½ï¿½ï¿½ï¿½Ğ¶ï¿½Ó¦ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ï¿½
 	{
 		for (auto tem : mystock)
 		{
-			if (_sym == tem->get_name()) // ÕÒµ½ÁË²Ö¿âµÄ¿â´æÁË
+			if (_sym == tem.get_name()) // ï¿½Òµï¿½ï¿½Ë²Ö¿ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½
 			{
-				tem->setnew_sum(tem->get_sum() - _sum); // ¸üĞÂ¿â´æµÄÊıÁ¿
-				this->money += price;					// ×¬Ç®ÁË
+				//tem->setnew_sum(tem->get_sum() - _sum); // ï¿½ï¿½ï¿½Â¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½---ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½á½»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+				this->money += price;					// ×¬Ç®ï¿½ï¿½
+				db.updateUser(this->id, QString::fromStdString(this->Username), QString::fromStdString(this->password), this->money);
 				break;
 			}
 		}
 	}
 }
 
-// ×¢ÊÍ²¿·ÖÎªµÚÒ»°æÔø¾­ÓÃ¹ıµÄÊµÏÖ·½Ê½£¬ÏÖÔÚÌí¼ÓÁËAccount_groupÀ´´æ´¢ÕË»§ĞÅÏ¢£¬¿´ÆğÀ´¸üºÃ¿´ÁË
+
+int Account::removeOrder(int Orderid)
+{
+	std::vector<Order>myOrder = db.getMyOrdersList(this->return_id());//return User's Order list
+	if (myOrder.empty())
+	{
+		return -1;
+	}
+	for (auto tem : myOrder)
+	{
+		if (tem.Order_id == Orderid)//use the orderid to find the correct order to remove
+		{
+			if (tem.side)//If it is a sell order
+			{
+				for (auto stock1 : this->mystock)
+				{
+					if (stock1.get_name() == tem.symbol)//find the stock
+					{
+						stock1.setnew_sum(tem.quantity+stock1.get_sum());
+						db.updateUserStock(this->id, QString::fromStdString(tem.symbol),stock1.get_sum());
+						if (db.removeOrder(Orderid))
+							return Orderid;
+						else
+							return -1;
+					}
+				}
+			}
+			else//If it is a buy order
+			{
+				this->money += tem.price*tem.quantity;
+                db.updateUser(this->id, QString::fromStdString(this->Username), QString::fromStdString(this->password), this->money);
+				if (db.removeOrder(Orderid))
+                    return Orderid;
+				else
+					return -1;
+			}
+		}
+	}
+}
+std::vector<Order> Account::show_my_order()
+{
+    return db.getMyOrdersList(this->return_id());
+}
+
+int ticks_time(int duration, int id)//é—´éš”æ—¶é—´ï¼Œå®šä½åˆ°ç¬¬å‡ å·è®¡æ—¶å™¨
+{
+	static int srt[10];
+	int end = clock();//ç»Ÿè®¡ç¨‹åºè¿è¡Œåˆ°æ­¤å¤„çš„æ—¶é—´ clockå‡½æ•°
+	if (end - srt[id] > duration)  //duration é—´éš”æ—¶é—´
+	{
+		srt[id] = end;//å¼€å§‹æ—¶é—´æ”¹ä¸ºä¸Šä¸€æ¬¡çš„ç»“æŸæ—¶é—´
+		return 1;//è¿”å›çœŸ
+	}
+	return 0;//è¿”å›å‡
+}

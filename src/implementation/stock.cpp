@@ -1,7 +1,9 @@
 #include"stock.h"
-
-void Stock::add_order(Order &order,Account_group &Ac) {
+#include "../database/database.h"
+extern Database db;
+void Stock::add_order(Order &order) {
     Order_lk* p = new Order_lk(order);
+	
     if (!order.side) {
         if (order.price <= market_price * highest_buy) {  //价格合规
             if (orderlist_buy->next == NULL)
@@ -83,29 +85,64 @@ void Stock::add_order(Order &order,Account_group &Ac) {
                // std::cout << "成交：" << buyi->next->order.Order_id << " 股票代码：" << symbol << " 数量: " <<
                     //buyi->next->order.quantity << " 价格: " << selli->next->order.price << std::endl;
                 //成交后订单生成可以在这里改。
-                selli->next->order.quantity -= buyi->next->order.quantity;//剩余票数               
-				Account*seller=Ac.find_user(selli->next->order.Peo_id);//找到卖家id所指向的用户
-				seller->upgrade(selli->next->order.symbol, buyi->next->order.quantity, (buyi->next->order.quantity*selli->next->order.price),selli->next->order);
-				Account*buyer = Ac.find_user(buyi->next->order.Peo_id);//找到买家id所指向的用户
-				buyer->upgrade(buyi->next->order.symbol, buyi->next->order.quantity,(buyi->next->order.quantity*selli->next->order.price), buyi->next->order);
+                selli->next->order.quantity -= buyi->next->order.quantity;//剩余票数
+                int tmp= std::stoi(selli->next->order.Peo_id);
+                db.updateOrder(selli->next->order.Order_id, tmp, selli->next->order.price, selli->next->order.quantity, QString::fromStdString(selli->next->order.symbol), selli->next->order.side);
+                //Account*seller=Ac.find_user(selli->next->order.Peo_id);//找到卖家id所指向的用户
+                Account seller(std::stoi(selli->next->order.Peo_id));
+				seller.upgrade(selli->next->order.symbol, buyi->next->order.quantity, (buyi->next->order.quantity*selli->next->order.price),selli->next->order);
+				//Account*buyer = Ac.find_user(buyi->next->order.Peo_id);//找到买家id所指向的用户
+                Account buyer(std::stoi(buyi->next->order.Peo_id));
+                buyer.upgrade(buyi->next->order.symbol, buyi->next->order.quantity,(buyi->next->order.quantity*selli->next->order.price), buyi->next->order);
 				buyi->next->order.quantity = 0;//订单清空
+                db.removeOrder(buyi->next->order.Order_id);//
+                if (selli->next->order.quantity == 0)
+                {
+                    db.removeOrder(selli->next->order.Order_id);
+                }
+
             }
             else {//买量大于卖量
                 //std::cout << "部分成交：" << buyi->next->order.Order_id << " 股票代码：" << symbol << " 数量: " <<
                    // selli->next->order.quantity << " 价格:" << selli->next->order.price << std::endl;
                 buyi->next->order.quantity -= selli->next->order.quantity;
-				Account*buyer = Ac.find_user(buyi->next->order.Peo_id);//找到买家id所指向的用户
-				buyer->upgrade(buyi->next->order.symbol, selli->next->order.quantity, (selli->next->order.quantity*selli->next->order.price), buyi->next->order);
-
-				Account*seller = Ac.find_user(selli->next->order.Peo_id);//找到卖家id所指向的用户
-				seller->upgrade(selli->next->order.symbol, selli->next->order.quantity, (selli->next->order.quantity*selli->next->order.price), selli->next->order);
-                selli->next->order.quantity = 0;
+                int tmp= std::stoi(buyi->next->order.Peo_id);
+                db.updateOrder(buyi->next->order.Order_id, tmp, buyi->next->order.price, buyi->next->order.quantity, QString::fromStdString(buyi->next->order.symbol), buyi->next->order.side);
+				//Account*buyer = Ac.find_user(buyi->next->order.Peo_id);//找到买家id所指向的用户
+                Account buyer(std::stoi(buyi->next->order.Peo_id));
+				buyer.upgrade(buyi->next->order.symbol, selli->next->order.quantity, (selli->next->order.quantity*selli->next->order.price), buyi->next->order);
+                Account seller(std::stoi(selli->next->order.Peo_id));
+                //Account*seller = Ac.find_user(selli->next->order.userid);//找到卖家id所指向的用户
+				seller.upgrade(selli->next->order.symbol, selli->next->order.quantity, (selli->next->order.quantity*selli->next->order.price), selli->next->order);
+                selli->next->order.quantity = 0;//clear the quantity
+                db.removeOrder(selli->next->order.Order_id);//
             }
             market_price = selli->next->order.price; //更新股价！
         }
         else {
             buyi = buyi->next;
         }
-        price_list.push_back(market_price);//这个列表存储了历史的股价，可以用来绘制图形？
+        price_list.push_back(market_price);//这个列表存储了每次的股价，可以用来绘制图形？
     }
+}
+double Stock::show_price()//show the current price 
+{
+	if (price_list.empty())//if there is no order in this special time
+	{
+		if (Historic_price.empty())
+			return market_price;//Return the lasttime;
+		else
+			return Historic_price.back();
+	}
+		
+	else
+	{
+		double sum = std::accumulate(price_list.begin(), price_list.end(), 0.0);//get the Addsum
+		double mean = sum / price_list.size();//get the mean
+		market_price = mean;//update current price
+		Historic_price.push_back(mean);//restore the mean
+		price_list.clear();//reset the price list
+		return mean;
+	}
+
 }

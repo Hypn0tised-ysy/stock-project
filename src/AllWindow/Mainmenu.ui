@@ -44,6 +44,9 @@
      <height>21</height>
     </rect>
    </property>
+   <property name="cursor">
+    <cursorShape>OpenHandCursor</cursorShape>
+   </property>
    <property name="styleSheet">
     <string notr="true">QPushButton{
 	background-color: rgb(69, 109, 255);
@@ -67,6 +70,9 @@ font:bold 14px;		/*设置按钮文字和大小*/
      <width>81</width>
      <height>16</height>
     </rect>
+   </property>
+   <property name="cursor">
+    <cursorShape>OpenHandCursor</cursorShape>
    </property>
    <property name="styleSheet">
     <string notr="true">QPushButton{
@@ -120,6 +126,9 @@ font:bold 14px;		/*设置按钮文字和大小*/
      <height>18</height>
     </rect>
    </property>
+   <property name="cursor">
+    <cursorShape>ClosedHandCursor</cursorShape>
+   </property>
    <property name="styleSheet">
     <string notr="true">QPushButton{
 	background-color: rgb(255, 63, 25);
@@ -132,19 +141,6 @@ font:bold 14px;		/*设置按钮文字和大小*/
    </property>
    <property name="text">
     <string>退出登录</string>
-   </property>
-  </widget>
-  <widget class="QLCDNumber" name="times">
-   <property name="geometry">
-    <rect>
-     <x>140</x>
-     <y>30</y>
-     <width>101</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true"/>
    </property>
   </widget>
   <widget class="QLabel" name="ID1">
@@ -228,6 +224,27 @@ font:bold 20px;		/*设置按钮文字和大小*/</string>
    </property>
    <property name="text">
     <string>NAME</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="ticks">
+   <property name="geometry">
+    <rect>
+     <x>310</x>
+     <y>40</y>
+     <width>81</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(235, 255, 249);
+border-radius:25px;    /*设置圆角半径 */
+font:bold 20px;		/*设置按钮文字和大小*/</string>
+   </property>
+   <property name="text">
+    <string>0</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>

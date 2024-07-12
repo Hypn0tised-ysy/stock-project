@@ -3,7 +3,7 @@
 Database db;
 Database::Database(QObject *parent) : QObject(parent)
 {
-    this->openDatabase("stock");
+    this->openDatabase("stock.db");
 }
 
 Database::~Database()
@@ -41,17 +41,24 @@ bool Database::openDatabase(const QString &dbName)
                "id INTEGER PRIMARY KEY AUTOINCREMENT,"
                "operator INT,"
                "price REAL,"
-               "quantity INT"
-               "symbol TEXT"
-               "side INT");
+               "quantity INT,"
+               "symbol TEXT,"
+               "side INT)");
     // Create user_stocks table
     query.exec("CREATE TABLE IF NOT EXISTS user_stocks ("
                "id INTEGER PRIMARY KEY AUTOINCREMENT, "
                "user_id INTEGER NOT NULL, "
                "symbol TEXT NOT NULL, "
-               "name TEXT"
+               "name TEXT,"
                "quantity INTEGER NOT NULL, "
                "FOREIGN KEY (user_id) REFERENCES users(id))");
+    // Create stock_prices table
+    query.exec("CREATE TABLE IF NOT EXISTS stock_prices ("
+               "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+               "symbol TEXT, "
+               "price REAL, "
+               "timestamp   INT)");
+
 
     return true;
 }
@@ -251,6 +258,7 @@ bool Database::updateOrder(int orderId, int &operatorId, double price, int quant
     query.addBindValue(quantity);
     query.addBindValue(symbol);
     query.addBindValue(side);
+    query.addBindValue(orderId);
 
     if (!query.exec())
     {
@@ -384,7 +392,7 @@ std::vector<Stock> Database::getStocksList()
         std::vector<Stock> result;
         while (query.next())
         {
-            Stock stock(query.value("symbol").toString().toStdString(), query.value("price").toDouble());
+            Stock stock(query.value("symbol").toString().toStdString(), query.value("price").toDouble(),query.value("name").toString().toStdString(),query.value("id").toInt());
             result.push_back(stock);
         }
         return result;
@@ -411,4 +419,100 @@ std::vector<Order> Database::getOrdersList(QString symbol, bool side)
         }
         return result;
     }
+}
+bool Database::addStockPrice(const QString &symbol, double price,int &time)//接受股票代码和价格为参数，时间戳默认是当前的时间戳
+{
+    QSqlQuery query;
+    query.prepare("INSERT INTO stock_prices (symbol, price, timestamp) VALUES (?, ?, ?)");
+    query.addBindValue(symbol);
+    query.addBindValue(price);
+    query.addBindValue(time);
+    if (!query.exec())
+    {
+        qDebug() << "Failed to add stock price:" << query.lastError().text();
+        return false;
+    }
+    return true;
+}
+std::vector<StockPrice> Database::getStockPrice(const QString &symbol)
+{
+    QSqlQuery query;
+    query.prepare("SELECT * FROM stock_prices WHERE symbol = ?");
+    query.addBindValue(symbol);
+    if (!query.exec())
+    {
+        qDebug() << "Failed to fetch stock prices:" << query.lastError().text();
+        return std::vector<StockPrice>();
+    }
+    else
+    {
+        std::vector<StockPrice> result;
+        while (query.next())
+        {
+            StockPrice stockPrice;
+            stockPrice.symbol = query.value("symbol").toString();
+            stockPrice.price = query.value("price").toDouble();
+            stockPrice.time = query.value("timestamp").toInt();
+            result.push_back(stockPrice);
+        }
+        return result;
+    }
+}
+/*
+    QVariantList stockPrices=db.getStockPrice("code");获取股票代码为code的股票历史数据
+    QVariantMap stockPriceMap=stockPrices[分钟数].toMap();股票x分钟前的数据
+    qDebug()<<stockPriceMap["id"].toInt();股票x分钟前的id信息
+    qDebug（）<<db.getStockPrice("code")[分钟数].toMap()["要获取的信息id,symbol,price,timestamp(Qstring)"].toInt()或者toString();
+*/
+std::vector<Order> Database::getMyOrdersList(int userId)
+{
+    QSqlQuery query;
+    query.prepare("SELECT * FROM orders WHERE operator = ?");
+    query.addBindValue(userId);
+    if (!query.exec())
+    {
+        qDebug() << "Failed to fetch orders:" << query.lastError().text();
+        return std::vector<Order>();
+    }
+    else
+    {
+        std::vector<Order> result;
+        while (query.next())
+        {
+            Order order(query.value("id").toInt(), query.value("operator").toString().toStdString(), query.value("price").toDouble(), query.value("quantity").toInt(), query.value("symbol").toString().toStdString(), query.value("side").toBool());
+            result.push_back(order);
+        }
+        return result;
+    }
+}
+int Database::getNewestTime()
+{
+    QSqlQuery query;
+    query.prepare("SELECT MAX(timestamp) FROM stock_prices");
+    if (!query.exec() || !query.next())
+    {
+        qDebug() << "Failed to get newest time:" << query.lastError().text();
+        return -1;
+    }
+    return query.value(0).toInt();
+
+}
+int Database::getStockQuantity(int userId, const QString &symbol)
+{
+    QSqlQuery query;
+    query.prepare("SELECT quantity FROM user_stocks WHERE user_id = ? AND symbol = ?");
+    query.addBindValue(userId);
+    query.addBindValue(symbol);
+    if (!query.exec())
+    {
+        qDebug() << "Failed to get stock quantity:" << query.lastError().text();
+        return -1;
+    }
+    //如果没有数据说明原来是0
+    if (!query.next())
+    {
+        return 0;
+    }
+    
+    return query.value(0).toInt();
 }
