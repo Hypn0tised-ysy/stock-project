@@ -96,7 +96,7 @@ void Stock::add_order(Order &order) {
 				db.removeOrder(buyi->next->order.Order_id);//
 				if (selli->next->order.quantity == 0)
 				{
-					db.removeOrder(selli->next->order.Order_id);
+					db.removeOrder(selli->next->order.Order_id);//如果刚好匹配，应该也要把卖单删除
 				}
             }
             else {//买量大于卖量

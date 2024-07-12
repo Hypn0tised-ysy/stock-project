@@ -161,6 +161,7 @@ int Account::add_my_order(int &operatorId, double price, int quantity, const QSt
 
 void Account::upgrade(std::string _sym, int _sum, double price, Order&order) // ���¿����Ϣ,����ָ���ļ۸�
 {
+	this->mystock.assign(db.getMyStock(this->id).begin(), db.getMyStock(this->id).end());
 	if (!order.side) // �����������Ϣ
 	{
 		//this->money -= price;	   // ����Ҫ��Ǯ��--- Ǯ�Ѿ����ύ������ʱ�򽻹���
