@@ -5,7 +5,7 @@
 
 extern Database db;
 Predictor predictor(&db);
-Predictor::Predictor(Database *database, QObject *parent) :
+Predictor::Predictor(Database *db, QObject *parent) :
     QObject(parent), dbPtr(db),armaModel()
 {
 }
