@@ -29,6 +29,7 @@
 
 #include "candlestickdatareader.h"
 #include<QString>
+QT_CHARTS_USE_NAMESPACE
 CandlestickDataReader::CandlestickDataReader(QIODevice *device)
     : QTextStream(device)
 {
