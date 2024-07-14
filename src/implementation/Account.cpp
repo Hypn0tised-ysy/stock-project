@@ -116,7 +116,7 @@ int Account::add_my_order(int &operatorId, double price, int quantity, const QSt
 			//Order mynew = Order(order_id, user->get_id(user), price, sum, sym, side); // �������붩��
             //std::cout << "����Ϊ����������" << std::endl;
 			this->money -= price*quantity;//delete the money firstly
-			db.updateUser(this->id, QString::fromStdString(this->Username), QString::fromStdString(this->password) , this->money);
+            bool tmp=db.updateUser(this->id, QString::fromStdString(this->Username), QString::fromStdString(this->password) , this->money);
 			return db.addOrder(operatorId, price, quantity, symbol, side);
 		}
 		else
@@ -160,8 +160,9 @@ int Account::add_my_order(int &operatorId, double price, int quantity, const QSt
 }
 
 void Account::upgrade(std::string _sym, int _sum, double price, Order&order) // ���¿����Ϣ,����ָ���ļ۸�
-{
-	this->mystock.assign(db.getMyStock(this->id).begin(), db.getMyStock(this->id).end());
+{   //this->mystock.assign(db.getMyStock(this->id).begin(), db.getMyStock(this->id).end());
+    std::vector<My_stock> v1 = db.getMyStock(this->id);
+    this->mystock.assign(v1.begin(),v1.end());
 	if (!order.side) // �����������Ϣ
 	{
 		//this->money -= price;	   // ����Ҫ��Ǯ��--- Ǯ�Ѿ����ύ������ʱ�򽻹���
@@ -238,7 +239,7 @@ int Account::removeOrder(int Orderid)
 			else//If it is a buy order
 			{
 				this->money += tem.price*tem.quantity;
-				db.updateUser(this->id, QString::fromStdString(this->Username), QString::fromStdString(this->password), this->money);
+                db.updateUser(this->id, QString::fromStdString(this->Username), QString::fromStdString(this->password), this->money);
 				if (db.removeOrder(Orderid))
                     return Orderid;
 				else
@@ -252,7 +253,7 @@ std::vector<Order> Account::show_my_order()
     return db.getMyOrdersList(this->return_id());
 }
 
-int time(int duration, int id)//间隔时间，定位到第几号计时器
+int ticks_time(int duration, int id)//间隔时间，定位到第几号计时器
 {
 	static int srt[10];
 	int end = clock();//统计程序运行到此处的时间 clock函数

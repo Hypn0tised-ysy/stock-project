@@ -259,6 +259,7 @@ bool Database::updateOrder(int orderId, int &operatorId, double price, int quant
     query.addBindValue(symbol);
     query.addBindValue(side);
     query.addBindValue(orderId);
+
     if (!query.exec())
     {
         qDebug() << "Failed to update stock:" << query.lastError().text();

@@ -1,10 +1,15 @@
 #include "ui_buy_order.h"
 #include "ui_ui_buy_order.h"
 #include<QMessageBox>
-jiaoyi::jiaoyi(Account *_NowUser,QWidget *parent)
+#include"Mainmenu.h"
+extern Account* real_NowUser;
+extern std::map<std::string, Stock> mp1;
+extern std::vector<Stock> all_stocks;
+extern Database db;
+jiaoyi::jiaoyi(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::jiaoyi)
-{   b_NowUser=_NowUser;
+{
     ui->setupUi(this);
     setFixedSize(500, 600);
     ui->ID->setClearButtonEnabled(true);
@@ -39,20 +44,35 @@ void jiaoyi::on_queding_clicked()
             QString ID=ui->ID->text();
             QString price=ui->jiage->text();
             QString number=ui->num->text();
-            bool b_or_s=true;
-            int tmp1=b_NowUser->return_id();
-            int tmp=b_NowUser->add_my_order(tmp1,price.toDouble(),number.toInt(),ID,!b_or_s);
-            if(tmp<=0)
+            int tmp1=real_NowUser->return_id();
+            int order_id=real_NowUser->add_my_order(tmp1,price.toDouble(),number.toInt(),ID,false);
+            if(order_id<=0)
             {
                 QMessageBox::information(this,"警告","订单信息有误，请您再次检查",QMessageBox::Close);
                 return;
             }
             else{
-
             ui->ID->clear();
             ui->jiage->clear();
             ui->num->clear();
             QMessageBox::information(this,"提示","订单已提交",QMessageBox::Close);
+            std::string id=ID.toStdString();
+            double prices=price.toDouble();
+            int numbers=number.toInt();
+            std::string peo_id=std::to_string(real_NowUser->return_id());
+            Order order(order_id,peo_id,prices,numbers,id,false);
+            mp1[id].add_order(order);
+            /*for(int i=0;i<all_stocks.size();i++)
+            {
+                std::vector<Order> tmp1=db.getOrdersList(QString::fromStdString(all_stocks[i].symbol),true);
+                std::vector<Order> tmp2=db.getOrdersList(QString::fromStdString(all_stocks[i].symbol),false);
+                for(int j=0;j<tmp1.size();j++){
+                    mp1[all_stocks[i].symbol].add_order(tmp1[j]);
+                }
+                for(int k=0;k<tmp2.size();k++){
+                    mp1[all_stocks[i].symbol].add_order(tmp2[k]);
+                }
+            }*/
             close();
             }
         }

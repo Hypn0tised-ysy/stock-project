@@ -3,19 +3,19 @@
 #include<QString>
 #include<string>
 #include<vector>
-
+#include<QMessageBox>
 gushi::gushi(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::gushi)
 {
     ui->setupUi(this);
     setFixedSize(1500, 800);
-    timer=new QTimer;
+   /* timer=new QTimer;
     time_record=new QTime;
     ui->times->setDigitCount(8);
     init_time();
     timer->start(1000);//1000为正常时间，目前暂时加速。
-    connect(timer,SIGNAL(timeout()),this,SLOT(update_time()));
+    connect(timer,SIGNAL(timeout()),this,SLOT(update_time()));*/
     resizeit();
 
 }
@@ -36,23 +36,23 @@ void gushi::resizeit(){
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Fixed);
     ui->tableWidget->setColumnWidth(2,widths*0.26);
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(2,QHeaderView::Fixed);
-    ui->times->setGeometry(widths*0.7,heights*0.05,widths*0.2,heights*0.1);
+    //ui->times->setGeometry(widths*0.7,heights*0.05,widths*0.2,heights*0.1);
 }
 
 
-void gushi::init_time(){
+/*void gushi::init_time(){
     time_record->setHMS(8,0,0);
     ui->times->display(time_record->toString("hh:mm:ss"));
-}
+}*/
 
-void gushi::update_time(){
+/*void gushi::update_time(){
     *time_record = time_record->addSecs(1);
     if(time_record->second()==0&&time_record->minute()==0){
         showit();//一小时一更新股市
     }
     ui->times->display(time_record->toString("hh:mm:ss"));
 
-}
+}*/
 
 void gushi::on_close_clicked()
 {
@@ -61,6 +61,7 @@ void gushi::on_close_clicked()
 
 
 void gushi::showit(){
+
     ui->tableWidget->setRowCount(all_stocks.size());
     for(int i=0;i<all_stocks.size();i++){
         ui->tableWidget->setRowHeight(i,10);
@@ -82,7 +83,12 @@ void gushi::showit(){
     //根据数据库中的股票数据来自动显示股票信息。
 }
 
-
+void gushi::tips(){
+    if(first){
+        QMessageBox::information(this,"提示","双击股票后查看股票的详情",QMessageBox::Close);
+        first=false;
+    }
+}
 
 
 void gushi::on_tableWidget_cellDoubleClicked(int row, int column)

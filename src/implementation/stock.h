@@ -22,6 +22,7 @@ public:
         name = n;
         databaseid=d;
     }
+    Stock(){}
     Order_lk *orderlist_buy = new Order_lk(Order(-1, "0", -1, -1, "z", 0));
     Order_lk *orderlist_sell = new Order_lk(Order(-1, "0", -1, -1, "z", 1));
     std::vector<double> price_list;//current trade price
