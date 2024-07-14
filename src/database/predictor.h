@@ -6,7 +6,7 @@
 #include <Eigen/Dense>
 #include "database.h"
 #include "arma.h"
-
+class ARMA;
 class Predictor : public QObject
 {
     Q_OBJECT
