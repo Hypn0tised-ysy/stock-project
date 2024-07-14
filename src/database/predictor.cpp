@@ -4,9 +4,9 @@
 #include <cstdlib>
 
 extern Database db;
-Predictor predictor;
+Predictor predictor(&db);
 Predictor::Predictor(Database *database, QObject *parent) :
-    QObject(parent), dbPtr(db)
+    QObject(parent), dbPtr(db),armaModel()
 {
 }
 bool Predictor::enoughData(const QString &symbol)
@@ -70,7 +70,7 @@ std::vector<double> Predictor::getPricesArma(const QString &symbol)
     return result;
 }
 
-Eigen::VectorXd Predictor::linearRegression(const MatrixXd &data)
+Eigen::VectorXd Predictor::linearRegression(const Eigen::MatrixXd &data)
 {
     int numPoints = data.rows();
     Eigen::VectorXd x = data.col(0);
@@ -84,7 +84,7 @@ Eigen::VectorXd Predictor::linearRegression(const MatrixXd &data)
     return beta;
 }
 
-Eigen::VectorXd Predictor::predict(const VectorXd &beta, int start, int end)
+Eigen::VectorXd Predictor::predict(const Eigen::VectorXd &beta, int start, int end)
 {
     int numPoints = end - start;
     Eigen::VectorXd predictions(numPoints);
