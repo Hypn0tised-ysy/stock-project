@@ -1,4 +1,5 @@
 #ifndef ARMA_H
+#define ARMA_H
 #include "database.h"
 #include "predictor.h"
 #include <Eigen/Dense>
