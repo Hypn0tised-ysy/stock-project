@@ -28,7 +28,6 @@
 ****************************************************************************/
 
 #include "candlestickdatareader.h"
-
 CandlestickDataReader::CandlestickDataReader(QIODevice *device)
     : QTextStream(device)
 {

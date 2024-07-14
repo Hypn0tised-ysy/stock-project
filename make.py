@@ -4,10 +4,10 @@ print("Hello World")
 # Open the stock.db file
 conn = sqlite3.connect('stock.db')
 cursor = conn.cursor()
-price=50
+price=30
 # Loop to execute the INSERT statement
-for timestamp in range(1001,10001,1):
-    symbol = "100001"
+for timestamp in range(1,10001,1):
+    symbol = "100003"
     price = price*(1+random.uniform(-0.01, 0.01))
     cursor.execute("INSERT INTO stock_prices (symbol, price, timestamp) VALUES (?, ?, ?)", (symbol, price, timestamp))
 
