@@ -11,7 +11,7 @@ Predictor::Predictor(Database *db, QObject *parent) :
 }
 bool Predictor::enoughData(const QString &symbol)
 {
-    std::vector<StockPrice> stocks=dbPtr->getStockPrice(symbol);
+    std::vector<StockPrice> stocks=dbPtr->getStockPrice(symbol,true);
     if (stocks.size()<Predictor::End-Predictor::Start) {
         return false;
     }
@@ -19,7 +19,7 @@ bool Predictor::enoughData(const QString &symbol)
 }
 bool Predictor::enoughData(const QString &symbol,int numHistory)
 {
-    std::vector<StockPrice> stocks=dbPtr->getStockPrice(symbol);
+    std::vector<StockPrice> stocks=dbPtr->getStockPrice(symbol,true);
     if (stocks.size()<numHistory) {
         return false;
     }
@@ -28,7 +28,7 @@ bool Predictor::enoughData(const QString &symbol,int numHistory)
 
 QVariantList Predictor::predictStockPrices(const QString &symbol)
 {
-    std::vector<StockPrice> stocks=dbPtr->getStockPrice(symbol);
+    std::vector<StockPrice> stocks=dbPtr->getStockPrice(symbol,true);
 
     if (stocks.size() < End-Start) {
         qDebug() << "Not enough data to perform prediction.";
@@ -56,7 +56,7 @@ QVariantList Predictor::predictStockPrices(const QString &symbol)
 }
 QVariantList Predictor::predictStockPrices(const QString &symbol,int numHistory,int numFuture)
 {
-    std::vector<StockPrice> stocks=dbPtr->getStockPrice(symbol);
+    std::vector<StockPrice> stocks=dbPtr->getStockPrice(symbol,true);
 
     if (stocks.size() < numHistory) {
         qDebug() << "Not enough data to perform prediction.";
@@ -105,7 +105,7 @@ std::vector<double> Predictor::getPrices(const QString &symbol,int numHistory,in
 std::vector<double> Predictor::getPricesArma(const QString &symbol)
 {
     armaModel=new ARMA(2,2);//这里把p和q分别设置成2和2
-    std::vector<StockPrice> stocks=dbPtr->getStockPrice(symbol);
+    std::vector<StockPrice> stocks=dbPtr->getStockPrice(symbol,true);
     std::vector<double> data;
     for(auto item:stocks)
     {
@@ -118,7 +118,7 @@ std::vector<double> Predictor::getPricesArma(const QString &symbol)
 std::vector<double> Predictor::getPricesArma(const QString &symbol,int numHistory,int numFuture)
 {
     armaModel=new ARMA(2,2);//这里把p和q分别设置成2和2
-    std::vector<StockPrice> stocks=dbPtr->getStockPrice(symbol);
+    std::vector<StockPrice> stocks=dbPtr->getStockPrice(symbol,true);
     std::vector<double> data;
     for(auto item:stocks)
     {
