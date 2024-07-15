@@ -31,12 +31,12 @@ extern Predictor predictor;
 
 /*使用predictor获取Predictor::Predict项预测数据,能够进行预测的前提是至少有Predictor::End-Predictor::Start项历史数据，参数可以改
 std::vector<double> predictData;
-if(predictor.enoughData())
+if(predictor.enoughData(<num of data>))
 {
     //linear regression
-    predictData=predictor.getPrices("股票代码");
+    predictData=predictor.getPrices("股票代码",历史数据个数,预测数据个数);
     //arma
-    predictData=predictor.getPricesArma("股票代码");
+    predictData=predictor.getPricesArma("股票代码"，历史数据个数，预测数据个数);
 }
 */
 
