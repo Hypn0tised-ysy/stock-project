@@ -148,3 +148,4 @@ void simulated_trade() {
     }
 
 }
+}
