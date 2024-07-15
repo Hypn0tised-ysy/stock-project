@@ -53,6 +53,7 @@ public:
     int getStockQuantity(int userId, const QString &symbol);
     bool addStockPrice(const QString &symbol, double price, int &time);
     std::vector<StockPrice> getStockPrice(const QString &symbol);
+    std::vector<StockPrice> getStockPrice(const QString &symbol,bool reverse);//reverse为true则时间越晚排序越前
     int getNewestTime();
 
 private:

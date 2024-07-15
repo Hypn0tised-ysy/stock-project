@@ -458,6 +458,37 @@ std::vector<StockPrice> Database::getStockPrice(const QString &symbol)
         return result;
     }
 }
+std::vector<StockPrice> Database::getStockPrice(const QString &symbol,bool reverse)
+{
+    if(reverse)
+    {
+        QSqlQuery query;
+        query.prepare("SELECT * FROM stock_prices WHERE symbol = ? order by timestamp DESC");
+        query.addBindValue(symbol);
+        if (!query.exec())
+        {
+            qDebug() << "Failed to fetch stock prices:" << query.lastError().text();
+            return std::vector<StockPrice>();
+        }
+        else
+        {
+            std::vector<StockPrice> result;
+            while (query.next())
+            {
+                StockPrice stockPrice;
+                stockPrice.symbol = query.value("symbol").toString();
+                stockPrice.price = query.value("price").toDouble();
+                stockPrice.time = query.value("timestamp").toInt();
+                result.push_back(stockPrice);
+            }
+            return result;
+        }
+
+
+    }
+    else
+        return getStockPrice(symbol);
+}
 /*
     QVariantList stockPrices=db.getStockPrice("code");获取股票代码为code的股票历史数据
     QVariantMap stockPriceMap=stockPrices[分钟数].toMap();股票x分钟前的数据
