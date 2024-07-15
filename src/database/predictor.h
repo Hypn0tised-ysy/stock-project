@@ -14,10 +14,14 @@ public:
     enum{Start=0,End=60,Predict=10};//使用前Start分钟到前End分钟项数据，预测Predict项数据
     explicit Predictor(Database *db, QObject *parent = nullptr);
     bool enoughData(const QString &symbol);//判断是否有足够数据，如果返回为true再调用getPrices函数
+    bool enoughData(const QString &symbol,int numHistory);
     QVariantList predictStockPrices(const QString &symbol);
+    QVariantList predictStockPrices(const QString &symbol,int numHistory,int numFuture);
     std::vector<double> getPrices(const QString &symbol);//返回值result，result[0]得到预测的第一项price数据，类型为double,共有Predict项数据
+    std::vector<double> getPrices(const QString &symbol,int numHistory,int numFuture);//num参数为使用历史数据的个数
     std::vector<double> getPricesArma(const QString &symbol);//使用arma模型预测价格走势,预测的数据个数为Predict个
-private:
+    std::vector<double> getPricesArma(const QString &symbol,int numHistory,int numFuture);
+    private:
     Database *dbPtr;
     ARMA* armaModel;
     Eigen::VectorXd linearRegression(const Eigen::MatrixXd &data);
