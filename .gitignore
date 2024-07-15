@@ -4,3 +4,4 @@
 /.vs
 StockMarket.pro.user
 *.user
+/eigen-3.4.0/*

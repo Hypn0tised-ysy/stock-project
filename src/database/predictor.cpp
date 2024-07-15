@@ -17,6 +17,14 @@ bool Predictor::enoughData(const QString &symbol)
     }
     else return true;
 }
+bool Predictor::enoughData(const QString &symbol,int numHistory)
+{
+    std::vector<StockPrice> stocks=dbPtr->getStockPrice(symbol);
+    if (stocks.size()<numHistory) {
+        return false;
+    }
+    else return true;
+}
 
 QVariantList Predictor::predictStockPrices(const QString &symbol)
 {
@@ -46,9 +54,47 @@ QVariantList Predictor::predictStockPrices(const QString &symbol)
 
     return result;
 }
+QVariantList Predictor::predictStockPrices(const QString &symbol,int numHistory,int numFuture)
+{
+    std::vector<StockPrice> stocks=dbPtr->getStockPrice(symbol);
+
+    if (stocks.size() < numHistory) {
+        qDebug() << "Not enough data to perform prediction.";
+        return QVariantList();
+    }
+
+    Eigen::MatrixXd data(numHistory, 2);//numHistory个向量，每个向量2个元素
+    for (int i = 0; i < numHistory; ++i) {
+        data(i, 0) = i;
+        data(i, 1) = stocks[i].price;
+    }
+
+    Eigen::VectorXd beta = linearRegression(data);
+    Eigen::VectorXd predictions = predict(beta, numHistory, numHistory+numFuture);
+
+    QVariantList result;
+    for (int i = 0; i < predictions.size(); ++i) {
+        QVariantMap prediction;
+        prediction["minute"] = End-Start + i;
+        prediction["predictedPrice"] = predictions(i);
+        result.append(prediction);
+    }
+
+    return result;
+}
 std::vector<double> Predictor::getPrices(const QString &symbol)
 {
     QVariantList qList=predictStockPrices(symbol);
+    std::vector<double> result;
+    for(int i=0;i<qList.size();i++)
+    {
+        result.push_back(qList[i].toMap()["predictedPrice"].toDouble());
+    }
+    return result;
+}
+std::vector<double> Predictor::getPrices(const QString &symbol,int numHistory,int numFuture)
+{
+    QVariantList qList=predictStockPrices(symbol,numHistory,numFuture);
     std::vector<double> result;
     for(int i=0;i<qList.size();i++)
     {
@@ -67,6 +113,19 @@ std::vector<double> Predictor::getPricesArma(const QString &symbol)
     }
     armaModel->fit(data);
     std::vector<double> result=armaModel->predict(Predict);
+    return result;
+}
+std::vector<double> Predictor::getPricesArma(const QString &symbol,int numHistory,int numFuture)
+{
+    armaModel=new ARMA(2,2);//这里把p和q分别设置成2和2
+    std::vector<StockPrice> stocks=dbPtr->getStockPrice(symbol);
+    std::vector<double> data;
+    for(auto item:stocks)
+    {
+        data.push_back(item.price);
+    }
+    armaModel->fit(data);
+    std::vector<double> result=armaModel->predict(numFuture);
     return result;
 }
 

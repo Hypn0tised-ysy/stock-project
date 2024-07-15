@@ -13,7 +13,7 @@ void Simulated_user::s_trade(double _price,int _quantity,QString &_symbol,bool _
 
 void create_s_acc() {
     for (int i = 0; i < 1000; i++) {
-        std::string name = "s_user" + std::to_string(i+1); // Éú³ÉÓÃ»§id
+        std::string name = "s_user" + std::to_string(i+1); // ç”Ÿæˆç”¨æˆ·id
         std::string password = "111111111";
 
         enroll(name, password);
@@ -22,59 +22,59 @@ void create_s_acc() {
 
 
 void simulated_trade() {
-    // ¶¨Òå¼ÆÊ±Æ÷ÖÜÆÚÎªtick
+    // å®šä¹‰è®¡æ—¶å™¨å‘¨æœŸä¸ºtick
     const std::chrono::seconds timerInterval(30);
 
-    // Æô¶¯¼ÆÊ±Æ÷
+    // å¯åŠ¨è®¡æ—¶å™¨
     while (true) {
-        // »ñÈ¡µ±Ç°Ê±¼äµã
+        // èŽ·å–å½“å‰æ—¶é—´ç‚¹
         auto startTime = std::chrono::steady_clock::now();
-        //ÉèÖÃËæ»úÊýÖÖ×Ó
+        //è®¾ç½®éšæœºæ•°ç§å­
         srand(time(NULL));
-        //Ëæ»úÊÂ¼þÃû³Æ
+        //éšæœºäº‹ä»¶åç§°
         std::string ev = "Event";
-        //¹É¼ÛÕÇµø
+        //è‚¡ä»·æ¶¨è·Œ
         bool gob = rand() % 2;
-        //·¢ÉúÊÂ¼þe
+        //å‘ç”Ÿäº‹ä»¶e
         Event e(ev, gob);
-        //»ñÈ¡¹ÉÆ±×ÜÊý
+        //èŽ·å–è‚¡ç¥¨æ€»æ•°
         int n = db.getStocksList().size();
-        //¹ÉÆ±±àºÅ
+        //è‚¡ç¥¨ç¼–å·
         int s_id = rand() % n + 1;
-        //»ñÈ¡¹ÉÆ±ÀàÐÍ
+        //èŽ·å–è‚¡ç¥¨ç±»åž‹
         Stock s = db.getStocksList()[s_id - 1];
 
         e.impact(s);
         QString sym = QString::fromStdString(s.symbol);
-        // Ä£Äâ10¸öÓÃ»§½øÐÐ½»Ò×
+        // æ¨¡æ‹Ÿ10ä¸ªç”¨æˆ·è¿›è¡Œäº¤æ˜“
         for (int i = 0; i < 10; i++) {
-            // Ëæ»úÉú³É½»Ò×¶©µ¥Êý¾Ý
+            // éšæœºç”Ÿæˆäº¤æ˜“è®¢å•æ•°æ®
 
             int peo_id = rand() % 1000 + 1;
             double price;
             int quantity;
             double ra = (rand() % 5 + 1) / 100;
             Simulated_user robot(peo_id);
-            //µ¨´óÐÍÓÃ»§£¨±àºÅ1µ½300£©
+            //èƒ†å¤§åž‹ç”¨æˆ·ï¼ˆç¼–å·1åˆ°300ï¼‰
             if (1 <= peo_id && peo_id <= 300) {
-                //¸ù¾Ýµ±Ç°ÐÎÊÆ¾ö¶¨¸ß¼ÛÂòÈëÉÏÕÇ¹ÉÆ±»òÊÇµÍÂô³öÏÂµø¹ÉÆ±
-                //Èç¹ûÊÂ¼þ¿ÉÄÜµ¼ÖÂs¹ÉÆ±ÉÏÕÇ
+                //æ ¹æ®å½“å‰å½¢åŠ¿å†³å®šé«˜ä»·ä¹°å…¥ä¸Šæ¶¨è‚¡ç¥¨æˆ–æ˜¯ä½Žå–å‡ºä¸‹è·Œè‚¡ç¥¨
+                //å¦‚æžœäº‹ä»¶å¯èƒ½å¯¼è‡´sè‚¡ç¥¨ä¸Šæ¶¨
                 if (gob) {
-                    //¸ß¼ÛÂòÈë´óÁ¿¹ÉÆ±
+                    //é«˜ä»·ä¹°å…¥å¤§é‡è‚¡ç¥¨
                     price = s.market_price * (1 + ra);
                     quantity = 20 * (rand() % 9 + 1);
                     robot.s_trade(price, quantity, sym, !gob);
 
                 }
-                //Èç¹ûÊÂ¼þ²»ÀûÓÚs¹ÉÆ±
+                //å¦‚æžœäº‹ä»¶ä¸åˆ©äºŽsè‚¡ç¥¨
                 else {
-                    //¼ì²é²Ö¿âÓÐÎÞs¹ÉÆ±£¬Èç¹ûÓÐ£¬µÍ¼ÛÂô³ö
+                    //æ£€æŸ¥ä»“åº“æœ‰æ— sè‚¡ç¥¨ï¼Œå¦‚æžœæœ‰ï¼Œä½Žä»·å–å‡º
                     for (int i = 0; i < db.getMyStock(peo_id).size(); i++)
                     {
                         if (s.symbol == db.getMyStock(peo_id)[i].get_name())
                         {
                             price = s.market_price * (1 - ra);
-                            //Âô³öÒ»°ës¹ÉÆ±
+                            //å–å‡ºä¸€åŠsè‚¡ç¥¨
                             quantity = db.getMyStock(peo_id)[i].get_sum() / 2;
                             robot.s_trade(price, quantity, sym, !gob);
                             break;
@@ -82,11 +82,11 @@ void simulated_trade() {
                     }
                 }
             }
-            //ÎÞÄÔÐÍÓÃ»§£¨±àºÅ301µ½700£©
+            //æ— è„‘åž‹ç”¨æˆ·ï¼ˆç¼–å·301åˆ°700ï¼‰
             else if (300 < peo_id && peo_id <= 700)
             {
                 bool ra2 = rand() % 2;
-                //¸ß¼ÛÂòÈës¹ÉÆ±
+                //é«˜ä»·ä¹°å…¥sè‚¡ç¥¨
                 if (ra2)
                 {
 
@@ -95,7 +95,7 @@ void simulated_trade() {
                     robot.s_trade(price, quantity, sym, !gob);
                 }
                 else
-                {//Èç¹û²Ö¿â´æÔÚ¹ÉÆ±£¬µÍ¼ÛÊÛ³ö
+                {//å¦‚æžœä»“åº“å­˜åœ¨è‚¡ç¥¨ï¼Œä½Žä»·å”®å‡º
                     for (int i = 0; i < db.getMyStock(peo_id).size(); i++)
                     {
                         if (s.symbol == db.getMyStock(peo_id)[i].get_name())
@@ -109,10 +109,10 @@ void simulated_trade() {
                 }
 
             }
-            //µ¨Ð¡ÐÍÓÃ»§£¨±àºÅ701µ½1000£©
+            //èƒ†å°åž‹ç”¨æˆ·ï¼ˆç¼–å·701åˆ°1000ï¼‰
             else if (700 < peo_id <= 1000)
             {
-                //Èç¹ûÊÂ¼þÓÐÀûÓÚs¹ÉÆ±£¬½÷É÷¹ºÈë
+                //å¦‚æžœäº‹ä»¶æœ‰åˆ©äºŽsè‚¡ç¥¨ï¼Œè°¨æ…Žè´­å…¥
                 if (gob)
                 {
                     price = s.market_price * (1 + ra);
@@ -122,13 +122,13 @@ void simulated_trade() {
                 }
                 else
                 {
-                    //¼ì²é²Ö¿âÓÐÎÞs¹ÉÆ±£¬Èç¹ûÓÐ£¬µÍ¼ÛÂô³ö
+                    //æ£€æŸ¥ä»“åº“æœ‰æ— sè‚¡ç¥¨ï¼Œå¦‚æžœæœ‰ï¼Œä½Žä»·å–å‡º
                     for (int i = 0; i < db.getMyStock(peo_id).size(); i++)
                     {
                         if (s.symbol == db.getMyStock(peo_id)[i].get_name())
                         {
                             price = s.market_price * (1 - ra);
-                            //Âô³öÈ«²¿¹ÉÆ±
+                            //å–å‡ºå…¨éƒ¨è‚¡ç¥¨
                             quantity = db.getMyStock(peo_id)[i].get_sum();
                             robot.s_trade(price, quantity, sym, !gob);
                             break;
@@ -137,18 +137,15 @@ void simulated_trade() {
                 }
             }
         }
-            // ¼ÆËãÏÂÒ»¸öÊ±¼äµã
+            // è®¡ç®—ä¸‹ä¸€ä¸ªæ—¶é—´ç‚¹
             auto endTime = std::chrono::steady_clock::now();
             auto elapsedTime = std::chrono::duration_cast<std::chrono::seconds>(endTime - startTime);
 
-            // µÈ´ýÖ±µ½´ïµ½Ö¸¶¨µÄÊ±¼ä¼ä¸ô
+            // ç­‰å¾…ç›´åˆ°è¾¾åˆ°æŒ‡å®šçš„æ—¶é—´é—´éš”
             if (elapsedTime < timerInterval) {
                 std::this_thread::sleep_for(timerInterval - elapsedTime);
             }
         }
 
-    }
-
-
-
-
+}
+}
