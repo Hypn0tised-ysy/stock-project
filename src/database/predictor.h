@@ -11,7 +11,7 @@ class Predictor : public QObject
 {
     Q_OBJECT
 public:
-    enum{Start=0,End=60,Predict=10}//使用前Start分钟到前End分钟项数据，预测Predict项数据
+    enum{Start=0,End=60,Predict=10};//使用前Start分钟到前End分钟项数据，预测Predict项数据
     explicit Predictor(Database *db, QObject *parent = nullptr);
     bool enoughData(const QString &symbol);//判断是否有足够数据，如果返回为true再调用getPrices函数
     QVariantList predictStockPrices(const QString &symbol);
