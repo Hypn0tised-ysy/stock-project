@@ -29,6 +29,7 @@ public:
     bool updateUser(int userId, const QString &username, const QString &password, double balance);
     int CheckUser(const QString &username, const QString &password);
     QVariantList getUser(int userId);
+    std::vector<int> getBotslist();
 
     // operate stocks' information
     bool addStock(const QString &symbol, const QString &name, double price);

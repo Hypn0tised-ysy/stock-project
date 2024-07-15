@@ -547,3 +547,22 @@ int Database::getStockQuantity(int userId, const QString &symbol)
     
     return query.value(0).toInt();
 }
+std::vector<int> Database::getBotslist()
+{
+    QSqlQuery query;
+    query.prepare("SELECT username FROM users WHERE username LIKE 's_%'");
+    if (!query.exec())
+    {
+        qDebug() << "Failed to get bots list:" << query.lastError().text();
+        return std::vector<int>();
+    }
+    else
+    {
+        std::vector<int> result;
+        while (query.next())
+        {
+            result.push_back(query.value("id").toInt());
+        }
+        return result;
+    }
+}
