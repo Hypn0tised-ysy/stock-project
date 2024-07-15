@@ -13,7 +13,7 @@ void Simulated_user::s_trade(double _price,int _quantity,QString &_symbol,bool _
 
 void create_s_acc() {
     for (int i = 0; i < 1000; i++) {
-        std::string name = "s_user" + std::to_string(i+1); // Éú³ÉÓÃ»§id
+        std::string name = "s_user" + std::to_string(i+1); // ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½id
         std::string password = "111111111";
 
         enroll(name, password);
@@ -22,59 +22,59 @@ void create_s_acc() {
 
 
 void simulated_trade() {
-    // ¶¨Òå¼ÆÊ±Æ÷ÖÜÆÚÎªtick
+    // ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªtick
     const std::chrono::seconds timerInterval(30);
 
-    // Æô¶¯¼ÆÊ±Æ÷
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
     while (true) {
-        // »ñÈ¡µ±Ç°Ê±¼äµã
+        // ï¿½ï¿½È¡ï¿½ï¿½Ç°Ê±ï¿½ï¿½ï¿½
         auto startTime = std::chrono::steady_clock::now();
-        //ÉèÖÃËæ»úÊýÖÖ×Ó
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         srand(time(NULL));
-        //Ëæ»úÊÂ¼þÃû³Æ
+        //ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½
         std::string ev = "Event";
-        //¹É¼ÛÕÇµø
+        //ï¿½É¼ï¿½ï¿½Çµï¿½
         bool gob = rand() % 2;
-        //·¢ÉúÊÂ¼þe
+        //ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½e
         Event e(ev, gob);
-        //»ñÈ¡¹ÉÆ±×ÜÊý
+        //ï¿½ï¿½È¡ï¿½ï¿½Æ±ï¿½ï¿½ï¿½ï¿½
         int n = db.getStocksList().size();
-        //¹ÉÆ±±àºÅ
+        //ï¿½ï¿½Æ±ï¿½ï¿½ï¿½
         int s_id = rand() % n + 1;
-        //»ñÈ¡¹ÉÆ±ÀàÐÍ
+        //ï¿½ï¿½È¡ï¿½ï¿½Æ±ï¿½ï¿½ï¿½ï¿½
         Stock s = db.getStocksList()[s_id - 1];
 
         e.impact(s);
         QString sym = QString::fromStdString(s.symbol);
-        // Ä£Äâ10¸öÓÃ»§½øÐÐ½»Ò×
+        // Ä£ï¿½ï¿½10ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½Ð½ï¿½ï¿½ï¿½
         for (int i = 0; i < 10; i++) {
-            // Ëæ»úÉú³É½»Ò×¶©µ¥Êý¾Ý
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É½ï¿½ï¿½×¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
             int peo_id = rand() % 1000 + 1;
             double price;
             int quantity;
             double ra = (rand() % 5 + 1) / 100;
             Simulated_user robot(peo_id);
-            //µ¨´óÐÍÓÃ»§£¨±àºÅ1µ½300£©
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½1ï¿½ï¿½300ï¿½ï¿½
             if (1 <= peo_id && peo_id <= 300) {
-                //¸ù¾Ýµ±Ç°ÐÎÊÆ¾ö¶¨¸ß¼ÛÂòÈëÉÏÕÇ¹ÉÆ±»òÊÇµÍÂô³öÏÂµø¹ÉÆ±
-                //Èç¹ûÊÂ¼þ¿ÉÄÜµ¼ÖÂs¹ÉÆ±ÉÏÕÇ
+                //ï¿½ï¿½ï¿½Ýµï¿½Ç°ï¿½ï¿½ï¿½Æ¾ï¿½ï¿½ï¿½ï¿½ß¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¹ï¿½Æ±ï¿½ï¿½ï¿½Çµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Âµï¿½ï¿½ï¿½Æ±
+                //ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½Üµï¿½ï¿½ï¿½sï¿½ï¿½Æ±ï¿½ï¿½ï¿½ï¿½
                 if (gob) {
-                    //¸ß¼ÛÂòÈë´óÁ¿¹ÉÆ±
+                    //ï¿½ß¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ±
                     price = s.market_price * (1 + ra);
                     quantity = 20 * (rand() % 9 + 1);
                     robot.s_trade(price, quantity, sym, !gob);
 
                 }
-                //Èç¹ûÊÂ¼þ²»ÀûÓÚs¹ÉÆ±
+                //ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½Æ±
                 else {
-                    //¼ì²é²Ö¿âÓÐÎÞs¹ÉÆ±£¬Èç¹ûÓÐ£¬µÍ¼ÛÂô³ö
+                    //ï¿½ï¿½ï¿½Ö¿ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½Æ±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð£ï¿½ï¿½Í¼ï¿½ï¿½ï¿½ï¿½ï¿½
                     for (int i = 0; i < db.getMyStock(peo_id).size(); i++)
                     {
                         if (s.symbol == db.getMyStock(peo_id)[i].get_name())
                         {
                             price = s.market_price * (1 - ra);
-                            //Âô³öÒ»°ës¹ÉÆ±
+                            //ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½sï¿½ï¿½Æ±
                             quantity = db.getMyStock(peo_id)[i].get_sum() / 2;
                             robot.s_trade(price, quantity, sym, !gob);
                             break;
@@ -82,11 +82,11 @@ void simulated_trade() {
                     }
                 }
             }
-            //ÎÞÄÔÐÍÓÃ»§£¨±àºÅ301µ½700£©
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½301ï¿½ï¿½700ï¿½ï¿½
             else if (300 < peo_id && peo_id <= 700)
             {
                 bool ra2 = rand() % 2;
-                //¸ß¼ÛÂòÈës¹ÉÆ±
+                //ï¿½ß¼ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½Æ±
                 if (ra2)
                 {
 
@@ -95,7 +95,7 @@ void simulated_trade() {
                     robot.s_trade(price, quantity, sym, !gob);
                 }
                 else
-                {//Èç¹û²Ö¿â´æÔÚ¹ÉÆ±£¬µÍ¼ÛÊÛ³ö
+                {//ï¿½ï¿½ï¿½ï¿½Ö¿ï¿½ï¿½ï¿½Ú¹ï¿½Æ±ï¿½ï¿½ï¿½Í¼ï¿½ï¿½Û³ï¿½
                     for (int i = 0; i < db.getMyStock(peo_id).size(); i++)
                     {
                         if (s.symbol == db.getMyStock(peo_id)[i].get_name())
@@ -109,10 +109,10 @@ void simulated_trade() {
                 }
 
             }
-            //µ¨Ð¡ÐÍÓÃ»§£¨±àºÅ701µ½1000£©
+            //ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½701ï¿½ï¿½1000ï¿½ï¿½
             else if (700 < peo_id <= 1000)
             {
-                //Èç¹ûÊÂ¼þÓÐÀûÓÚs¹ÉÆ±£¬½÷É÷¹ºÈë
+                //ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½Æ±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 if (gob)
                 {
                     price = s.market_price * (1 + ra);
@@ -122,13 +122,13 @@ void simulated_trade() {
                 }
                 else
                 {
-                    //¼ì²é²Ö¿âÓÐÎÞs¹ÉÆ±£¬Èç¹ûÓÐ£¬µÍ¼ÛÂô³ö
+                    //ï¿½ï¿½ï¿½Ö¿ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½Æ±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð£ï¿½ï¿½Í¼ï¿½ï¿½ï¿½ï¿½ï¿½
                     for (int i = 0; i < db.getMyStock(peo_id).size(); i++)
                     {
                         if (s.symbol == db.getMyStock(peo_id)[i].get_name())
                         {
                             price = s.market_price * (1 - ra);
-                            //Âô³öÈ«²¿¹ÉÆ±
+                            //ï¿½ï¿½ï¿½ï¿½È«ï¿½ï¿½ï¿½ï¿½Æ±
                             quantity = db.getMyStock(peo_id)[i].get_sum();
                             robot.s_trade(price, quantity, sym, !gob);
                             break;
@@ -137,11 +137,11 @@ void simulated_trade() {
                 }
             }
 
-            // ¼ÆËãÏÂÒ»¸öÊ±¼äµã
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Ê±ï¿½ï¿½ï¿½
             auto endTime = std::chrono::steady_clock::now();
             auto elapsedTime = std::chrono::duration_cast<std::chrono::seconds>(endTime - startTime);
 
-            // µÈ´ýÖ±µ½´ïµ½Ö¸¶¨µÄÊ±¼ä¼ä¸ô
+            // ï¿½È´ï¿½Ö±ï¿½ï¿½ï¿½ïµ½Ö¸ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½
             if (elapsedTime < timerInterval) {
                 std::this_thread::sleep_for(timerInterval - elapsedTime);
             }
@@ -153,3 +153,4 @@ void simulated_trade() {
 
 
     }
+}
